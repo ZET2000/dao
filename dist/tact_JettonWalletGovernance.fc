@@ -595,14 +595,14 @@ builder $JettonWalletGovernance$init$_store(builder build_0, (int, int, slice, s
 
 ((int, int, slice, slice), (int, slice, slice, cell)) $JettonWalletGovernance$_fun_get_wallet_data((int, int, slice, slice) $self) impure inline_ref {
     var (($self'status, $self'balance, $self'owner, $self'master)) = $self;
-    var $fresh$ret_6898 = $JettonWalletData$_constructor_balance_owner_minter_code($self'balance, $self'owner, $self'master, $global_myCode());
-    return (($self'status, $self'balance, $self'owner, $self'master), $fresh$ret_6898);
+    var $fresh$ret_7173 = $JettonWalletData$_constructor_balance_owner_minter_code($self'balance, $self'owner, $self'master, $global_myCode());
+    return (($self'status, $self'balance, $self'owner, $self'master), $fresh$ret_7173);
 }
 
 ((int, int, slice, slice), int) $JettonWalletGovernance$_fun_get_status((int, int, slice, slice) $self) impure inline_ref {
     var (($self'status, $self'balance, $self'owner, $self'master)) = $self;
-    var $fresh$ret_6899 = $self'status;
-    return (($self'status, $self'balance, $self'owner, $self'master), $fresh$ret_6899);
+    var $fresh$ret_7174 = $self'status;
+    return (($self'status, $self'balance, $self'owner, $self'master), $fresh$ret_7174);
 }
 
 ;;

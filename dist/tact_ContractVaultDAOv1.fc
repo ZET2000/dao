@@ -114,8 +114,8 @@ builder $ContractVaultDAOv1$_store(builder build_0, (slice, int, (slice, slice))
 
 ((slice, int, (slice, slice)), (slice, slice)) $ContractVaultDAOv1$_fun_info((slice, int, (slice, slice)) $self) impure inline_ref {
     var (($self'owner, $self'status, ($self'data'title, $self'data'description))) = $self;
-    var $fresh$ret_6975 = ($self'data'title, $self'data'description);
-    return (($self'owner, $self'status, ($self'data'title, $self'data'description)), $fresh$ret_6975);
+    var $fresh$ret_7250 = ($self'data'title, $self'data'description);
+    return (($self'owner, $self'status, ($self'data'title, $self'data'description)), $fresh$ret_7250);
 }
 
 ;;

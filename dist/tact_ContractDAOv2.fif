@@ -112,13 +112,12 @@ PROGRAM{
     64 STU
     SWAP
     STVARUINT16
-    SWAP
-    STVARUINT16
+    32 STU
   }>
   $VoteSettings$_load PROCINLINE:<{
     64 LDU
     LDVARUINT16
-    LDVARUINT16
+    32 LDU
     3 -ROLL
   }>
   $VaultInitialization$_store PROCINLINE:<{

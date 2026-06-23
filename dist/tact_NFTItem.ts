@@ -1231,6 +1231,59 @@ export function dictValueParserRemoveAdmin(): DictionaryValue<RemoveAdmin> {
     }
 }
 
+export type ChangeTreasury = {
+    $$type: 'ChangeTreasury';
+    queryId: bigint;
+    address: Address;
+}
+
+export function storeChangeTreasury(src: ChangeTreasury) {
+    return (builder: Builder) => {
+        const b_0 = builder;
+        b_0.storeUint(12, 32);
+        b_0.storeUint(src.queryId, 64);
+        b_0.storeAddress(src.address);
+    };
+}
+
+export function loadChangeTreasury(slice: Slice) {
+    const sc_0 = slice;
+    if (sc_0.loadUint(32) !== 12) { throw Error('Invalid prefix'); }
+    const _queryId = sc_0.loadUintBig(64);
+    const _address = sc_0.loadAddress();
+    return { $$type: 'ChangeTreasury' as const, queryId: _queryId, address: _address };
+}
+
+export function loadTupleChangeTreasury(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _address = source.readAddress();
+    return { $$type: 'ChangeTreasury' as const, queryId: _queryId, address: _address };
+}
+
+export function loadGetterTupleChangeTreasury(source: TupleReader) {
+    const _queryId = source.readBigNumber();
+    const _address = source.readAddress();
+    return { $$type: 'ChangeTreasury' as const, queryId: _queryId, address: _address };
+}
+
+export function storeTupleChangeTreasury(source: ChangeTreasury) {
+    const builder = new TupleBuilder();
+    builder.writeNumber(source.queryId);
+    builder.writeAddress(source.address);
+    return builder.build();
+}
+
+export function dictValueParserChangeTreasury(): DictionaryValue<ChangeTreasury> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeChangeTreasury(src)).endCell());
+        },
+        parse: (src) => {
+            return loadChangeTreasury(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type JettonTransferNotification = {
     $$type: 'JettonTransferNotification';
     queryId: bigint;
@@ -3846,7 +3899,7 @@ export type VoteSettings = {
     $$type: 'VoteSettings';
     endTime: bigint;
     min_amount: bigint;
-    fee: bigint;
+    quorum: bigint;
 }
 
 export function storeVoteSettings(src: VoteSettings) {
@@ -3854,7 +3907,7 @@ export function storeVoteSettings(src: VoteSettings) {
         const b_0 = builder;
         b_0.storeUint(src.endTime, 64);
         b_0.storeCoins(src.min_amount);
-        b_0.storeCoins(src.fee);
+        b_0.storeUint(src.quorum, 32);
     };
 }
 
@@ -3862,29 +3915,29 @@ export function loadVoteSettings(slice: Slice) {
     const sc_0 = slice;
     const _endTime = sc_0.loadUintBig(64);
     const _min_amount = sc_0.loadCoins();
-    const _fee = sc_0.loadCoins();
-    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, fee: _fee };
+    const _quorum = sc_0.loadUintBig(32);
+    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, quorum: _quorum };
 }
 
 export function loadTupleVoteSettings(source: TupleReader) {
     const _endTime = source.readBigNumber();
     const _min_amount = source.readBigNumber();
-    const _fee = source.readBigNumber();
-    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, fee: _fee };
+    const _quorum = source.readBigNumber();
+    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, quorum: _quorum };
 }
 
 export function loadGetterTupleVoteSettings(source: TupleReader) {
     const _endTime = source.readBigNumber();
     const _min_amount = source.readBigNumber();
-    const _fee = source.readBigNumber();
-    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, fee: _fee };
+    const _quorum = source.readBigNumber();
+    return { $$type: 'VoteSettings' as const, endTime: _endTime, min_amount: _min_amount, quorum: _quorum };
 }
 
 export function storeTupleVoteSettings(source: VoteSettings) {
     const builder = new TupleBuilder();
     builder.writeNumber(source.endTime);
     builder.writeNumber(source.min_amount);
-    builder.writeNumber(source.fee);
+    builder.writeNumber(source.quorum);
     return builder.build();
 }
 
@@ -5781,6 +5834,7 @@ export function dictValueParserNFTItem$Data(): DictionaryValue<NFTItem$Data> {
 export type MasterDAO$Data = {
     $$type: 'MasterDAO$Data';
     owner: Address;
+    treasury: Address;
     fees: bigint;
     admins: Dictionary<Address, boolean>;
     collection: Address;
@@ -5791,6 +5845,7 @@ export function storeMasterDAO$Data(src: MasterDAO$Data) {
     return (builder: Builder) => {
         const b_0 = builder;
         b_0.storeAddress(src.owner);
+        b_0.storeAddress(src.treasury);
         b_0.storeCoins(src.fees);
         b_0.storeDict(src.admins, Dictionary.Keys.Address(), Dictionary.Values.Bool());
         b_0.storeAddress(src.collection);
@@ -5803,37 +5858,41 @@ export function storeMasterDAO$Data(src: MasterDAO$Data) {
 export function loadMasterDAO$Data(slice: Slice) {
     const sc_0 = slice;
     const _owner = sc_0.loadAddress();
+    const _treasury = sc_0.loadAddress();
     const _fees = sc_0.loadCoins();
     const _admins = Dictionary.load(Dictionary.Keys.Address(), Dictionary.Values.Bool(), sc_0);
     const _collection = sc_0.loadAddress();
     const sc_1 = sc_0.loadRef().beginParse();
     const _token = sc_1.loadBit() ? loadDaoToken(sc_1) : null;
-    return { $$type: 'MasterDAO$Data' as const, owner: _owner, fees: _fees, admins: _admins, collection: _collection, token: _token };
+    return { $$type: 'MasterDAO$Data' as const, owner: _owner, treasury: _treasury, fees: _fees, admins: _admins, collection: _collection, token: _token };
 }
 
 export function loadTupleMasterDAO$Data(source: TupleReader) {
     const _owner = source.readAddress();
+    const _treasury = source.readAddress();
     const _fees = source.readBigNumber();
     const _admins = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.Bool(), source.readCellOpt());
     const _collection = source.readAddress();
     const _token_p = source.readTupleOpt();
     const _token = _token_p ? loadTupleDaoToken(_token_p) : null;
-    return { $$type: 'MasterDAO$Data' as const, owner: _owner, fees: _fees, admins: _admins, collection: _collection, token: _token };
+    return { $$type: 'MasterDAO$Data' as const, owner: _owner, treasury: _treasury, fees: _fees, admins: _admins, collection: _collection, token: _token };
 }
 
 export function loadGetterTupleMasterDAO$Data(source: TupleReader) {
     const _owner = source.readAddress();
+    const _treasury = source.readAddress();
     const _fees = source.readBigNumber();
     const _admins = Dictionary.loadDirect(Dictionary.Keys.Address(), Dictionary.Values.Bool(), source.readCellOpt());
     const _collection = source.readAddress();
     const _token_p = source.readTupleOpt();
     const _token = _token_p ? loadTupleDaoToken(_token_p) : null;
-    return { $$type: 'MasterDAO$Data' as const, owner: _owner, fees: _fees, admins: _admins, collection: _collection, token: _token };
+    return { $$type: 'MasterDAO$Data' as const, owner: _owner, treasury: _treasury, fees: _fees, admins: _admins, collection: _collection, token: _token };
 }
 
 export function storeTupleMasterDAO$Data(source: MasterDAO$Data) {
     const builder = new TupleBuilder();
     builder.writeAddress(source.owner);
+    builder.writeAddress(source.treasury);
     builder.writeNumber(source.fees);
     builder.writeCell(source.admins.size > 0 ? beginCell().storeDictDirect(source.admins, Dictionary.Keys.Address(), Dictionary.Values.Bool()).endCell() : null);
     builder.writeAddress(source.collection);
@@ -6026,6 +6085,7 @@ const NFTItem_types: ABIType[] = [
     {"name":"GetFunds","header":8,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"jettonWallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"jettonAmount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"AddAdmin","header":9,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"RemoveAdmin","header":10,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"ChangeTreasury","header":12,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"address","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"JettonTransferNotification","header":1935855772,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"sender","type":{"kind":"simple","type":"address","optional":false}},{"name":"forwardPayload","type":{"kind":"simple","type":"slice","optional":false,"format":"remainder"}}]},
     {"name":"StartNewVoting","header":3100530816,"fields":[{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}}]},
     {"name":"StartDAOVoting","header":718541994,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}}]},
@@ -6072,7 +6132,7 @@ const NFTItem_types: ABIType[] = [
     {"name":"DaoToken","header":null,"fields":[{"name":"jetton_wallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"dao_fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"OptionInfo","header":null,"fields":[{"name":"title","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}}]},
     {"name":"OptionInfoRoot","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"title","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}}]},
-    {"name":"VoteSettings","header":null,"fields":[{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"min_amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"VoteSettings","header":null,"fields":[{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"min_amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"quorum","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
     {"name":"StartNewVotingStruct","header":null,"fields":[{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}}]},
     {"name":"StartNewVotingTestStruct","header":null,"fields":[{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"min_amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"TakeDAOVoteStruct","header":null,"fields":[{"name":"adminAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"optionAddress","type":{"kind":"simple","type":"address","optional":false}}]},
@@ -6104,7 +6164,7 @@ const NFTItem_types: ABIType[] = [
     {"name":"ContractVirtualDAOv2$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"option","type":{"kind":"simple","type":"address","optional":true}},{"name":"status","type":{"kind":"simple","type":"uint","optional":false,"format":4}}]},
     {"name":"NFTItemInit","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"content","type":{"kind":"simple","type":"cell","optional":false}}]},
     {"name":"NFTItem$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":true}},{"name":"content","type":{"kind":"simple","type":"cell","optional":true}},{"name":"editor","type":{"kind":"simple","type":"address","optional":false}},{"name":"collectionAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"itemIndex","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
-    {"name":"MasterDAO$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"fees","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"admins","type":{"kind":"dict","key":"address","value":"bool"}},{"name":"collection","type":{"kind":"simple","type":"address","optional":false}},{"name":"token","type":{"kind":"simple","type":"DaoToken","optional":true}}]},
+    {"name":"MasterDAO$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"treasury","type":{"kind":"simple","type":"address","optional":false}},{"name":"fees","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"admins","type":{"kind":"dict","key":"address","value":"bool"}},{"name":"collection","type":{"kind":"simple","type":"address","optional":false}},{"name":"token","type":{"kind":"simple","type":"DaoToken","optional":true}}]},
 ]
 
 const NFTItem_opcodes = {
@@ -6119,6 +6179,7 @@ const NFTItem_opcodes = {
     "GetFunds": 8,
     "AddAdmin": 9,
     "RemoveAdmin": 10,
+    "ChangeTreasury": 12,
     "JettonTransferNotification": 1935855772,
     "StartNewVoting": 3100530816,
     "StartDAOVoting": 718541994,

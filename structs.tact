@@ -24,7 +24,7 @@ struct OptionInfoRoot {
 struct VoteSettings {
     endTime: Int as uint64;
     min_amount: Int as coins;
-    fee: Int as coins;
+    quorum: Int as uint32;
 }
 
 struct StartNewVotingStruct {

@@ -12,6 +12,7 @@ import "./DAOCitizen.tact";
 
 contract MasterDAO with Deployable {
     owner: Address;
+    treasury: Address;
     fees: Int as coins;
     admins: map<Address, Bool>;
     collection: Address;
@@ -19,6 +20,7 @@ contract MasterDAO with Deployable {
 
     init(owner: Address) {
         self.owner = owner;
+        self.treasury = owner;
         self.fees = 0;
         self.admins = emptyMap();
         self.collection = owner;
@@ -41,8 +43,8 @@ contract MasterDAO with Deployable {
             body: JettonTransfer{
                 queryId: 42,
                 amount: msg.jettonAmount,
-                destination: sender(),
-                responseDestination: sender(),
+                destination: self.treasury,
+                responseDestination: self.treasury,
                 customPayload: null,
                 forwardTonAmount: 1,
                 forwardPayload: rawSlice("F")
@@ -75,6 +77,11 @@ contract MasterDAO with Deployable {
                 address: msg.address,
             }.toCell()
         });
+    }
+
+    receive(msg: ChangeTreasury) {
+        require(sender() == self.owner, "access denied");
+        self.treasury = msg.address;
     }
 
     receive(msg: RemoveAdmin) {

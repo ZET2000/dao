@@ -48,6 +48,11 @@ message(10) RemoveAdmin {
     address: Address;
 }
 
+message(12) ChangeTreasury {
+    queryId: Int as uint64;
+    address: Address;
+}
+
 message(0x7362d09c) JettonTransferNotification {
     queryId: Int as uint64;
     amount: Int as coins;

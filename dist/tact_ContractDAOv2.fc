@@ -503,27 +503,27 @@ cell __gen_cell_cell_ea01a593d0a6ea359d8a2c2f38b3e14f090e97ec2e780879d9f7ded2b5c
 
 ;;
 ;; Type: VoteSettings
-;; TLB: _ endTime:uint64 min_amount:coins fee:coins = VoteSettings
+;; TLB: _ endTime:uint64 min_amount:coins quorum:uint32 = VoteSettings
 ;;
 
 builder $VoteSettings$_store(builder build_0, (int, int, int) v) inline {
-    var (v'endTime, v'min_amount, v'fee) = v;
+    var (v'endTime, v'min_amount, v'quorum) = v;
     build_0 = build_0.store_uint(v'endTime, 64);
     build_0 = build_0.store_varuint16(v'min_amount);
-    build_0 = build_0.store_varuint16(v'fee);
+    build_0 = build_0.store_uint(v'quorum, 32);
     return build_0;
 }
 
 (slice, ((int, int, int))) $VoteSettings$_load(slice sc_0) inline {
     var v'endTime = sc_0~load_uint(64);
     var v'min_amount = sc_0~load_varuint16();
-    var v'fee = sc_0~load_varuint16();
-    return (sc_0, (v'endTime, v'min_amount, v'fee));
+    var v'quorum = sc_0~load_uint(32);
+    return (sc_0, (v'endTime, v'min_amount, v'quorum));
 }
 
 (int, int, int) $VoteSettings$_to_external(((int, int, int)) v) inline {
-    var (v'endTime, v'min_amount, v'fee) = v; 
-    return (v'endTime, v'min_amount, v'fee);
+    var (v'endTime, v'min_amount, v'quorum) = v; 
+    return (v'endTime, v'min_amount, v'quorum);
 }
 
 ;;
@@ -730,18 +730,18 @@ tuple $OptionInfoRoot$_load_opt(cell cl) inline {
 
 ;;
 ;; Type: ContractDAOv2
-;; TLB: _ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2
+;; TLB: _ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2
 ;;
 
 builder $ContractDAOv2$_store(builder build_0, (slice, slice, slice, int, cell, (int, int, int), cell) v) inline {
-    var (v'owner, v'admin, v'master, v'status, v'metadata, (v'settings'endTime, v'settings'min_amount, v'settings'fee), v'options) = v;
+    var (v'owner, v'admin, v'master, v'status, v'metadata, (v'settings'endTime, v'settings'min_amount, v'settings'quorum), v'options) = v;
     build_0 = build_0.store_slice(v'owner);
     build_0 = build_0.store_slice(v'admin);
     build_0 = build_0.store_slice(v'master);
     build_0 = build_0.store_uint(v'status, 4);
     build_0 = build_0.store_ref(v'metadata);
     var build_1 = begin_cell();
-    build_1 = $VoteSettings$_store(build_1, (v'settings'endTime, v'settings'min_amount, v'settings'fee));
+    build_1 = $VoteSettings$_store(build_1, (v'settings'endTime, v'settings'min_amount, v'settings'quorum));
     build_1 = build_1.store_dict(v'options);
     build_0 = store_builder_ref(build_0, build_1);
     return build_0;
@@ -893,21 +893,21 @@ cell $ContractVirtualDAOv2$_child_get_code() impure asm """
 ;;
 
 ((slice, slice, slice, int, cell, (int, int, int), cell), cell) $ContractDAOv2$_fun_get_options((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
-    var $fresh$ret_7060 = $self'options;
-    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7060);
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
+    var $fresh$ret_7335 = $self'options;
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7335);
 }
 
 ((slice, slice, slice, int, cell, (int, int, int), cell), (int, int, int)) $ContractDAOv2$_fun_get_settings((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
-    var $fresh$ret_7061 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee);
-    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7061);
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
+    var $fresh$ret_7336 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum);
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7336);
 }
 
 ((slice, slice, slice, int, cell, (int, int, int), cell), int) $ContractDAOv2$_fun_get_status((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
-    var $fresh$ret_7062 = $self'status;
-    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7062);
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
+    var $fresh$ret_7337 = $self'status;
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7337);
 }
 
 ;;
@@ -952,7 +952,7 @@ _ %get_status() method_id(100881) {
     __tact_context_sender = msg_sender_addr;
     
     ;; Load contract data
-    var ($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options) = $ContractDAOv2$_contract_load();
+    var ($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options) = $ContractDAOv2$_contract_load();
     
     ;; Handle bounced messages
     if (msg_bounced) { return (); }
@@ -1027,7 +1027,7 @@ _ %get_status() method_id(100881) {
             var ($init'code, $init'data) = $ContractVaultDAOv1$_init_child($global_myAddress(), 0, ($data'title, $data'description));
             $self'options~__tact_dict_set_slice_cell(267, $global_contractAddress(($init'code, $init'data)), $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description($global_contractAddress(($init'code, $init'data)), $msg'title, $msg'description), begin_cell()));
             $global_deploy($DeployParameters$_constructor_init_value_body(($init'code, $init'data), ($ctx'value - 10000000), $VaultInitialization$_store_cell($VaultInitialization$_constructor_queryId_admin(0, __tact_context_get_sender()), begin_cell())));
-            $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+            $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
             return ();
         }
         
@@ -1047,7 +1047,7 @@ _ %get_status() method_id(100881) {
         var ($init'code, $init'data) = $GovernanceJettonMinter$_init_child(0, $global_myAddress(), $self'owner, $self'metadata);
         $self'master = $global_contractAddress(($init'code, $init'data));
         $global_deploy($DeployParameters$_constructor_init_value(($init'code, $init'data), 100000000));
-        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
         return ();
     }
     ;; Receive "start" message
@@ -1055,7 +1055,7 @@ _ %get_status() method_id(100881) {
         throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
         throw_unless(45676, ($self'status == 0));
         $self'status = 1;
-        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
         return ();
     }
     ;; Receive "wd" message

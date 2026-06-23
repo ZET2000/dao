@@ -3,7 +3,7 @@ Contract: ContractJettonDAOv1
 BoC Size: 477 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 100
+Total structures: 101
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -89,17 +89,21 @@ Signature: `AddAdmin{queryId:uint64,address:address}`
 TL-B: `remove_admin#0000000a queryId:uint64 address:address = RemoveAdmin`
 Signature: `RemoveAdmin{queryId:uint64,address:address}`
 
+### ChangeTreasury
+TL-B: `change_treasury#0000000c queryId:uint64 address:address = ChangeTreasury`
+Signature: `ChangeTreasury{queryId:uint64,address:address}`
+
 ### JettonTransferNotification
 TL-B: `jetton_transfer_notification#7362d09c queryId:uint64 amount:coins sender:address forwardPayload:remainder<slice> = JettonTransferNotification`
 Signature: `JettonTransferNotification{queryId:uint64,amount:coins,sender:address,forwardPayload:remainder<slice>}`
 
 ### StartNewVoting
-TL-B: `start_new_voting#b8ce5880 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} = StartNewVoting`
-Signature: `StartNewVoting{metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins}}`
+TL-B: `start_new_voting#b8ce5880 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} = StartNewVoting`
+Signature: `StartNewVoting{metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32}}`
 
 ### StartDAOVoting
-TL-B: `start_dao_voting#2ad414aa queryId:uint64 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} = StartDAOVoting`
-Signature: `StartDAOVoting{queryId:uint64,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins}}`
+TL-B: `start_dao_voting#2ad414aa queryId:uint64 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} = StartDAOVoting`
+Signature: `StartDAOVoting{queryId:uint64,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32}}`
 
 ### InitVoting
 TL-B: `init_voting#55d9ab43 queryId:uint64 totalSupply:coins = InitVoting`
@@ -274,12 +278,12 @@ TL-B: `_ address:address title:^string description:^string = OptionInfoRoot`
 Signature: `OptionInfoRoot{address:address,title:^string,description:^string}`
 
 ### VoteSettings
-TL-B: `_ endTime:uint64 min_amount:coins fee:coins = VoteSettings`
-Signature: `VoteSettings{endTime:uint64,min_amount:coins,fee:coins}`
+TL-B: `_ endTime:uint64 min_amount:coins quorum:uint32 = VoteSettings`
+Signature: `VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32}`
 
 ### StartNewVotingStruct
-TL-B: `_ metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} = StartNewVotingStruct`
-Signature: `StartNewVotingStruct{metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins}}`
+TL-B: `_ metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} = StartNewVotingStruct`
+Signature: `StartNewVotingStruct{metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32}}`
 
 ### StartNewVotingTestStruct
 TL-B: `_ endTime:uint64 min_amount:coins fee:coins = StartNewVotingTestStruct`
@@ -294,12 +298,12 @@ TL-B: `_ bits:int257 refs:int257 = SliceBitsAndRefs`
 Signature: `SliceBitsAndRefs{bits:int257,refs:int257}`
 
 ### ContractDAOv1$Data
-TL-B: `_ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv1`
-Signature: `ContractDAOv1{owner:address,admin:address,wallet:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
+TL-B: `_ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv1`
+Signature: `ContractDAOv1{owner:address,admin:address,wallet:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
 
 ### ContractDAOv2$Data
-TL-B: `_ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2`
-Signature: `ContractDAOv2{owner:address,admin:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
+TL-B: `_ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2`
+Signature: `ContractDAOv2{owner:address,admin:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
 
 ### NFTCollection$Data
 TL-B: `_ owner:address admin:address nextItemIndex:uint64 content:^cell defaultContent:^cell royaltyParams:RoyaltyParams{nominator:uint16,dominator:uint16,owner:address} commonCode:^cell commonData:^builder = NFTCollection`
@@ -402,8 +406,8 @@ TL-B: `_ owner:address content:Maybe ^cell editor:address collectionAddress:addr
 Signature: `NFTItem{owner:address,content:Maybe ^cell,editor:address,collectionAddress:address,itemIndex:uint64}`
 
 ### MasterDAO$Data
-TL-B: `_ owner:address fees:coins admins:dict<address, bool> collection:address token:Maybe DaoToken{jetton_wallet:address,dao_fee:coins} = MasterDAO`
-Signature: `MasterDAO{owner:address,fees:coins,admins:dict<address, bool>,collection:address,token:Maybe DaoToken{jetton_wallet:address,dao_fee:coins}}`
+TL-B: `_ owner:address treasury:address fees:coins admins:dict<address, bool> collection:address token:Maybe DaoToken{jetton_wallet:address,dao_fee:coins} = MasterDAO`
+Signature: `MasterDAO{owner:address,treasury:address,fees:coins,admins:dict<address, bool>,collection:address,token:Maybe DaoToken{jetton_wallet:address,dao_fee:coins}}`
 
 ## Get methods
 Total get methods: 1

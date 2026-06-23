@@ -29,17 +29,3 @@ struct SliceBitsAndRefs {
 asm fun calculateSliceBitsAndRefs(slice: Slice): SliceBitsAndRefs {
     SBITREFS
 }
-
-inline fun parseStartNewVoting(ds: Slice): StartNewVotingStruct {
-    let metadata = ds.loadRef();
-    let settings = ds.loadRef().beginParse();
-
-    return StartNewVotingStruct{
-        metadata: metadata,
-        settings: VoteSettings{
-            endTime: settings.loadUint(64),
-            min_amount: settings.loadCoins(),
-            fee: settings.loadCoins(),
-        }
-    }
-}
