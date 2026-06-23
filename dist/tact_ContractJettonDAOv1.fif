@@ -1,0 +1,389 @@
+// automatically generated from `@stdlib/std/stdlib.fc` `/dist/tact_ContractJettonDAOv1.fc` 
+PROGRAM{
+  DECLPROC __tact_store_address_opt
+  DECLPROC __tact_context_get
+  DECLPROC __tact_context_get_sender
+  DECLPROC $TakeDAOVote$_store
+  DECLPROC $TakeDAOVote$_store_cell
+  DECLPROC $JettonTransfer$_store
+  DECLPROC $JettonTransfer$_store_cell
+  DECLPROC $ContractJettonDAOv1$_store
+  DECLPROC $ContractJettonDAOv1$_load
+  DECLPROC $ContractJettonDAOv1$_contract_load
+  DECLPROC $ContractJettonDAOv1$_contract_store
+  DECLPROC $Builder$_fun_asSlice
+  DECLPROC $ContractJettonDAOv1$_fun_get_option
+  DECLPROC $TakeDAOVote$_constructor_adminAddress_optionAddress
+  DECLPROC $SendParameters$_constructor_to_value_body
+  DECLPROC $JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload
+  105348 DECLMETHOD %get_option
+  DECLPROC recv_internal
+  65535 DECLMETHOD __tact_selector_hack
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sender
+  DECLGLOBVAR __tact_child_contract_codes
+  DECLGLOBVAR __tact_randomized
+  __tact_store_address_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      b{00} STSLICECONST
+    }>ELSE<{
+      SWAP
+      STSLICE
+    }>
+  }>
+  __tact_context_get PROCINLINE:<{
+    __tact_context GETGLOB
+    4 UNTUPLE
+  }>
+  __tact_context_get_sender PROCINLINE:<{
+    __tact_context_sender GETGLOB
+  }>
+  $TakeDAOVote$_store PROCINLINE:<{
+    3914228146 PUSHINT
+    s0 s3 XCHG2
+    32 STU
+    STSLICE
+    STSLICE
+  }>
+  $TakeDAOVote$_store_cell PROCINLINE:<{
+    -ROT
+    $TakeDAOVote$_store INLINECALLDICT
+    ENDC
+  }>
+  $JettonTransfer$_store PROCINLINE:<{
+    260734629 PUSHINT
+    s0 s8 XCHG2
+    32 STU
+    s1 s6 XCHG
+    64 STU
+    s0 s4 XCHG2
+    STVARUINT16
+    s1 s2 XCHG
+    STSLICE
+    SWAP
+    __tact_store_address_opt INLINECALLDICT
+    STOPTREF
+    SWAP
+    STVARUINT16
+    STSLICE
+  }>
+  $JettonTransfer$_store_cell PROCINLINE:<{
+    7 -ROLL
+    $JettonTransfer$_store INLINECALLDICT
+    ENDC
+  }>
+  $ContractJettonDAOv1$_store PROCINLINE:<{
+    s4 s5 XCHG2
+    STSLICE
+    s1 s2 XCHG
+    STSLICE
+    STSLICE
+    SWAP
+    NEWC
+    STSLICE
+    ROT
+    STVARUINT16
+    STBREFR
+  }>
+  $ContractJettonDAOv1$_load PROCINLINE:<{
+    LDMSGADDR
+    LDMSGADDR
+    LDMSGADDR
+    LDREF
+    SWAP
+    CTOS
+    LDMSGADDR
+    LDVARUINT16
+    DROP
+    s2 s5 XCHG
+    s2 s4 XCHG
+    s2 s3 XCHG
+  }>
+  $ContractJettonDAOv1$_contract_load PROCINLINE:<{
+    c4 PUSH
+    CTOS
+    $ContractJettonDAOv1$_load INLINECALLDICT
+    1 5 BLKDROP2
+  }>
+  $ContractJettonDAOv1$_contract_store PROCINLINE:<{
+    NEWC
+    5 -ROLL
+    $ContractJettonDAOv1$_store INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  $Builder$_fun_asSlice PROCINLINE:<{
+        ENDC
+        CTOS
+  }>
+  $ContractJettonDAOv1$_fun_get_option PROCREF:<{
+    s2 PUSH
+  }>
+  $TakeDAOVote$_constructor_adminAddress_optionAddress PROCINLINE:<{
+  }>
+  $SendParameters$_constructor_to_value_body PROCINLINE:<{
+    0 PUSHINT
+    PUSHNULL
+    s4 s2 XCHG2
+    PUSHNULL
+    s4 s2 XCHG2
+    TRUE
+  }>
+  $JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload PROCINLINE:<{
+  }>
+  %get_option PROC:<{
+    $ContractJettonDAOv1$_contract_load INLINECALLDICT
+    $ContractJettonDAOv1$_fun_get_option INLINECALLDICT
+    5 1 BLKDROP2
+  }>
+  recv_internal PROC:<{
+    c2 SAVE
+    SAMEALTSAVE
+    SWAP
+    CTOS
+    2 PUSHINT
+    SDSKIPFIRST
+    1 LDI
+    1 LDI
+    LDMSGADDR
+    OVER
+    s3 s4 XCHG
+    s6 s6 XCHG2
+    4 TUPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    __tact_context_sender SETGLOB
+    $ContractJettonDAOv1$_contract_load INLINECALLDICT
+    s0 s6 XCHG
+    IFJMP:<{
+      6 BLKDROP
+    }>
+    s4 PUSH
+    SBITS
+    31 GTINT
+    IF:<{
+      s0 s4 XCHG
+      32 LDU
+      OVER
+      1935855772 PUSHINT
+      EQUAL
+      IFJMP:<{
+        NIP
+        s4 POP
+        s0 s3 XCHG
+        64 LDU
+        NIP
+        LDVARUINT16
+        LDMSGADDR
+        DROP
+        61686 PUSHINT
+        s1 s4 XCPU
+        SDEQ
+        THROWANYIFNOT
+        __tact_context_get_sender INLINECALLDICT
+        s5 s5 XCHG2
+        ADD
+        s4 s3 s0 XCHG3
+        s1 s2 XCHG
+        $ContractJettonDAOv1$_contract_store INLINECALLDICT
+        RETALT
+      }>
+      SWAP
+      3958568142 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        __tact_context_get INLINECALLDICT
+        DROP
+        NIP
+        42884 PUSHINT
+        s2 POP
+        120000000 PUSHINT
+        GREATER
+        THROWANYIFNOT
+        61686 PUSHINT
+        __tact_context_get_sender INLINECALLDICT
+        s3 PUSH
+        SDEQ
+        THROWANYIFNOT
+        2DUP
+        $TakeDAOVote$_constructor_adminAddress_optionAddress INLINECALLDICT
+        NEWC
+        $TakeDAOVote$_store_cell INLINECALLDICT
+        120000000 PUSHINT
+        42 PUSHINT
+        PUSHNULL
+        100000000 PUSHINT
+            NEWC
+        1 PUSHINT
+        SWAP
+        1 STU
+        s1 s5 XCHG
+            STREF
+        $Builder$_fun_asSlice INLINECALLDICT
+        s7 PUSH
+        s3 s5 XCHG
+        s4 s10 XCHG
+        s3 s8 XCPU
+        s3 s1 s3 XCHG3
+        $JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload INLINECALLDICT
+        NEWC
+        $JettonTransfer$_store_cell INLINECALLDICT
+        s4 s5 s5 PUXC2
+        $SendParameters$_constructor_to_value_body INLINECALLDICT
+            NEWC
+            b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+            1 STI               // store `bounce`
+            b{000} STSLICECONST // store bounced = false and src = addr_none
+            STSLICE             // store `to`
+            SWAP
+            STGRAMS             // store `value`
+            105 PUSHINT         // 1 + 4 + 4 + 64 + 32
+            STZEROES            // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+            // → Stack state
+            // s0: Builder
+            // s1: `data`
+            // s2: `code`
+            // s3: `body`
+            // s4: `mode`
+            // Group 2: Placing the Builder after code and data, then checking those for nullability
+            s2 XCHG0
+            DUP2
+            ISNULL
+            SWAP
+            ISNULL
+            AND
+            // → Stack state
+            // s0: -1 (true) if `data` and `code` are both null, 0 (false) otherwise
+            // s1: `code`
+            // s2: `data`
+            // s3: Builder
+            // s4: `body`
+            // s5: `mode`
+            // Group 3: Left branch of the IFELSE, executed if s0 is -1 (true)
+            <{
+                DROP2 // drop `data` and `code`, since either of those is null
+                b{0} STSLICECONST
+            }> PUSHCONT
+            // Group 3: Right branch of the IFELSE, executed if s0 is 0 (false)
+            <{
+                // _ split_depth:(Maybe (## 5))
+                //   special:(Maybe TickTock)
+                //   code:(Maybe ^Cell)
+                //   data:(Maybe ^Cell)
+                //   library:(Maybe ^Cell)
+                // = StateInit;
+                ROT                // place message Builder on top
+                b{10} STSLICECONST // store Maybe = true, Either = false
+                // Start composing inlined StateInit
+                b{00} STSLICECONST // store split_depth and special first
+                STDICT             // store code
+                STDICT             // store data
+                b{0} STSLICECONST  // store library
+            }> PUSHCONT
+            // Group 3: IFELSE that does the branching shown above
+            IFELSE
+            // → Stack state
+            // s0: Builder
+            // s1: null or StateInit
+            // s2: `body`
+            // s3: `mode`
+            // Group 4: Finalizing the message
+            STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+            ENDC
+            // → Stack state
+            // s0: Cell
+            // s1: `mode`
+            // Group 5: Sending the message, with `mode` on top
+            SWAP
+            SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
+        2SWAP
+        0 PUSHINT
+        $ContractJettonDAOv1$_contract_store INLINECALLDICT
+        RETALT
+      }>
+      5 1 BLKDROP2
+    }>ELSE<{
+      s4 s5 XCHG
+      5 BLKDROP
+    }>
+    HASHSU
+    23166468657157421731239308589695817901203710535567560793112587872225643991292 PUSHINT
+    EQUAL
+    IFJMP:<{
+    }>
+    130 THROW
+  }>
+  __tact_selector_hack PROC:<{
+    @atend @ 1 {
+            execute current@ context@ current!
+            {
+                // The core idea of this function is to save gas by avoiding unnecessary dict jump, when recv_internal/recv_external is called
+                // We want to extract recv_internal/recv_external from the dict and select needed function
+                // not by jumping to the needed function by it's index, but by using usual IF statements.
+                }END> b> // Close previous builder, now we have a cell of previous code on top of the stack
+                <{ // Start of the new code builder
+                    SETCP0
+                    // Swap the new code builder with the previous code, now we have previous code on top of the stack
+                    swap
+                    // Transform cell to slice and load first ref from the previous code, now we have the dict on top of the stack
+                    <s ref@
+                    // Extract the recv_internal from the dict
+                    dup 0 swap @procdictkeylen idict@ { "internal shortcut error" abort } ifnot
+                    swap
+                    // Delete the recv_internal from the dict
+                    0 swap @procdictkeylen idict- drop
+                    // Delete the recv_external from the dict (it's okay if it's not there)
+                    -1 swap @procdictkeylen idict- drop
+                    // Delete the __tact_selector_hack from the dict
+                    65535 swap @procdictkeylen idict- drop
+                    // Bring the code builder from the bottom of the stack
+                    // because if recv_external extraction is optional, and the number of elements on the stack is not fixed
+                    depth 1- roll
+                    // Swap with the dict from which we extracted recv_internal and (maybe) recv_external
+                    swap
+                    // Check if the dict is empty
+                    dup null?
+                    // Store a copy of this flag in the bottom of the stack
+                    dup depth 1- -roll
+                    {
+                        // If the dict is empty, just drop it (it will be null if it's empty)
+                        drop
+                    }
+                    {
+                        // If the dict is not empty, prepare continuation to be stored in c3
+                        <{
+                            // Save this dict as first ref in this continuation, it will be pushed in runtime by DICTPUSHCONST
+                            swap @procdictkeylen DICTPUSHCONST
+                            // Jump to the needed function by it's index
+                            DICTIGETJMPZ
+                            // If such key is not found, throw 11 along with the key as an argument
+                            11 THROWARG
+                        }> PUSHCONT
+                        // Store the continuation in c3
+                        c3 POP
+                    } cond
+                    // Function id is on top of the (runtime) stack
+                    DUP IFNOTJMP:<{
+                        // place recv_internal here
+                        DROP swap @addop
+                    }>
+                    // Bring back the flag, indicating if the dict is empty or not from the bottom of the stack
+                    depth 1- roll
+                    {
+                        // If the dict is empty, throw 11
+                        11 THROWARG
+                    }
+                    {
+                        // If the dict is not empty, jump to continuation from c3
+                        c3 PUSH JMPX
+                    } cond
+                }> b>
+            } : }END>c
+            current@ context! current!
+        } does @atend !
+  }>
+}END>c

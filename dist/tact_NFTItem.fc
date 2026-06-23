@@ -1,0 +1,448 @@
+#pragma version =0.4.6;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; tact_NFTItem.headers.fc
+;;
+;; Header files for NFTItem
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
+
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) impure inline;
+
+;; __tact_context_get
+(int, slice, int, slice) __tact_context_get() inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; $NFTItemInit$_load
+(slice, ((slice, cell))) $NFTItemInit$_load(slice sc_0) inline;
+
+;; $NFTItemInit$_load_not_mut
+((slice, cell)) $NFTItemInit$_load_not_mut(slice sc_0) inline;
+
+;; $NFTItem$_store
+builder $NFTItem$_store(builder build_0, (slice, cell, slice, slice, int) v) inline;
+
+;; $NFTItem$_load
+(slice, ((slice, cell, slice, slice, int))) $NFTItem$_load(slice sc_0) inline;
+
+;; $NFTData$_to_external
+(int, int, slice, slice, cell) $NFTData$_to_external(((int, int, slice, slice, cell)) v) inline;
+
+;; $NFTItem$_contract_load
+(slice, cell, slice, slice, int) $NFTItem$_contract_load() impure inline;
+
+;; $NFTItem$_contract_store
+() $NFTItem$_contract_store((slice, cell, slice, slice, int) v) impure inline;
+
+;; $MessageParameters$_constructor_bounce_to_value_body_mode
+((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_body_mode(int $bounce, slice $to, int $value, cell $body, int $mode) inline;
+
+;; $global_sendMsg
+() $global_sendMsg(slice $toAddress, int $amount, int $op, int $queryId, builder $payload, int $sendMode) impure inline;
+
+;; $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content
+((int, int, slice, slice, cell)) $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content(int $init, int $itemIndex, slice $collectionAddress, slice $owner, cell $content) inline;
+
+;; $NFTItem$_fun_get_nft_data
+((slice, cell, slice, slice, int), (int, int, slice, slice, cell)) $NFTItem$_fun_get_nft_data((slice, cell, slice, slice, int) $self) impure inline_ref;
+
+
+;; tact_NFTItem.stdlib.fc
+global (int, slice, int, slice) __tact_context;
+global slice __tact_context_sender;
+global cell __tact_child_contract_codes;
+global int __tact_randomized;
+
+(slice, slice) __tact_load_address_opt(slice cs) asm """
+
+            b{00} SDBEGINSQ
+            IF:<{
+              PUSHNULL
+            }>ELSE<{
+              LDMSGADDR
+              SWAP
+            }>
+
+""";
+
+builder __tact_store_addr_none(builder b) asm "b{00} STSLICECONST";
+
+builder __tact_store_address_opt(builder b, slice address) inline {
+    if (null?(address)) {
+        return __tact_store_addr_none(b);
+    } else {
+        return b.store_slice(address);
+    }
+}
+
+forall X -> X __tact_not_null(X x) impure inline {
+    throw_if(128, null?(x)); return x;
+}
+
+(int, slice, int, slice) __tact_context_get() inline {
+    return __tact_context;
+}
+
+slice __tact_context_get_sender() inline {
+    return __tact_context_sender;
+}
+
+builder $global_beginCell() impure asm """
+    NEWC
+""";
+
+int $global_myBalance() impure asm """
+    BALANCE FIRST
+""";
+
+() $global_message((int, cell, int, slice, int) $params) impure asm """
+    NEWC
+    b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+    1 STI               // store `bounce`
+    b{000} STSLICECONST // store bounced = false and src = addr_none
+    STSLICE             // store `to`
+    SWAP
+    STGRAMS             // store `value`
+    106 PUSHINT         // 1 + 4 + 4 + 64 + 32 + 1
+    STZEROES
+    // → Stack state
+    // s0: Builder
+    // s1: `body`
+    // s2: `mode`
+    STDICT
+    ENDC
+    SWAP
+    SENDRAWMSG
+""";
+
+() $global_forceBasechain(slice $address) impure asm """
+    REWRITESTDADDR DROP 138 THROWIF
+""";
+
+cell $Builder$_fun_endCell(builder $self) impure asm """
+    ENDC
+""";
+
+builder $Builder$_fun_storeBuilder(builder $self, builder $other) impure asm """
+    STBR
+""";
+
+builder $Builder$_fun_storeSlice(builder $self, slice $slice) impure asm """
+    STSLICER
+""";
+
+builder $Builder$_fun_storeAddress(builder $self, slice $address) impure asm """
+    STSLICER
+""";
+
+int $Slice$_fun_bits(slice $self) impure asm """
+    SBITS
+""";
+
+int $Context$_fun_readForwardFee((int, slice, int, slice) $self) impure asm """
+    LDMSGADDR   // load dest:MsgAddressInt
+    LDGRAMS     // load value:CurrencyCollection
+    ONE
+    SDSKIPFIRST // skip extra currency collection
+    LDGRAMS     // load ihr_fee
+    LDGRAMS     // load fwd_fee, we'll be using this!
+    DROP        // drop remaining Slice (with created_lt and created_at)
+
+    // There are 7 entries on the stack — first 3 fields of Context plus 4 loaded ones.
+    // The topmost is fwd_fee, which is the only one we're after, so let's drop 6 entries below:
+    6 1 BLKDROP2 // drop the loaded values as well as the first 3 fields of Context
+
+    ZERO              // not masterchain
+    GETORIGINALFWDFEE // floor(fwd_fee * 2^16 / (2^16 - first_frac)), where
+                      // first_frac is a value listed in config param 25
+                      // of the blockchain: https://tonviewer.com/config#25
+                      // this instruction effectively multiplies the fwd_fee by 1.5,
+                      // at least for the current value of first_frac, which is 21845
+""";
+
+;; tact_NFTItem.storage.fc
+;;
+;; Type: MessageParameters
+;; TLB: _ mode:int257 body:Maybe ^cell value:int257 to:address bounce:bool = MessageParameters
+;;
+
+((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_body_mode(int $bounce, slice $to, int $value, cell $body, int $mode) inline {
+    return ($mode, $body, $value, $to, $bounce);
+}
+
+;;
+;; Type: NFTData
+;; TLB: _ init:int257 itemIndex:uint64 collectionAddress:address owner:address content:Maybe ^cell = NFTData
+;;
+
+(int, int, slice, slice, cell) $NFTData$_to_external(((int, int, slice, slice, cell)) v) inline {
+    var (v'init, v'itemIndex, v'collectionAddress, v'owner, v'content) = v; 
+    return (v'init, v'itemIndex, v'collectionAddress, v'owner, v'content);
+}
+
+((int, int, slice, slice, cell)) $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content(int $init, int $itemIndex, slice $collectionAddress, slice $owner, cell $content) inline {
+    return ($init, $itemIndex, $collectionAddress, $owner, $content);
+}
+
+;;
+;; Type: NFTItemInit
+;; TLB: _ owner:address content:^cell = NFTItemInit
+;;
+
+(slice, ((slice, cell))) $NFTItemInit$_load(slice sc_0) inline {
+    var v'owner = sc_0~load_msg_addr();
+    var v'content = sc_0~load_ref();
+    return (sc_0, (v'owner, v'content));
+}
+
+((slice, cell)) $NFTItemInit$_load_not_mut(slice sc_0) inline {
+    var r = sc_0~$NFTItemInit$_load();
+    sc_0.end_parse();
+    return r;
+}
+
+;;
+;; Type: NFTItem
+;; TLB: _ owner:address content:Maybe ^cell editor:address collectionAddress:address itemIndex:uint64 = NFTItem
+;;
+
+builder $NFTItem$_store(builder build_0, (slice, cell, slice, slice, int) v) inline {
+    var (v'owner, v'content, v'editor, v'collectionAddress, v'itemIndex) = v;
+    build_0 = __tact_store_address_opt(build_0, v'owner);
+    build_0 = build_0.store_maybe_ref(v'content);
+    build_0 = build_0.store_slice(v'editor);
+    build_0 = build_0.store_slice(v'collectionAddress);
+    build_0 = build_0.store_uint(v'itemIndex, 64);
+    return build_0;
+}
+
+(slice, ((slice, cell, slice, slice, int))) $NFTItem$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address_opt();
+    var v'content = sc_0~load_maybe_ref();
+    var v'editor = sc_0~load_msg_addr();
+    var v'collectionAddress = sc_0~load_msg_addr();
+    var v'itemIndex = sc_0~load_uint(64);
+    return (sc_0, (v'owner, v'content, v'editor, v'collectionAddress, v'itemIndex));
+}
+
+(slice, cell, slice, slice, int) $NFTItem$_contract_load() impure inline {
+    slice $sc = get_data().begin_parse();
+    return $sc~$NFTItem$_load();
+}
+
+() $NFTItem$_contract_store((slice, cell, slice, slice, int) v) impure inline {
+    builder b = begin_cell();
+    b = $NFTItem$_store(b, v);
+    set_data(b.end_cell());
+}
+
+;;
+;; Contract NFTItem functions
+;;
+
+() $global_sendMsg(slice $toAddress, int $amount, int $op, int $queryId, builder $payload, int $sendMode) impure inline {
+    $global_message($MessageParameters$_constructor_bounce_to_value_body_mode(false, $toAddress, $amount, $Builder$_fun_endCell($Builder$_fun_storeBuilder(store_uint(store_uint($global_beginCell(), $op, 32), $queryId, 64), $payload)), $sendMode));
+}
+
+((slice, cell, slice, slice, int), (int, int, slice, slice, cell)) $NFTItem$_fun_get_nft_data((slice, cell, slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex)) = $self;
+    var $fresh$ret_7103 = $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content(((~ null?($self'owner)) ? -1 : 0), $self'itemIndex, $self'collectionAddress, $self'owner, $self'content);
+    return (($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex), $fresh$ret_7103);
+}
+
+;;
+;; Get methods of a Contract NFTItem
+;;
+
+_ %get_nft_data() method_id(102351) {
+    var self = $NFTItem$_contract_load();
+    var res = self~$NFTItem$_fun_get_nft_data();
+    return $NFTData$_to_external(res);
+}
+
+;;
+;; Routing of a Contract NFTItem
+;;
+
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    cs~skip_bits(2);
+    var msg_bounceable = cs~load_int(1);
+    var msg_bounced = cs~load_int(1);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounceable, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var ($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex) = $NFTItem$_contract_load();
+    
+    ;; Handle bounced messages
+    if (msg_bounced) { return (); }
+    int op = 0;
+    int in_msg_length = slice_bits(in_msg);
+    if (in_msg_length >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    ;; Receive GetStaticData message
+    if (op == 0x2fcb26a2) {
+        in_msg~skip_bits(32);
+        var $msg'queryId = in_msg~load_uint(64);
+        throw_unless(9, (~ null?($self'owner)));
+        $global_sendMsg(__tact_context_get_sender(), 0, 2339837749, $msg'queryId, $Builder$_fun_storeAddress(store_uint($global_beginCell(), $self'itemIndex, 256), $self'collectionAddress), 64);
+        
+        return ();
+    }
+    
+    ;; Receive EditContent message
+    if (op == 0x1a0b9d51) {
+        in_msg~skip_bits(32);
+        var $msg'queryId = in_msg~load_uint(64);
+        var $msg'content = in_msg~load_ref();
+        throw_unless(61686, ( equal_slices_bits(__tact_context_get_sender(), $self'editor) ));
+        $self'content = $msg'content;
+        $NFTItem$_contract_store(($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex));
+        return ();
+    }
+    
+    ;; Receive Transfer message
+    if (op == 0x5fcc3d14) {
+        in_msg~skip_bits(32);
+        var $msg'queryId = in_msg~load_uint(64);
+        var $msg'newOwner = in_msg~load_msg_addr();
+        var $msg'responseDestination = in_msg~__tact_load_address_opt();
+        var $msg'customPayload = in_msg~load_maybe_ref();
+        var $msg'forwardAmount = in_msg~load_varuint16();
+        var $msg'forwardPayload = in_msg;
+        throw_unless(9, (~ null?($self'owner)));
+        throw_unless(401, ( equal_slices_bits(__tact_context_get_sender(), $self'editor) ));
+        throw_unless(708, ($Slice$_fun_bits($msg'forwardPayload) >= 1));
+        $global_forceBasechain($msg'newOwner);
+        int $fwdFees = $Context$_fun_readForwardFee(__tact_context_get());
+        int $restAmount = ($global_myBalance() - 50000000);
+        if (($msg'forwardAmount > 0)) {
+            $restAmount = $restAmount - ($msg'forwardAmount + $fwdFees);
+        }
+        int $needResponse = (~ null?($msg'responseDestination));
+        if ($needResponse) {
+            $restAmount = $restAmount - $fwdFees;
+        }
+        throw_unless(402, ($restAmount >= 0));
+        if (($msg'forwardAmount > 0)) {
+            $global_sendMsg($msg'newOwner, $msg'forwardAmount, 85167505, $msg'queryId, $Builder$_fun_storeSlice($Builder$_fun_storeAddress($global_beginCell(), __tact_not_null($self'owner)), $msg'forwardPayload), 1);
+        }
+        if ($needResponse) {
+            $global_forceBasechain(__tact_not_null($msg'responseDestination));
+            $global_sendMsg(__tact_not_null($msg'responseDestination), $restAmount, 3576854235, $msg'queryId, $global_beginCell(), 1);
+        }
+        $self'owner = $msg'newOwner;
+        $NFTItem$_contract_store(($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex));
+        return ();
+    }
+    
+    ;; Receive empty message
+    if ((op == 0) & (in_msg_length <= 32)) {
+        
+        return ();
+    }
+    ;; Receiver fallback
+    slice $msg = in_msg;
+    throw_unless(65535, null?($self'owner));
+    throw_unless(405, ( equal_slices_bits(__tact_context_get_sender(), $self'collectionAddress) ));
+    var ($nftItemInit'owner, $nftItemInit'content) = $NFTItemInit$_load_not_mut($msg);
+    $self'owner = $nftItemInit'owner;
+    $self'content = $nftItemInit'content;
+    $NFTItem$_contract_store(($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex));
+}
+
+
+() __tact_selector_hack_asm() impure asm """
+@atend @ 1 {
+        execute current@ context@ current!
+        {
+            // The core idea of this function is to save gas by avoiding unnecessary dict jump, when recv_internal/recv_external is called
+            // We want to extract recv_internal/recv_external from the dict and select needed function
+            // not by jumping to the needed function by it's index, but by using usual IF statements.
+
+            }END> b> // Close previous builder, now we have a cell of previous code on top of the stack
+
+            <{ // Start of the new code builder
+                SETCP0
+                // Swap the new code builder with the previous code, now we have previous code on top of the stack
+                swap
+                // Transform cell to slice and load first ref from the previous code, now we have the dict on top of the stack
+                <s ref@
+
+                // Extract the recv_internal from the dict
+                dup 0 swap @procdictkeylen idict@ { "internal shortcut error" abort } ifnot
+                swap
+
+                // Delete the recv_internal from the dict
+                0 swap @procdictkeylen idict- drop
+                // Delete the recv_external from the dict (it's okay if it's not there)
+                -1 swap @procdictkeylen idict- drop
+                // Delete the __tact_selector_hack from the dict
+                65535 swap @procdictkeylen idict- drop
+
+                // Bring the code builder from the bottom of the stack
+                // because if recv_external extraction is optional, and the number of elements on the stack is not fixed
+                depth 1- roll
+                // Swap with the dict from which we extracted recv_internal and (maybe) recv_external
+                swap
+
+                // Check if the dict is empty
+                dup null?
+                // Store a copy of this flag in the bottom of the stack
+                dup depth 1- -roll
+                {
+                    // If the dict is empty, just drop it (it will be null if it's empty)
+                    drop
+                }
+                {
+                    // If the dict is not empty, prepare continuation to be stored in c3
+                    <{
+                        // Save this dict as first ref in this continuation, it will be pushed in runtime by DICTPUSHCONST
+                        swap @procdictkeylen DICTPUSHCONST
+                        // Jump to the needed function by it's index
+                        DICTIGETJMPZ
+                        // If such key is not found, throw 11 along with the key as an argument
+                        11 THROWARG
+                    }> PUSHCONT
+                    // Store the continuation in c3
+                    c3 POP
+                } cond
+
+                // Function id is on top of the (runtime) stack
+                DUP IFNOTJMP:<{
+                    // place recv_internal here
+                    DROP swap @addop
+                }>
+
+                // Bring back the flag, indicating if the dict is empty or not from the bottom of the stack
+                depth 1- roll
+                {
+                    // If the dict is empty, throw 11
+                    11 THROWARG
+                }
+                {
+                    // If the dict is not empty, jump to continuation from c3
+                    c3 PUSH JMPX
+                } cond
+            }> b>
+        } : }END>c
+        current@ context! current!
+    } does @atend !
+""";
+
+() __tact_selector_hack() method_id(65535) {
+    return __tact_selector_hack_asm();
+}

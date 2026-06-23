@@ -1,0 +1,1155 @@
+#pragma version =0.4.6;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; tact_ContractDAOv2.headers.fc
+;;
+;; Header files for ContractDAOv2
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
+
+;; __tact_context_get
+(int, slice, int, slice) __tact_context_get() inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; __tact_dict_get_slice_cell
+cell __tact_dict_get_slice_cell(cell d, int kl, slice k) inline;
+
+;; __tact_dict_set_slice_cell
+(cell, ()) __tact_dict_set_slice_cell(cell d, int kl, slice k, cell v) inline;
+
+;; $VoteSettings$_store
+builder $VoteSettings$_store(builder build_0, (int, int, int) v) inline;
+
+;; $VoteSettings$_load
+(slice, ((int, int, int))) $VoteSettings$_load(slice sc_0) inline;
+
+;; $VaultInitialization$_store
+builder $VaultInitialization$_store(builder build_0, (int, slice) v) inline;
+
+;; $VaultInitialization$_store_cell
+cell $VaultInitialization$_store_cell((int, slice) v, builder b) inline;
+
+;; $VirtualInitialization$_store
+builder $VirtualInitialization$_store(builder build_0, (int, slice) v) inline;
+
+;; $VirtualInitialization$_store_cell
+cell $VirtualInitialization$_store_cell((int, slice) v, builder b) inline;
+
+;; $JettonBurn$_store
+builder $JettonBurn$_store(builder build_0, (int, int, slice, cell) v) inline;
+
+;; $JettonBurn$_store_cell
+cell $JettonBurn$_store_cell((int, int, slice, cell) v, builder b) inline;
+
+;; $JettonTransferInternal$_store
+builder $JettonTransferInternal$_store(builder build_0, (int, int, slice, slice, int, slice) v) inline;
+
+;; $Mint$_store
+builder $Mint$_store(builder build_0, (int, slice, (int, int, slice, slice, int, slice)) v) inline;
+
+;; $Mint$_store_cell
+cell $Mint$_store_cell((int, slice, (int, int, slice, slice, int, slice)) v, builder b) inline;
+
+;; $CallTo$_store
+builder $CallTo$_store(builder build_0, (int, slice, int, cell) v) inline;
+
+;; $CallTo$_store_cell
+cell $CallTo$_store_cell((int, slice, int, cell) v, builder b) inline;
+
+;; $OptionInfo$_store
+builder $OptionInfo$_store(builder build_0, (slice, slice) v) inline;
+
+;; $OptionInfoRoot$_store
+builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice) v) inline;
+
+;; $OptionInfoRoot$_store_cell
+cell $OptionInfoRoot$_store_cell((slice, slice, slice) v, builder b) inline;
+
+;; $OptionInfoRoot$_load
+(slice, ((slice, slice, slice))) $OptionInfoRoot$_load(slice sc_0) inline;
+
+;; $OptionInfoRoot$_as_optional
+tuple $OptionInfoRoot$_as_optional((slice, slice, slice) v) inline;
+
+;; $OptionInfoRoot$_load_opt
+tuple $OptionInfoRoot$_load_opt(cell cl) inline;
+
+;; $ContractDAOv2$_store
+builder $ContractDAOv2$_store(builder build_0, (slice, slice, slice, int, cell, (int, int, int), cell) v) inline;
+
+;; $ContractDAOv2$_load
+(slice, ((slice, slice, slice, int, cell, (int, int, int), cell))) $ContractDAOv2$_load(slice sc_0) inline;
+
+;; $OptionInfoRoot$_not_null
+((slice, slice, slice)) $OptionInfoRoot$_not_null(tuple v) inline;
+
+;; $VoteSettings$_to_external
+(int, int, int) $VoteSettings$_to_external(((int, int, int)) v) inline;
+
+;; $ContractCitizenDAOv1$init$_store
+builder $ContractCitizenDAOv1$init$_store(builder build_0, (slice, slice, int) v) inline;
+
+;; $GovernanceJettonMinter$init$_store
+builder $GovernanceJettonMinter$init$_store(builder build_0, (int, slice, slice, cell) v) inline;
+
+;; $ContractVaultDAOv1$init$_store
+builder $ContractVaultDAOv1$init$_store(builder build_0, (slice, int, (slice, slice)) v) inline;
+
+;; $ContractVirtualDAOv2$init$_store
+builder $ContractVirtualDAOv2$init$_store(builder build_0, (slice, slice, slice, int) v) inline;
+
+;; $ContractDAOv2$_contract_load
+(slice, slice, slice, int, cell, (int, int, int), cell) $ContractDAOv2$_contract_load() impure inline;
+
+;; $ContractDAOv2$_contract_store
+() $ContractDAOv2$_contract_store((slice, slice, slice, int, cell, (int, int, int), cell) v) impure inline;
+
+;; $Cell$_fun_asSlice
+slice $Cell$_fun_asSlice(cell $self) impure inline;
+
+;; $global_newAddress
+slice $global_newAddress(int $chain, int $hash) impure inline;
+
+;; $global_contractAddressExt
+slice $global_contractAddressExt(int $chain, cell $code, cell $data) impure inline;
+
+;; $global_contractAddress
+slice $global_contractAddress((cell, cell) $s) impure inline;
+
+;; $Builder$_fun_asSlice
+slice $Builder$_fun_asSlice(builder $self) impure inline;
+
+;; $ContractDAOv2$_fun_get_options
+((slice, slice, slice, int, cell, (int, int, int), cell), cell) $ContractDAOv2$_fun_get_options((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+
+;; $ContractDAOv2$_fun_get_settings
+((slice, slice, slice, int, cell, (int, int, int), cell), (int, int, int)) $ContractDAOv2$_fun_get_settings((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+
+;; $ContractDAOv2$_fun_get_status
+((slice, slice, slice, int, cell, (int, int, int), cell), int) $ContractDAOv2$_fun_get_status((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+
+;; $ContractCitizenDAOv1$_init_child
+(cell, cell) $ContractCitizenDAOv1$_init_child(slice $owner, slice $admin, int $status) inline_ref;
+
+;; $GovernanceJettonMinter$_init_child
+(cell, cell) $GovernanceJettonMinter$_init_child(int $totalSupply, slice $adminAddress, slice $nextAdminAddress, cell $jettonContent) inline_ref;
+
+;; $ContractVaultDAOv1$_init_child
+(cell, cell) $ContractVaultDAOv1$_init_child(slice $owner, int $status, (slice, slice) $data) inline_ref;
+
+;; $ContractVirtualDAOv2$_init_child
+(cell, cell) $ContractVirtualDAOv2$_init_child(slice $owner, slice $admin, slice $option, int $status) inline_ref;
+
+;; $DeployParameters$_constructor_init_value_body
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_init_value_body((cell, cell) $init, int $value, cell $body) inline;
+
+;; $VirtualInitialization$_constructor_queryId_optionAddress
+((int, slice)) $VirtualInitialization$_constructor_queryId_optionAddress(int $queryId, slice $optionAddress) inline;
+
+;; $SendParameters$_constructor_to_value_body
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_body(slice $to, int $value, cell $body) inline;
+
+;; $Mint$_constructor_queryId_toAddress_masterMsg
+((int, slice, (int, int, slice, slice, int, slice))) $Mint$_constructor_queryId_toAddress_masterMsg(int $queryId, slice $toAddress, (int, int, slice, slice, int, slice) $masterMsg) inline;
+
+;; $JettonTransferInternal$_constructor_queryId_amount_sender_forwardTonAmount_forwardPayload
+((int, int, slice, slice, int, slice)) $JettonTransferInternal$_constructor_queryId_amount_sender_forwardTonAmount_forwardPayload(int $queryId, int $amount, slice $sender, int $forwardTonAmount, slice $forwardPayload) inline;
+
+;; $CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg
+((int, slice, int, cell)) $CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg(int $queryId, slice $toAddress, int $tonAmount, cell $masterMsg) inline;
+
+;; $JettonBurn$_constructor_queryId_amount_responseDestination_customPayload
+((int, int, slice, cell)) $JettonBurn$_constructor_queryId_amount_responseDestination_customPayload(int $queryId, int $amount, slice $responseDestination, cell $customPayload) inline;
+
+;; $OptionInfo$_constructor_title_description
+((slice, slice)) $OptionInfo$_constructor_title_description(slice $title, slice $description) inline;
+
+;; $OptionInfoRoot$_constructor_address_title_description
+((slice, slice, slice)) $OptionInfoRoot$_constructor_address_title_description(slice $address, slice $title, slice $description) inline;
+
+;; $VaultInitialization$_constructor_queryId_admin
+((int, slice)) $VaultInitialization$_constructor_queryId_admin(int $queryId, slice $admin) inline;
+
+;; $DeployParameters$_constructor_init_value
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_init_value((cell, cell) $init, int $value) inline;
+
+;; $SendParameters$_constructor_to_value_mode_body
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_mode_body(slice $to, int $value, int $mode, cell $body) inline;
+
+
+;; tact_ContractDAOv2.stdlib.fc
+global (int, slice, int, slice) __tact_context;
+global slice __tact_context_sender;
+global cell __tact_child_contract_codes;
+global int __tact_randomized;
+
+builder __tact_store_addr_none(builder b) asm "b{00} STSLICECONST";
+
+builder __tact_store_address_opt(builder b, slice address) inline {
+    if (null?(address)) {
+        return __tact_store_addr_none(b);
+    } else {
+        return b.store_slice(address);
+    }
+}
+
+(cell, int) __tact_dict_delete(cell dict, int key_len, slice index) asm(index dict key_len) """
+    DICTDEL
+""";
+
+((cell), ()) __tact_dict_set_ref(cell dict, int key_len, slice index, cell value) asm(value index dict key_len) """
+    DICTSETREF
+""";
+
+(cell, int) __tact_dict_get_ref(cell dict, int key_len, slice index) asm(index dict key_len) """
+    DICTGETREF NULLSWAPIFNOT
+""";
+
+(int, slice, int, slice) __tact_context_get() inline {
+    return __tact_context;
+}
+
+slice __tact_context_get_sender() inline {
+    return __tact_context_sender;
+}
+
+forall X0, X1, X2 -> tuple __tact_tuple_create_3((X0, X1, X2) v) asm """
+    3 TUPLE
+""";
+
+forall X0, X1, X2 -> (X0, X1, X2) __tact_tuple_destroy_3(tuple v) asm """
+    3 UNTUPLE
+""";
+
+cell __tact_dict_get_slice_cell(cell d, int kl, slice k) inline {
+    var (r, ok) = __tact_dict_get_ref(d, kl, k);
+    if (ok) {
+        return r;
+    } else {
+        return null();
+    }
+}
+
+(cell, ()) __tact_dict_set_slice_cell(cell d, int kl, slice k, cell v) inline {
+    if (null?(v)) {
+        var (r, ok) = __tact_dict_delete(d, kl, k);
+        return (r, ());
+    } else {
+        return __tact_dict_set_ref(d, kl, k, v);
+    }
+}
+
+builder $global_beginCell() impure asm """
+    NEWC
+""";
+
+int $global_contractHash(cell $code, cell $data) impure asm """
+    s0 PUSH HASHCU // `data` hash
+    s2 PUSH HASHCU // `code` hash
+    SWAP2
+    CDEPTH         // `data` depth
+    SWAP
+    CDEPTH         // `code` depth
+    131380 INT     // (2 << 16) | (1 << 8) | 0x34
+
+    // Group 2: Composition of the Builder
+    NEWC
+    24 STU  // store refs_descriptor | bits_descriptor | data
+    16 STU  // store depth_descriptor for `code`
+    16 STU  // store depth_descriptor for `data`
+    256 STU // store `code` hash
+    256 STU // store `data` hash
+
+    // Group 3: SHA256 hash of the resulting Builder
+    ONE HASHEXT_SHA256
+""";
+
+slice $Slice$_fun_asAddressUnsafe(slice $self) impure asm "NOP";
+
+slice $Cell$_fun_beginParse(cell $self) impure asm """
+    CTOS
+""";
+
+slice $Cell$_fun_asSlice(cell $self) impure inline {
+    var ($self) = $self;
+    return $Cell$_fun_beginParse($self);
+}
+
+cell $Builder$_fun_endCell(builder $self) impure asm """
+    ENDC
+""";
+
+slice $global_newAddress(int $chain, int $hash) impure inline {
+    return $Slice$_fun_asAddressUnsafe($Cell$_fun_asSlice($Builder$_fun_endCell(store_uint(store_int(store_uint($global_beginCell(), 4, 3), $chain, 8), $hash, 256))));
+}
+
+slice $global_contractAddressExt(int $chain, cell $code, cell $data) impure inline {
+    int $hash = $global_contractHash($code, $data);
+    return $global_newAddress($chain, $hash);
+}
+
+slice $global_contractAddress((cell, cell) $s) impure inline {
+    var (($s'code, $s'data)) = $s;
+    return $global_contractAddressExt(0, $s'code, $s'data);
+}
+
+slice $global_myAddress() impure asm """
+    MYADDR
+""";
+
+() $global_send((int, cell, cell, cell, int, slice, int) $params) impure asm """
+    NEWC
+    b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+    1 STI               // store `bounce`
+    b{000} STSLICECONST // store bounced = false and src = addr_none
+    STSLICE             // store `to`
+    SWAP
+    STGRAMS             // store `value`
+    105 PUSHINT         // 1 + 4 + 4 + 64 + 32
+    STZEROES            // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+    // → Stack state
+    // s0: Builder
+    // s1: `data`
+    // s2: `code`
+    // s3: `body`
+    // s4: `mode`
+
+    // Group 2: Placing the Builder after code and data, then checking those for nullability
+    s2 XCHG0
+    DUP2
+    ISNULL
+    SWAP
+    ISNULL
+    AND
+    // → Stack state
+    // s0: -1 (true) if `data` and `code` are both null, 0 (false) otherwise
+    // s1: `code`
+    // s2: `data`
+    // s3: Builder
+    // s4: `body`
+    // s5: `mode`
+
+    // Group 3: Left branch of the IFELSE, executed if s0 is -1 (true)
+    <{
+        DROP2 // drop `data` and `code`, since either of those is null
+        b{0} STSLICECONST
+    }> PUSHCONT
+
+    // Group 3: Right branch of the IFELSE, executed if s0 is 0 (false)
+    <{
+        // _ split_depth:(Maybe (## 5))
+        //   special:(Maybe TickTock)
+        //   code:(Maybe ^Cell)
+        //   data:(Maybe ^Cell)
+        //   library:(Maybe ^Cell)
+        // = StateInit;
+        ROT                // place message Builder on top
+        b{10} STSLICECONST // store Maybe = true, Either = false
+        // Start composing inlined StateInit
+        b{00} STSLICECONST // store split_depth and special first
+        STDICT             // store code
+        STDICT             // store data
+        b{0} STSLICECONST  // store library
+    }> PUSHCONT
+
+    // Group 3: IFELSE that does the branching shown above
+    IFELSE
+    // → Stack state
+    // s0: Builder
+    // s1: null or StateInit
+    // s2: `body`
+    // s3: `mode`
+
+    // Group 4: Finalizing the message
+    STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+    ENDC
+    // → Stack state
+    // s0: Cell
+    // s1: `mode`
+
+    // Group 5: Sending the message, with `mode` on top
+    SWAP
+    SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
+""";
+
+() $global_deploy((int, cell, int, int, (cell, cell)) $params) impure asm """
+    4 1 BLKPUSH // pushes 2 copies of `init.code` and `init.data`
+    HASHCU // `init.data` hash
+    SWAP
+    HASHCU // `init.code` hash
+    SWAP2
+    CDEPTH // `init.data` depth
+    SWAP
+    CDEPTH // `init.code` depth
+
+    // Group 2: Calculating destination address
+    // For almost identical logic and instructions,
+    // see comments inside `contractHash()` function in contract.tact
+    131380 INT // (2 << 16) | (1 << 8) | 0x34
+    NEWC
+    24 STU
+    16 STU
+    16 STU
+    256 STU
+    256 STU
+    ONE HASHEXT_SHA256 // obtains hash part (account id) of the address
+    // → Stack state
+    // s0: destAddr(hash part)
+    // s1: `init.data`
+    // s2: `init.code`
+    // s3 and below: `bounce`, `value`, `body`, `mode`
+
+    // Group 3: Building a message (CommonMsgInfoRelaxed)
+    s3 XCHG0           // swaps `bounce` with destAddr(hash part)
+    NEWC
+    b{01} STSLICECONST // store tag = $0 and ihr_disabled = true
+    1 STI              // store `bounce`
+    s1 s2 XCHG         // swap `init.data` with `init.code`, placing code on s1
+    STREF              // store `init.code`
+    STREF              // store `init.data`
+    // Inline StateInit:
+    b{00010000000000} STSLICECONST
+    // 0 + 00 + 10 + 0 + 00000000
+    // 1) 0 - bounced = false
+    // 2) 00 - src = addr_none
+    // 3) 10 - tag of addr_std (part of dest)
+    // 4) 0 - Maybe Anycast = false
+    // 5) 00000000 - workchain_id (part of dest)
+    //
+    256 STU     // store destAddr(hash part)
+    SWAP        // Builder on top, `value` below
+    STGRAMS     // store `value`
+    105 PUSHINT // 1 + 4 + 4 + 64 + 32
+    STZEROES    // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+
+    // Group 4: Continue building a message (CommonMsgInfoRelaxed into MessageRelaxed)
+    // Remaining bits of MessageRelaxed:
+    b{1000110} STSLICECONST
+    // 10 + 0 + 0 + 1 + 1 + 0
+    // 10 - Maybe (Either StateInit ^StateInit) = true false
+    // 0 - split_depth:(Maybe (## 5)) = false
+    // 0 = special:(Maybe TickTock) = false
+    // 1 = code:(Maybe ^Cell) = true
+    // 1 = data:(Maybe ^Cell) = true
+    // 0 = library:(Maybe ^Cell) = false
+    //
+    STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+    ENDC   // finalize the message
+    // → Stack state
+    // s0: Cell
+    // s1: params.`mode`
+
+    // Group 5: Sending the message, with `mode` on top
+    SWAP
+    SENDRAWMSG
+""";
+
+int $global_now() impure asm """
+    NOW
+""";
+
+slice $Builder$_fun_asSlice(builder $self) impure inline {
+    var ($self) = $self;
+    return $Cell$_fun_beginParse($Builder$_fun_endCell($self));
+}
+
+(slice, slice) $Slice$_fun_loadAddress(slice $self) impure asm( -> 1 0) """
+    LDMSGADDR
+""";
+
+;; tact_ContractDAOv2.constants.fc
+;; Cell 4PfO9eI71fVPauQF+6Sp6STf4UeNsUqfNA2JzUe57+0=
+cell __gen_cell_cell_e0f7cef5e23bd5f54f6ae405fba4a9e924dfe1478db14a9f340d89cd47b9efed() asm """
+    B{b5ee9c7241010101000700000a000000002d39133512} B>boc PUSHREF
+""";
+
+;; Cell 6gGlk9Cm6jWdiiwvOLPhTwkOl+wueAh52ffe0rXFodM=
+cell __gen_cell_cell_ea01a593d0a6ea359d8a2c2f38b3e14f090e97ec2e780879d9f7ded2b5c5a1d3() asm """
+    B{b5ee9c7241010101000d00001600000000636173686f7574c596ac28} B>boc PUSHREF
+""";
+
+;; tact_ContractDAOv2.storage.fc
+;;
+;; Type: SendParameters
+;; TLB: _ mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell value:int257 to:address bounce:bool = SendParameters
+;;
+
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_body(slice $to, int $value, cell $body) inline {
+    return (0, $body, null(), null(), $value, $to, true);
+}
+
+((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_mode_body(slice $to, int $value, int $mode, cell $body) inline {
+    return ($mode, $body, null(), null(), $value, $to, true);
+}
+
+;;
+;; Type: DeployParameters
+;; TLB: _ mode:int257 body:Maybe ^cell value:int257 bounce:bool init:StateInit{code:^cell,data:^cell} = DeployParameters
+;;
+
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_init_value_body((cell, cell) $init, int $value, cell $body) inline {
+    return (0, $body, $value, true, $init);
+}
+
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_init_value((cell, cell) $init, int $value) inline {
+    return (0, null(), $value, true, $init);
+}
+
+;;
+;; Type: VoteSettings
+;; TLB: _ endTime:uint64 min_amount:coins fee:coins = VoteSettings
+;;
+
+builder $VoteSettings$_store(builder build_0, (int, int, int) v) inline {
+    var (v'endTime, v'min_amount, v'fee) = v;
+    build_0 = build_0.store_uint(v'endTime, 64);
+    build_0 = build_0.store_varuint16(v'min_amount);
+    build_0 = build_0.store_varuint16(v'fee);
+    return build_0;
+}
+
+(slice, ((int, int, int))) $VoteSettings$_load(slice sc_0) inline {
+    var v'endTime = sc_0~load_uint(64);
+    var v'min_amount = sc_0~load_varuint16();
+    var v'fee = sc_0~load_varuint16();
+    return (sc_0, (v'endTime, v'min_amount, v'fee));
+}
+
+(int, int, int) $VoteSettings$_to_external(((int, int, int)) v) inline {
+    var (v'endTime, v'min_amount, v'fee) = v; 
+    return (v'endTime, v'min_amount, v'fee);
+}
+
+;;
+;; Type: VaultInitialization
+;; Header: 0xdb89bc8a
+;; TLB: vault_initialization#db89bc8a queryId:uint64 admin:address = VaultInitialization
+;;
+
+builder $VaultInitialization$_store(builder build_0, (int, slice) v) inline {
+    var (v'queryId, v'admin) = v;
+    build_0 = store_uint(build_0, 3683237002, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_slice(v'admin);
+    return build_0;
+}
+
+cell $VaultInitialization$_store_cell((int, slice) v, builder b) inline {
+    return $VaultInitialization$_store(b, v).end_cell();
+}
+
+((int, slice)) $VaultInitialization$_constructor_queryId_admin(int $queryId, slice $admin) inline {
+    return ($queryId, $admin);
+}
+
+;;
+;; Type: VirtualInitialization
+;; Header: 0x0d7bbd5c
+;; TLB: virtual_initialization#0d7bbd5c queryId:uint64 optionAddress:address = VirtualInitialization
+;;
+
+builder $VirtualInitialization$_store(builder build_0, (int, slice) v) inline {
+    var (v'queryId, v'optionAddress) = v;
+    build_0 = store_uint(build_0, 226213212, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_slice(v'optionAddress);
+    return build_0;
+}
+
+cell $VirtualInitialization$_store_cell((int, slice) v, builder b) inline {
+    return $VirtualInitialization$_store(b, v).end_cell();
+}
+
+((int, slice)) $VirtualInitialization$_constructor_queryId_optionAddress(int $queryId, slice $optionAddress) inline {
+    return ($queryId, $optionAddress);
+}
+
+;;
+;; Type: JettonBurn
+;; Header: 0x595f07bc
+;; TLB: jetton_burn#595f07bc queryId:uint64 amount:coins responseDestination:address customPayload:Maybe ^cell = JettonBurn
+;;
+
+builder $JettonBurn$_store(builder build_0, (int, int, slice, cell) v) inline {
+    var (v'queryId, v'amount, v'responseDestination, v'customPayload) = v;
+    build_0 = store_uint(build_0, 1499400124, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_varuint16(v'amount);
+    build_0 = __tact_store_address_opt(build_0, v'responseDestination);
+    build_0 = build_0.store_maybe_ref(v'customPayload);
+    return build_0;
+}
+
+cell $JettonBurn$_store_cell((int, int, slice, cell) v, builder b) inline {
+    return $JettonBurn$_store(b, v).end_cell();
+}
+
+((int, int, slice, cell)) $JettonBurn$_constructor_queryId_amount_responseDestination_customPayload(int $queryId, int $amount, slice $responseDestination, cell $customPayload) inline {
+    return ($queryId, $amount, $responseDestination, $customPayload);
+}
+
+;;
+;; Type: JettonTransferInternal
+;; Header: 0x178d4519
+;; TLB: jetton_transfer_internal#178d4519 queryId:uint64 amount:coins sender:address responseDestination:address forwardTonAmount:coins forwardPayload:remainder<slice> = JettonTransferInternal
+;;
+
+builder $JettonTransferInternal$_store(builder build_0, (int, int, slice, slice, int, slice) v) inline {
+    var (v'queryId, v'amount, v'sender, v'responseDestination, v'forwardTonAmount, v'forwardPayload) = v;
+    build_0 = store_uint(build_0, 395134233, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_varuint16(v'amount);
+    build_0 = build_0.store_slice(v'sender);
+    build_0 = __tact_store_address_opt(build_0, v'responseDestination);
+    build_0 = build_0.store_varuint16(v'forwardTonAmount);
+    build_0 = build_0.store_slice(v'forwardPayload);
+    return build_0;
+}
+
+((int, int, slice, slice, int, slice)) $JettonTransferInternal$_constructor_queryId_amount_sender_forwardTonAmount_forwardPayload(int $queryId, int $amount, slice $sender, int $forwardTonAmount, slice $forwardPayload) inline {
+    return ($queryId, $amount, $sender, null(), $forwardTonAmount, $forwardPayload);
+}
+
+;;
+;; Type: Mint
+;; Header: 0x642b7d07
+;; TLB: mint#642b7d07 queryId:uint64 toAddress:address masterMsg:JettonTransferInternal{queryId:uint64,amount:coins,sender:address,responseDestination:address,forwardTonAmount:coins,forwardPayload:remainder<slice>} = Mint
+;;
+
+builder $Mint$_store(builder build_0, (int, slice, (int, int, slice, slice, int, slice)) v) inline {
+    var (v'queryId, v'toAddress, (v'masterMsg'queryId, v'masterMsg'amount, v'masterMsg'sender, v'masterMsg'responseDestination, v'masterMsg'forwardTonAmount, v'masterMsg'forwardPayload)) = v;
+    build_0 = store_uint(build_0, 1680571655, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_slice(v'toAddress);
+    var build_1 = begin_cell();
+    build_1 = $JettonTransferInternal$_store(build_1, (v'masterMsg'queryId, v'masterMsg'amount, v'masterMsg'sender, v'masterMsg'responseDestination, v'masterMsg'forwardTonAmount, v'masterMsg'forwardPayload));
+    build_0 = store_builder_ref(build_0, build_1);
+    return build_0;
+}
+
+cell $Mint$_store_cell((int, slice, (int, int, slice, slice, int, slice)) v, builder b) inline {
+    return $Mint$_store(b, v).end_cell();
+}
+
+((int, slice, (int, int, slice, slice, int, slice))) $Mint$_constructor_queryId_toAddress_masterMsg(int $queryId, slice $toAddress, (int, int, slice, slice, int, slice) $masterMsg) inline {
+    return ($queryId, $toAddress, $masterMsg);
+}
+
+;;
+;; Type: CallTo
+;; Header: 0x235caf52
+;; TLB: call_to#235caf52 queryId:uint64 toAddress:address tonAmount:coins masterMsg:^cell = CallTo
+;;
+
+builder $CallTo$_store(builder build_0, (int, slice, int, cell) v) inline {
+    var (v'queryId, v'toAddress, v'tonAmount, v'masterMsg) = v;
+    build_0 = store_uint(build_0, 593276754, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = build_0.store_slice(v'toAddress);
+    build_0 = build_0.store_varuint16(v'tonAmount);
+    build_0 = build_0.store_ref(v'masterMsg);
+    return build_0;
+}
+
+cell $CallTo$_store_cell((int, slice, int, cell) v, builder b) inline {
+    return $CallTo$_store(b, v).end_cell();
+}
+
+((int, slice, int, cell)) $CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg(int $queryId, slice $toAddress, int $tonAmount, cell $masterMsg) inline {
+    return ($queryId, $toAddress, $tonAmount, $masterMsg);
+}
+
+;;
+;; Type: OptionInfo
+;; TLB: _ title:^string description:^string = OptionInfo
+;;
+
+builder $OptionInfo$_store(builder build_0, (slice, slice) v) inline {
+    var (v'title, v'description) = v;
+    build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'title));
+    build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'description));
+    return build_0;
+}
+
+((slice, slice)) $OptionInfo$_constructor_title_description(slice $title, slice $description) inline {
+    return ($title, $description);
+}
+
+;;
+;; Type: OptionInfoRoot
+;; TLB: _ address:address title:^string description:^string = OptionInfoRoot
+;;
+
+builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice) v) inline {
+    var (v'address, v'title, v'description) = v;
+    build_0 = build_0.store_slice(v'address);
+    build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'title));
+    build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'description));
+    return build_0;
+}
+
+cell $OptionInfoRoot$_store_cell((slice, slice, slice) v, builder b) inline {
+    return $OptionInfoRoot$_store(b, v).end_cell();
+}
+
+(slice, ((slice, slice, slice))) $OptionInfoRoot$_load(slice sc_0) inline {
+    var v'address = sc_0~load_msg_addr();
+    var v'title = sc_0~load_ref().begin_parse();
+    var v'description = sc_0~load_ref().begin_parse();
+    return (sc_0, (v'address, v'title, v'description));
+}
+
+tuple $OptionInfoRoot$_as_optional((slice, slice, slice) v) inline {
+    var (v'address, v'title, v'description) = v;
+    return __tact_tuple_create_3(v'address, v'title, v'description);
+}
+
+tuple $OptionInfoRoot$_load_opt(cell cl) inline {
+    if (null?(cl)) {
+        return null();
+    }
+    var sc = cl.begin_parse();
+    return $OptionInfoRoot$_as_optional(sc~$OptionInfoRoot$_load());
+}
+
+((slice, slice, slice)) $OptionInfoRoot$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (slice vvv'address, slice vvv'title, slice vvv'description) = __tact_tuple_destroy_3(v);
+    return (vvv'address, vvv'title, vvv'description);
+}
+
+((slice, slice, slice)) $OptionInfoRoot$_constructor_address_title_description(slice $address, slice $title, slice $description) inline {
+    return ($address, $title, $description);
+}
+
+;;
+;; Type: ContractDAOv2
+;; TLB: _ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,fee:coins} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2
+;;
+
+builder $ContractDAOv2$_store(builder build_0, (slice, slice, slice, int, cell, (int, int, int), cell) v) inline {
+    var (v'owner, v'admin, v'master, v'status, v'metadata, (v'settings'endTime, v'settings'min_amount, v'settings'fee), v'options) = v;
+    build_0 = build_0.store_slice(v'owner);
+    build_0 = build_0.store_slice(v'admin);
+    build_0 = build_0.store_slice(v'master);
+    build_0 = build_0.store_uint(v'status, 4);
+    build_0 = build_0.store_ref(v'metadata);
+    var build_1 = begin_cell();
+    build_1 = $VoteSettings$_store(build_1, (v'settings'endTime, v'settings'min_amount, v'settings'fee));
+    build_1 = build_1.store_dict(v'options);
+    build_0 = store_builder_ref(build_0, build_1);
+    return build_0;
+}
+
+(slice, ((slice, slice, slice, int, cell, (int, int, int), cell))) $ContractDAOv2$_load(slice sc_0) inline {
+    var v'owner = sc_0~load_msg_addr();
+    var v'admin = sc_0~load_msg_addr();
+    var v'master = sc_0~load_msg_addr();
+    var v'status = sc_0~load_uint(4);
+    var v'metadata = sc_0~load_ref();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'settings = sc_1~$VoteSettings$_load();
+    var v'options = sc_1~load_dict();
+    return (sc_0, (v'owner, v'admin, v'master, v'status, v'metadata, v'settings, v'options));
+}
+
+(slice, slice, slice, int, cell, (int, int, int), cell) $ContractDAOv2$_contract_load() impure inline {
+    slice $sc = get_data().begin_parse();
+    return $sc~$ContractDAOv2$_load();
+}
+
+() $ContractDAOv2$_contract_store((slice, slice, slice, int, cell, (int, int, int), cell) v) impure inline {
+    builder b = begin_cell();
+    b = $ContractDAOv2$_store(b, v);
+    set_data(b.end_cell());
+}
+
+;;
+;; Type: ContractCitizenDAOv1
+;; TLB: _ owner:address admin:address status:uint4 = ContractCitizenDAOv1
+;;
+
+builder $ContractCitizenDAOv1$init$_store(builder build_0, (slice, slice, int) v) inline {
+    var (v'owner, v'admin, v'status) = v;
+    build_0 = build_0.store_slice(v'owner);
+    build_0 = __tact_store_address_opt(build_0, v'admin);
+    build_0 = build_0.store_uint(v'status, 4);
+    return build_0;
+}
+
+cell $ContractCitizenDAOv1$_child_get_code() impure asm """
+    B{b5ee9c72010211010002a80004feff008e88f4a413f4bcf2c80bed53208f6b30eda2edfb01d072d721d200d200fa4021103450666f04f86102f862ed44d0fa40d72c01916d93fa4001e201d30355206c1304925f04e022d749c21fe30002f90182f09f31fb7c139e4f1313022f5187d632af397344874ad3c3abb365f301d9d7ab67bae3025f03f2c082e1ed4301020304020271050601fc02d31f218200deedba8e2c5b328200f0f6f84222206ef2d080c705f2f471c855205023ce01206e9430cf84809201cee2cb03c9ed54db31e021821016f5c9cbbae30201c00b8e35d33f31fa4031fa40308200f0f6f84204206ef2d08014c70513f2f402c855205023ce01206e9430cf84809201cee2cb03c9ed54db31e0020c01daf8416f24135f038200f0f6036e13f2f4f842028208e4e1c0a1705324c855208210deadbeef5004cb1f12cb3fcecb03c91023706d50426d50427fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00f84258100002d90139bdcd2f6a2687d206b9600c8b6c9fd2000f100e981aa903609ed9e3618c0702014808090002220139b5423da89a1f481ae580322db27f48003c403a606aa40d827b678d86300a0139b73edda89a1f481ae580322db27f48003c403a606aa40d827b678d86300b00022000022103fe31d33f31fa40d430f8416f24135f038200a78421820b473bc0bcf2f48200b26c06c00116f2f48200f0f6f84205206ef2d08015c705917f95f84223c705e214f2f40382084c4b40a1704003c8552082106e224c675004cb1f12cb3fceccc9706d50426d50427fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb08a8a0d0e0f00065bcf81001a58cf8680cf8480f400f400cf810012e2f400c901fb00db31002ec855205023ce01206e9430cf84809201cee2cb03c9ed54} B>boc PUSHREF
+""";
+
+(cell, cell) $ContractCitizenDAOv1$_init_child(slice $owner, slice $admin, int $status) inline_ref {
+    ;; Build init code cell
+
+    ;; Contract Code: ContractCitizenDAOv1
+    cell init_code = $ContractCitizenDAOv1$_child_get_code();
+
+
+    builder b = begin_cell();
+    b = $ContractCitizenDAOv1$init$_store(b, ($owner, $admin, $status));
+    return (init_code, b.end_cell());
+}
+
+;;
+;; Type: GovernanceJettonMinter
+;; TLB: _ totalSupply:coins adminAddress:address nextAdminAddress:address jettonContent:^cell = GovernanceJettonMinter
+;;
+
+builder $GovernanceJettonMinter$init$_store(builder build_0, (int, slice, slice, cell) v) inline {
+    var (v'totalSupply, v'adminAddress, v'nextAdminAddress, v'jettonContent) = v;
+    build_0 = build_0.store_varuint16(v'totalSupply);
+    build_0 = build_0.store_slice(v'adminAddress);
+    build_0 = __tact_store_address_opt(build_0, v'nextAdminAddress);
+    build_0 = build_0.store_ref(v'jettonContent);
+    return build_0;
+}
+
+cell $GovernanceJettonMinter$_child_get_code() impure asm """
+    B{b5ee9c7201022e01000b8f000228ff008e88f4a413f4bcf2c80bed5320e303ed43d90102020271090a02f83001d072d721d200d200fa4021103450666f04f86102f862ed44d0fa00fa40d72c01916d93fa4001e201d455306c14058e40038020d7217021d749c21f9430d31f01de8210178d4519ba8e23d33ffa00596c2112a15023c855305043fa02ce58206e9430cf84809201cee2ccc9ed54e05f05e07024d74920c21fe3000304000a3104d31f0504bc2182102c76b973bae3022182107bdd97debae302218210642b7d07bae3022182106501f354ba8e2d5f0302d33f31fa40308123fff84224c705f2f45003c855305043fa02ce58206e9430cf84809201cee2ccc9ed54e0218210fb88e119ba0506070802f610565f06d33ffa40d2003021fa4430c0008ea77020f8285240db3c20f90022f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f90400916de25a700495c801cf16c992306de2c88210d173540001cb1f12cb3f58db3cf400c9f8427080505024c8cf8580ca00cf8440ce01fa02806acf40f400c901fb001a1002f45b03d33ffa00fa40d72c01916d93fa4001e231f842fa44037020f8284130db3c20f90022f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f9040081287b02c00097206ef2d08013ba93303270e212f2f45044a1236eb3923330e30d4003c855305043fa02ce58206e9430cf84809201cee2ccc9ed541a1101fe5b03d33f31fa40d430d0d31f018210178d4519baf2e081d33ffa00fa40d72c01916d93fa4001e201fa00515515144330368123fff84229c705f2f48200b4b127fa4430c000f2f42520d70b00c0019dd74bc00192c001923070e2f2899130e220b8a4f8416f24541323817d7104fa40fa0071d721fa00fa00306c6170f83a131204f88e3610235f03328200f9cff8425003206e925b7092c705e212f2f4f842586d01c855305043fa02ce58206e9430cf84809201cee2ccc9ed54e036208210235caf52ba8f2a10235f0332d33f31fa40fa00d4308123fff8425005c70514f2f422d020d70b1f2082100f8a7ea5bae30fe0208210cb862902bae30231322114151617013bbd9adf6a2687d007d206b9600c8b6c9fd2000f100ea2a98360a6d9e3620c0b0202710c0d000221013fadbcf6a2687d007d206b9600c8b6c9fd2000f100ea2a98360a2a81ed9e3620c00e013baf16f6a2687d007d206b9600c8b6c9fd2000f100ea2a98360a6d9e3622c00f016a7020f8284130db3c705920f90022f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f90400c87401cb0212ca07cbffc9d01a010e7f8825595465401b002e206e95307001cb01e0830958cb0a01206ef2d08001cbff006403206ef2d08001c8018210d53276db58cb1fcb3fc9707080425044c8cf8580ca00cf8440ce01fa02806acf40f400c901fb0002fea85230a0801e814e2070f838a08127d870f836aa008208989680a0a0bcf2f45183a044307050547f805050b8c855508210178d45195007cb1f15cb3f5003fa02ce01206e9430cf84809201cee201fa02cec9047020f8284130db3c102510471037103510245f41f90001f9005ad76501d76582020134c8cb17cb0fcb0fcbff1a130080cbff71f9040003c8cf8580ca0012cccccf884008cbff01fa028069cf40cf8634f400c901fb004003c855305043fa02ce58206e9430cf84809201cee2ccc9ed5401fe30d31f0182100f8a7ea5baf2e081d33ffa00fa40d72c01916d93fa4001e201f404fa00516616151443306c176c5220d70b00c0019dd74bc00192c001923070e2f2899130e2f8416f2424b8a4541432817d7106fa40fa0071d721fa00fa00306c6170f83a12a813a08127d870f836aa008208989680a0a012bcf2f4708011031802e431208210595f07bcba8ee58210eed236d3ba8ed4708011037020f8284130db3c5e221035102410235f41f90001f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f9040003c8cf8580ca0012cccccf884008cbff01fa028069cf40cf8634f400c901fb00965f03840ff2f0e2e30d1a19005c303402d33f318123fff84224c705f2f4c801cf16c913c855305043fa02ce58206e9430cf84809201cee2ccc9ed54009482102508d66aba8e183132d33f31d4d4308123fff8425004c70513f2f4ed54fb04e032208210d372158cba925f03e0c00002c12112b09ec8cf8508ce70cf0b6ec98042fb00e030f2c08201a07020f8284130db3c5e221035102410235f41f90001f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f9040003c8cf8580ca0012cccccf884008cbff01fa028069cf40cf8634f400c901fb001a01fc30f8416f24541323817d7104fa40fa0071d721fa00fa00306c6170f83a811d4c70f836aa00a012bcf2f4708011037020f8284130db3c5e221035102410235f41f90001f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f9040003c8cf8580ca0012cccccf884008cbff01fa028069cf40cf8634f400c901fb001a011c88c855315034cb0301fa02cecec91b022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d91c1d0202711e1f049801d072d721d200d200fa4021103450666f04f86102f862ed44d0d303fa00fa40fa4055306c1405e30203d70d1ff2e0822182100f8a7ea5bae302218210178d4519bae302218210595f07bcba22232425012bbfd8176a2686981fd007d207d202a98360a6d9e3622420012bbc508f6a2686981fd007d207d202a98360a6d9e3620c21000ef82a546330523000022300b6038020d7217021d749c21f9430d31f01de208210178d4519ba8e1a30d33ffa00596c21a04003c855305034cb0301fa02cecec9ed54e082107bdd97deba8e19d33ffa00596c21a04003c855305034cb0301fa02cecec9ed54e05f0501fe31d33ffa00fa40d72c01916d93fa4001e201f40431fa0023fa4430f2d08af8422ac7052871b0c0008152cc01917f9121e2f2f48123fff8422bc70592317f9101e2f2f45164a181093e21c2fff2f42620d70b00c0019dd74bc00192c001923070e2f2899130e2f8416f2425b8a4541432817d7106fa40fa0071d721fa00fa002604ea31d33ffa00fa40d72c01916d93fa4001e201fa002772b0c00281764501b3f2f45164a07054704adb3cf842fa44315920f90022f9005ad76501d76582020134c8cb17cb0fcb0fcbffcbff71f90400206ef2d08001ba9b8123fff84252b0c705f2f4df21c2009436135f03e30d206eb3915be30d400328292a2b02fe8efd31d33ffa00d72c01916d93fa4001e2318138c6f84228c705f2f45131a181093e21c2fff2f4f8416f24541323817d7104fa40fa0071d721fa00fa00306c6170f83a811d4c70f836aa00a012bcf2f47080505414377f07c8553082107bdd97de5005cb1f13cb3f01fa02ce01206e9430cf84809201cee2c92704431350552c2d02fe306c6170f83a12a85240a0801e814e2070f838a08127d870f836aa008208989680a0a0bcf2f450547080507f2b4613509ac855508210178d45195007cb1f15cb3f5003fa02ce01206e9430cf84809201cee201fa02cec95465142adb3c10561024103610261045102410235f41f90001f9005ad76501d76582020134c8cb172827007acb0fcb0fcbffcbff71f9040003c8cf8580ca0012cccccf884008cbff01fa028069cf40cf8634f400c901fb004003c855305034cb0301fa02cecec9ed54001ef82ac855315034cb0301fa02cecec9007a8011702747135069c8553082107362d09c5005cb1f13cb3f01fa02cecec92843144500441359c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00009ef8416f24135f03f8276f1021a1f82fa08208989680b60972fb0201206ef2d0808100827004c8018210d53276db58cb1fcb3fc94140441359c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00001ec855305034cb0301fa02cecec9ed540056441359c8cf8580ca00cf8440ce01fa02806acf40f400c901fb004003c855305034cb0301fa02cecec9ed54007ae033208210eed236d3ba8e233001d33f31d303308123fff84225c705f2f45023c855305034cb0301fa02cecec9ed54e06c418210d372158cbadcf2c082} B>boc PUSHREF
+""";
+
+(cell, cell) $GovernanceJettonMinter$_init_child(int $totalSupply, slice $adminAddress, slice $nextAdminAddress, cell $jettonContent) inline_ref {
+    ;; Build init code cell
+
+    ;; Contract Code: GovernanceJettonMinter
+    cell init_code = $GovernanceJettonMinter$_child_get_code();
+
+
+    builder b = begin_cell();
+    b = $GovernanceJettonMinter$init$_store(b, ($totalSupply, $adminAddress, $nextAdminAddress, $jettonContent));
+    return (init_code, b.end_cell());
+}
+
+;;
+;; Type: ContractVaultDAOv1
+;; TLB: _ owner:address status:uint4 data:OptionInfo{title:^string,description:^string} = ContractVaultDAOv1
+;;
+
+builder $ContractVaultDAOv1$init$_store(builder build_0, (slice, int, (slice, slice)) v) inline {
+    var (v'owner, v'status, (v'data'title, v'data'description)) = v;
+    build_0 = build_0.store_slice(v'owner);
+    build_0 = build_0.store_uint(v'status, 4);
+    build_0 = $OptionInfo$_store(build_0, (v'data'title, v'data'description));
+    return build_0;
+}
+
+cell $ContractVaultDAOv1$_child_get_code() impure asm """
+    B{b5ee9c720101040100b2000228ff008e88f4a413f4bcf2c80bed5320e303ed43d901020139a64582bb51343e9034c0f50074007500740484090408db0536cf1b10a00300ea3001d072d721d200d200fa4021103450666f04f86102f862ed44d0fa40d303d401d001d401d012102410236c1405925f05e003d70d1ff2e082308210db89bc8aba8e2c8200f0f6f84223c705f2f48200b26c01c000f2f4027159c855305034cecb030201c8ce12cd01c8cecdc9ed54e05f04f2c08200025c} B>boc PUSHREF
+""";
+
+(cell, cell) $ContractVaultDAOv1$_init_child(slice $owner, int $status, (slice, slice) $data) inline_ref {
+    ;; Build init code cell
+
+    ;; Contract Code: ContractVaultDAOv1
+    cell init_code = $ContractVaultDAOv1$_child_get_code();
+
+
+    builder b = begin_cell();
+    b = $ContractVaultDAOv1$init$_store(b, ($owner, $status, $data));
+    return (init_code, b.end_cell());
+}
+
+;;
+;; Type: ContractVirtualDAOv2
+;; TLB: _ owner:address admin:address option:address status:uint4 = ContractVirtualDAOv2
+;;
+
+builder $ContractVirtualDAOv2$init$_store(builder build_0, (slice, slice, slice, int) v) inline {
+    var (v'owner, v'admin, v'option, v'status) = v;
+    build_0 = build_0.store_slice(v'owner);
+    build_0 = build_0.store_slice(v'admin);
+    build_0 = __tact_store_address_opt(build_0, v'option);
+    build_0 = build_0.store_uint(v'status, 4);
+    return build_0;
+}
+
+cell $ContractVirtualDAOv2$_child_get_code() impure asm """
+    B{b5ee9c72010208010001f9000228ff008e88f4a413f4bcf2c80bed5320e303ed43d90102013fa666e13b51343e903e9035cb00645b64fe9000788074c0d54c1b0536cf1b10600302f830eda2edfb01d072d721d200d200fa4021103450666f04f86102f862ed44d0fa40fa40d72c01916d93fa4001e201d30355306c1405925f05e023d749c21f8e8e03d31f0182100d7bbd5cbae30203de03f90182f0c227cf8ce099fb69efb3d0efb48634d0a465ac6c3808927d5bbccdb6bfe2b6a8bae3025f04f2c082040500022101fe3302d33f31fa4030f8416f24135f038200f0f6f84224c705f2f48200b26c05c00015f2f42071058208e4e1c0a170542054c855208210efc982b25004cb1f12cb3fcecec9544333706d50426d50427fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb000601fcf8416f24135f038200f0f6f84224c705f2f48200b26c05c00115f2f4038208989680a17003206ef2d080542340c8552082101df76c5f5004cb1f12cb3fcecec9544133706d50426d50427fc8cf8580ca00cf8440ce01fa028069cf40025c6e016eb0935bcf819d58cf8680cf8480f400f400cf81e2f400c901fb00016d700700385003c855305034cece01206e9430cf84809201cee2cb03c9ed54db310030c855305034cece01206e9430cf84809201cee2cb03c9ed54} B>boc PUSHREF
+""";
+
+(cell, cell) $ContractVirtualDAOv2$_init_child(slice $owner, slice $admin, slice $option, int $status) inline_ref {
+    ;; Build init code cell
+
+    ;; Contract Code: ContractVirtualDAOv2
+    cell init_code = $ContractVirtualDAOv2$_child_get_code();
+
+
+    builder b = begin_cell();
+    b = $ContractVirtualDAOv2$init$_store(b, ($owner, $admin, $option, $status));
+    return (init_code, b.end_cell());
+}
+
+;;
+;; Contract ContractDAOv2 functions
+;;
+
+((slice, slice, slice, int, cell, (int, int, int), cell), cell) $ContractDAOv2$_fun_get_options((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
+    var $fresh$ret_7060 = $self'options;
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7060);
+}
+
+((slice, slice, slice, int, cell, (int, int, int), cell), (int, int, int)) $ContractDAOv2$_fun_get_settings((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
+    var $fresh$ret_7061 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee);
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7061);
+}
+
+((slice, slice, slice, int, cell, (int, int, int), cell), int) $ContractDAOv2$_fun_get_status((slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options)) = $self;
+    var $fresh$ret_7062 = $self'status;
+    return (($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options), $fresh$ret_7062);
+}
+
+;;
+;; Get methods of a Contract ContractDAOv2
+;;
+
+_ %get_options() method_id(129062) {
+    var self = $ContractDAOv2$_contract_load();
+    var res = self~$ContractDAOv2$_fun_get_options();
+    return res;
+}
+
+_ %get_settings() method_id(108850) {
+    var self = $ContractDAOv2$_contract_load();
+    var res = self~$ContractDAOv2$_fun_get_settings();
+    return $VoteSettings$_to_external(res);
+}
+
+_ %get_status() method_id(100881) {
+    var self = $ContractDAOv2$_contract_load();
+    var res = self~$ContractDAOv2$_fun_get_status();
+    return res;
+}
+
+;;
+;; Routing of a Contract ContractDAOv2
+;;
+
+;; message opcode reader utility: only binary receivers
+;; Returns 32 bit message opcode, otherwise throws the "Invalid incoming message" exit code
+(slice, int) ~load_opcode_internal(slice s) asm( -> 1 0) "32 LDUQ 130 THROWIFNOT";
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    cs~skip_bits(2);
+    var msg_bounceable = cs~load_int(1);
+    var msg_bounced = cs~load_int(1);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounceable, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var ($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options) = $ContractDAOv2$_contract_load();
+    
+    ;; Handle bounced messages
+    if (msg_bounced) { return (); }
+    int op = 0;
+    int in_msg_length = slice_bits(in_msg);
+    if (in_msg_length >= 32) {
+        op = in_msg~load_uint(32);
+        ;; Receive ProvideActionDAO message
+        if (op == 0x6e224c67) {
+            var $msg'queryId = in_msg~load_uint(64);
+            var $msg'admin = in_msg~load_msg_addr();
+            var $msg'payload = in_msg~load_ref();
+            var ($ctx'bounceable, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
+            slice $expectedAddress = $global_contractAddress($ContractCitizenDAOv1$_init_child($msg'admin, null(), 0));
+            throw_unless(42884, ($ctx'value > 55000000));
+            throw_unless(54285, ( equal_slices_bits(__tact_context_get_sender(), $expectedAddress) ));
+            slice $data = $Cell$_fun_beginParse($msg'payload);
+            int $op = $data~load_uint(32);
+            if (($op == 0x383977b6)) {
+                throw_unless(45676, ($self'status == 1));
+                throw_unless(32290, ($self'settings'endTime > $global_now()));
+                slice $optionAddress = $data~$Slice$_fun_loadAddress();
+                $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt(__tact_dict_get_slice_cell($self'options, 267, $optionAddress)));
+                var ($init'code, $init'data) = $ContractVirtualDAOv2$_init_child($global_myAddress(), __tact_context_get_sender(), null(), 0);
+                $global_deploy($DeployParameters$_constructor_init_value_body(($init'code, $init'data), 50000000, $VirtualInitialization$_store_cell($VirtualInitialization$_constructor_queryId_optionAddress(0, $optionAddress), begin_cell())));
+            } elseif (($op == 0xe94e61b2)) {
+                throw_unless(32290, ($self'settings'endTime > $global_now()));
+                var ($init'code, $init'data) = $ContractVirtualDAOv2$_init_child($global_myAddress(), __tact_context_get_sender(), null(), 0);
+                $global_deploy($DeployParameters$_constructor_init_value_body(($init'code, $init'data), 50000000, __gen_cell_cell_e0f7cef5e23bd5f54f6ae405fba4a9e924dfe1478db14a9f340d89cd47b9efed()));
+            }
+            
+            return ();
+        }
+        
+        ;; Receive SubmitVoting message
+        if (op == 0xefc982b2) {
+            var $msg'queryId = in_msg~load_uint(64);
+            var $msg'adminAddress = in_msg~load_msg_addr();
+            var $msg'optionAddress = in_msg~load_msg_addr();
+            throw_unless(45676, ($self'status == 1));
+            throw_unless(32290, ($self'settings'endTime > $global_now()));
+            slice $expectedAddress = $global_contractAddress($ContractVirtualDAOv2$_init_child($global_myAddress(), $msg'adminAddress, null(), 0));
+            throw_unless(54285, ( equal_slices_bits(__tact_context_get_sender(), $expectedAddress) ));
+            $global_send($SendParameters$_constructor_to_value_body($self'master, 50000000, $Mint$_store_cell($Mint$_constructor_queryId_toAddress_masterMsg(0, $msg'optionAddress, $JettonTransferInternal$_constructor_queryId_amount_sender_forwardTonAmount_forwardPayload(0, 1000000000, $msg'optionAddress, 0, $Builder$_fun_asSlice(store_uint($global_beginCell(), 0, 1)))), begin_cell())));
+            
+            return ();
+        }
+        
+        ;; Receive CancelVoting message
+        if (op == 0x1df76c5f) {
+            var $msg'queryId = in_msg~load_uint(64);
+            var $msg'adminAddress = in_msg~load_msg_addr();
+            var $msg'optionAddress = in_msg~load_msg_addr();
+            throw_unless(32290, ($self'settings'endTime > $global_now()));
+            slice $expectedAddress = $global_contractAddress($ContractVirtualDAOv2$_init_child($global_myAddress(), $msg'adminAddress, null(), 0));
+            throw_unless(54285, ( equal_slices_bits(__tact_context_get_sender(), $expectedAddress) ));
+            $global_send($SendParameters$_constructor_to_value_body($self'master, 25000000, $CallTo$_store_cell($CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg(0, $msg'optionAddress, 20000000, $JettonBurn$_store_cell($JettonBurn$_constructor_queryId_amount_responseDestination_customPayload(0, 1000000000, null(), null()), begin_cell())), begin_cell())));
+            
+            return ();
+        }
+        
+        ;; Receive AddOption message
+        if (op == 0xc8b1f5ab) {
+            var $msg'queryId = in_msg~load_uint(64);
+            var $msg'title = in_msg~load_ref().begin_parse();
+            var $msg'description = in_msg~load_ref().begin_parse();
+            var ($ctx'bounceable, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
+            throw_unless(42884, ($ctx'value > 30000000));
+            throw_unless(45676, ($self'status == 0));
+            throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
+            var ($data'title, $data'description) = $OptionInfo$_constructor_title_description($msg'title, $msg'description);
+            var ($init'code, $init'data) = $ContractVaultDAOv1$_init_child($global_myAddress(), 0, ($data'title, $data'description));
+            $self'options~__tact_dict_set_slice_cell(267, $global_contractAddress(($init'code, $init'data)), $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description($global_contractAddress(($init'code, $init'data)), $msg'title, $msg'description), begin_cell()));
+            $global_deploy($DeployParameters$_constructor_init_value_body(($init'code, $init'data), ($ctx'value - 10000000), $VaultInitialization$_store_cell($VaultInitialization$_constructor_queryId_admin(0, __tact_context_get_sender()), begin_cell())));
+            $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+            return ();
+        }
+        
+    }
+    ;; Receive empty message
+    if ((op == 0) & (in_msg_length <= 32)) {
+        return ();
+        
+        return ();
+    }
+    ;; Empty Receiver and Text Receivers
+    var text_op = slice_hash(in_msg);
+    ;; Receive "init" message
+    if (text_op == 0x9f31fb7c139e4f1313022f5187d632af397344874ad3c3abb365f301d9d7ab67) {
+        throw_unless(61686, ( equal_slices_bits(__tact_context_get_sender(), $self'owner) ));
+        throw_unless(45676, ($self'status == 0));
+        var ($init'code, $init'data) = $GovernanceJettonMinter$_init_child(0, $global_myAddress(), $self'owner, $self'metadata);
+        $self'master = $global_contractAddress(($init'code, $init'data));
+        $global_deploy($DeployParameters$_constructor_init_value(($init'code, $init'data), 100000000));
+        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+        return ();
+    }
+    ;; Receive "start" message
+    if (text_op == 0xac128f9294d44ed4e4ce25a81d30d9e4b45380aeb1780b49d17ad76dc9f692c6) {
+        throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
+        throw_unless(45676, ($self'status == 0));
+        $self'status = 1;
+        $ContractDAOv2$_contract_store(($self'owner, $self'admin, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'fee), $self'options));
+        return ();
+    }
+    ;; Receive "wd" message
+    if (text_op == 0x03b5f46289242db6c23e9c4a1e6262bb261e5019870c97c602dfaf96c60739bf) {
+        throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
+        throw_unless(45676, ($self'status == 1));
+        throw_unless(16693, ($self'settings'endTime < $global_now()));
+        $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, 128, __gen_cell_cell_ea01a593d0a6ea359d8a2c2f38b3e14f090e97ec2e780879d9f7ded2b5c5a1d3()));
+        
+        return ();
+    }
+    ;; Throw if not handled
+    throw(130);
+}
+
+
+() __tact_selector_hack_asm() impure asm """
+@atend @ 1 {
+        execute current@ context@ current!
+        {
+            // The core idea of this function is to save gas by avoiding unnecessary dict jump, when recv_internal/recv_external is called
+            // We want to extract recv_internal/recv_external from the dict and select needed function
+            // not by jumping to the needed function by it's index, but by using usual IF statements.
+
+            }END> b> // Close previous builder, now we have a cell of previous code on top of the stack
+
+            <{ // Start of the new code builder
+                SETCP0
+                // Swap the new code builder with the previous code, now we have previous code on top of the stack
+                swap
+                // Transform cell to slice and load first ref from the previous code, now we have the dict on top of the stack
+                <s ref@
+
+                // Extract the recv_internal from the dict
+                dup 0 swap @procdictkeylen idict@ { "internal shortcut error" abort } ifnot
+                swap
+
+                // Delete the recv_internal from the dict
+                0 swap @procdictkeylen idict- drop
+                // Delete the recv_external from the dict (it's okay if it's not there)
+                -1 swap @procdictkeylen idict- drop
+                // Delete the __tact_selector_hack from the dict
+                65535 swap @procdictkeylen idict- drop
+
+                // Bring the code builder from the bottom of the stack
+                // because if recv_external extraction is optional, and the number of elements on the stack is not fixed
+                depth 1- roll
+                // Swap with the dict from which we extracted recv_internal and (maybe) recv_external
+                swap
+
+                // Check if the dict is empty
+                dup null?
+                // Store a copy of this flag in the bottom of the stack
+                dup depth 1- -roll
+                {
+                    // If the dict is empty, just drop it (it will be null if it's empty)
+                    drop
+                }
+                {
+                    // If the dict is not empty, prepare continuation to be stored in c3
+                    <{
+                        // Save this dict as first ref in this continuation, it will be pushed in runtime by DICTPUSHCONST
+                        swap @procdictkeylen DICTPUSHCONST
+                        // Jump to the needed function by it's index
+                        DICTIGETJMPZ
+                        // If such key is not found, throw 11 along with the key as an argument
+                        11 THROWARG
+                    }> PUSHCONT
+                    // Store the continuation in c3
+                    c3 POP
+                } cond
+
+                // Function id is on top of the (runtime) stack
+                DUP IFNOTJMP:<{
+                    // place recv_internal here
+                    DROP swap @addop
+                }>
+
+                // Bring back the flag, indicating if the dict is empty or not from the bottom of the stack
+                depth 1- roll
+                {
+                    // If the dict is empty, throw 11
+                    11 THROWARG
+                }
+                {
+                    // If the dict is not empty, jump to continuation from c3
+                    c3 PUSH JMPX
+                } cond
+            }> b>
+        } : }END>c
+        current@ context! current!
+    } does @atend !
+""";
+
+() __tact_selector_hack() method_id(65535) {
+    return __tact_selector_hack_asm();
+}

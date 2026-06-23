@@ -1,0 +1,844 @@
+#pragma version =0.4.6;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; tact_NFTCollection.headers.fc
+;;
+;; Header files for NFTCollection
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
+
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) impure inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; __tact_string_builder_start
+tuple __tact_string_builder_start(builder b) inline;
+
+;; __tact_string_builder_start_string
+tuple __tact_string_builder_start_string() inline;
+
+;; __tact_string_builder_end
+cell __tact_string_builder_end(tuple builders) inline;
+
+;; __tact_string_builder_append
+((tuple), ()) __tact_string_builder_append(tuple builders, slice sc) inline_ref;
+
+;; $DictItem$_load
+(slice, ((int, cell))) $DictItem$_load(slice sc_0) inline;
+
+;; $DictItem$_load_not_mut
+((int, cell)) $DictItem$_load_not_mut(slice sc_0) inline;
+
+;; $RoyaltyParams$_store
+builder $RoyaltyParams$_store(builder build_0, (int, int, slice) v) inline;
+
+;; $RoyaltyParams$_load
+(slice, ((int, int, slice))) $RoyaltyParams$_load(slice sc_0) inline;
+
+;; $ReportRoyaltyParams$_store
+builder $ReportRoyaltyParams$_store(builder build_0, (int, (int, int, slice)) v) inline;
+
+;; $ReportRoyaltyParams$_store_cell
+cell $ReportRoyaltyParams$_store_cell((int, (int, int, slice)) v, builder b) inline;
+
+;; $NFTCollection$_store
+builder $NFTCollection$_store(builder build_0, (slice, slice, int, cell, cell, (int, int, slice), cell, builder) v) inline;
+
+;; $NFTCollection$_load
+(slice, ((slice, slice, int, cell, cell, (int, int, slice), cell, builder))) $NFTCollection$_load(slice sc_0) inline;
+
+;; $CollectionData$_to_external
+(int, cell, slice) $CollectionData$_to_external(((int, cell, slice)) v) inline;
+
+;; $RoyaltyParams$_to_external
+(int, int, slice) $RoyaltyParams$_to_external(((int, int, slice)) v) inline;
+
+;; $NFTCollection$init$_load
+(slice, ((slice, slice, int, cell, cell))) $NFTCollection$init$_load(slice sc_0) inline;
+
+;; $NFTItem$init$_store
+builder $NFTItem$init$_store(builder build_0, (slice, cell, slice, slice, int) v) inline;
+
+;; $RoyaltyParams$_constructor_nominator_dominator_owner
+((int, int, slice)) $RoyaltyParams$_constructor_nominator_dominator_owner(int $nominator, int $dominator, slice $owner) inline;
+
+;; $NFTItem$_code_child
+cell $NFTItem$_code_child() inline;
+
+;; $NFTCollection$_contract_init
+(slice, slice, int, cell, cell, (int, int, slice), cell, builder) $NFTCollection$_contract_init(slice $owner, slice $admin, int $nextItemIndex, cell $collectionContent, cell $defaultContent) impure inline;
+
+;; $NFTCollection$_contract_load
+(slice, slice, int, cell, cell, (int, int, slice), cell, builder) $NFTCollection$_contract_load() impure inline;
+
+;; $NFTCollection$_contract_store
+() $NFTCollection$_contract_store((slice, slice, int, cell, cell, (int, int, slice), cell, builder) v) impure inline;
+
+;; $Cell$_fun_asSlice
+slice $Cell$_fun_asSlice(cell $self) impure inline;
+
+;; $global_newAddress
+slice $global_newAddress(int $chain, int $hash) impure inline;
+
+;; $global_contractAddressExt
+slice $global_contractAddressExt(int $chain, cell $code, cell $data) impure inline;
+
+;; $global_contractAddress
+slice $global_contractAddress((cell, cell) $s) impure inline;
+
+;; $DeployParameters$_constructor_value_body_init_mode
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_value_body_init_mode(int $value, cell $body, (cell, cell) $init, int $mode) inline;
+
+;; $StateInit$_constructor_code_data
+((cell, cell)) $StateInit$_constructor_code_data(cell $code, cell $data) inline;
+
+;; $global_deployNFTItem
+() $global_deployNFTItem(cell $commonCode, int $itemIndex, int $amount, cell $initNFTBody, builder $commonData) impure inline;
+
+;; $MessageParameters$_constructor_bounce_to_value_body_mode
+((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_body_mode(int $bounce, slice $to, int $value, cell $body, int $mode) inline;
+
+;; $CollectionData$_constructor_nextItemIndex_collectionContent_owner
+((int, cell, slice)) $CollectionData$_constructor_nextItemIndex_collectionContent_owner(int $nextItemIndex, cell $collectionContent, slice $owner) inline;
+
+;; $NFTCollection$_fun_get_collection_data
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), (int, cell, slice)) $NFTCollection$_fun_get_collection_data((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self) impure inline_ref;
+
+;; $NFTItem$_init_child
+(cell, cell) $NFTItem$_init_child(slice $owner, cell $content, slice $editor, slice $collectionAddress, int $itemIndex) inline_ref;
+
+;; $NFTCollection$_fun_get_nft_address_by_index
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), slice) $NFTCollection$_fun_get_nft_address_by_index((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index) impure inline_ref;
+
+;; $NFTCollection$_fun_royalty_params
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), (int, int, slice)) $NFTCollection$_fun_royalty_params((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self) impure inline_ref;
+
+;; $NFTCollection$_fun_get_nft_content
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), cell) $NFTCollection$_fun_get_nft_content((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index, cell $individualNFTContent) impure inline_ref;
+
+;; $ReportRoyaltyParams$_constructor_queryId_params
+((int, (int, int, slice))) $ReportRoyaltyParams$_constructor_queryId_params(int $queryId, (int, int, slice) $params) inline;
+
+
+;; tact_NFTCollection.stdlib.fc
+global (int, slice, int, slice) __tact_context;
+global slice __tact_context_sender;
+global cell __tact_child_contract_codes;
+global int __tact_randomized;
+
+builder __tact_store_addr_none(builder b) asm "b{00} STSLICECONST";
+
+builder __tact_store_address_opt(builder b, slice address) inline {
+    if (null?(address)) {
+        return __tact_store_addr_none(b);
+    } else {
+        return b.store_slice(address);
+    }
+}
+
+forall X -> X __tact_not_null(X x) impure inline {
+    throw_if(128, null?(x)); return x;
+}
+
+slice __tact_context_get_sender() inline {
+    return __tact_context_sender;
+}
+
+tuple __tact_string_builder_start(builder b) inline {
+    return tpush(tpush(empty_tuple(), b), null());
+}
+
+tuple __tact_string_builder_start_string() inline {
+    return __tact_string_builder_start(begin_cell());
+}
+
+cell __tact_string_builder_end(tuple builders) inline {
+    (builder b, tuple tail) = uncons(builders);
+    cell c = b.end_cell();
+    while(~ null?(tail)) {
+        (b, tail) = uncons(tail);
+        c = b.store_ref(c).end_cell();
+    }
+    return c;
+}
+
+((tuple), ()) __tact_string_builder_append(tuple builders, slice sc) inline_ref {
+    int sliceRefs = slice_refs(sc);
+    int sliceBits = slice_bits(sc);
+
+    while((sliceBits > 0) | (sliceRefs > 0)) {
+
+        ;; Load the current builder
+        (builder b, tuple tail) = uncons(builders);
+        int remBytes = 127 - (builder_bits(b) / 8);
+        int exBytes = sliceBits / 8;
+
+        ;; Append bits
+        int amount = min(remBytes, exBytes);
+        if (amount > 0) {
+            slice read = sc~load_bits(amount * 8);
+            b = b.store_slice(read);
+        }
+
+        ;; Update builders
+        builders = cons(b, tail);
+
+        ;; Check if we need to add a new cell and continue
+        if (exBytes - amount > 0) {
+            var bb = begin_cell();
+            builders = cons(bb, builders);
+            sliceBits = (exBytes - amount) * 8;
+        } elseif (sliceRefs > 0) {
+            sc = sc~load_ref().begin_parse();
+            sliceRefs = slice_refs(sc);
+            sliceBits = slice_bits(sc);
+        } else {
+            sliceBits = 0;
+            sliceRefs = 0;
+        }
+    }
+
+    return ((builders), ());
+}
+
+builder $Builder$_fun_storeAddress(builder $self, slice $address) impure asm """
+    STSLICER
+""";
+
+slice $global_myAddress() impure asm """
+    MYADDR
+""";
+
+builder $global_beginCell() impure asm """
+    NEWC
+""";
+
+int $global_contractHash(cell $code, cell $data) impure asm """
+    s0 PUSH HASHCU // `data` hash
+    s2 PUSH HASHCU // `code` hash
+    SWAP2
+    CDEPTH         // `data` depth
+    SWAP
+    CDEPTH         // `code` depth
+    131380 INT     // (2 << 16) | (1 << 8) | 0x34
+
+    // Group 2: Composition of the Builder
+    NEWC
+    24 STU  // store refs_descriptor | bits_descriptor | data
+    16 STU  // store depth_descriptor for `code`
+    16 STU  // store depth_descriptor for `data`
+    256 STU // store `code` hash
+    256 STU // store `data` hash
+
+    // Group 3: SHA256 hash of the resulting Builder
+    ONE HASHEXT_SHA256
+""";
+
+slice $Slice$_fun_asAddressUnsafe(slice $self) impure asm "NOP";
+
+slice $Cell$_fun_beginParse(cell $self) impure asm """
+    CTOS
+""";
+
+slice $Cell$_fun_asSlice(cell $self) impure inline {
+    var ($self) = $self;
+    return $Cell$_fun_beginParse($self);
+}
+
+cell $Builder$_fun_endCell(builder $self) impure asm """
+    ENDC
+""";
+
+slice $global_newAddress(int $chain, int $hash) impure inline {
+    return $Slice$_fun_asAddressUnsafe($Cell$_fun_asSlice($Builder$_fun_endCell(store_uint(store_int(store_uint($global_beginCell(), 4, 3), $chain, 8), $hash, 256))));
+}
+
+slice $global_contractAddressExt(int $chain, cell $code, cell $data) impure inline {
+    int $hash = $global_contractHash($code, $data);
+    return $global_newAddress($chain, $hash);
+}
+
+slice $global_contractAddress((cell, cell) $s) impure inline {
+    var (($s'code, $s'data)) = $s;
+    return $global_contractAddressExt(0, $s'code, $s'data);
+}
+
+() $global_message((int, cell, int, slice, int) $params) impure asm """
+    NEWC
+    b{01} STSLICECONST  // store tag = $0 and ihr_disabled = true
+    1 STI               // store `bounce`
+    b{000} STSLICECONST // store bounced = false and src = addr_none
+    STSLICE             // store `to`
+    SWAP
+    STGRAMS             // store `value`
+    106 PUSHINT         // 1 + 4 + 4 + 64 + 32 + 1
+    STZEROES
+    // → Stack state
+    // s0: Builder
+    // s1: `body`
+    // s2: `mode`
+    STDICT
+    ENDC
+    SWAP
+    SENDRAWMSG
+""";
+
+() $global_deploy((int, cell, int, int, (cell, cell)) $params) impure asm """
+    4 1 BLKPUSH // pushes 2 copies of `init.code` and `init.data`
+    HASHCU // `init.data` hash
+    SWAP
+    HASHCU // `init.code` hash
+    SWAP2
+    CDEPTH // `init.data` depth
+    SWAP
+    CDEPTH // `init.code` depth
+
+    // Group 2: Calculating destination address
+    // For almost identical logic and instructions,
+    // see comments inside `contractHash()` function in contract.tact
+    131380 INT // (2 << 16) | (1 << 8) | 0x34
+    NEWC
+    24 STU
+    16 STU
+    16 STU
+    256 STU
+    256 STU
+    ONE HASHEXT_SHA256 // obtains hash part (account id) of the address
+    // → Stack state
+    // s0: destAddr(hash part)
+    // s1: `init.data`
+    // s2: `init.code`
+    // s3 and below: `bounce`, `value`, `body`, `mode`
+
+    // Group 3: Building a message (CommonMsgInfoRelaxed)
+    s3 XCHG0           // swaps `bounce` with destAddr(hash part)
+    NEWC
+    b{01} STSLICECONST // store tag = $0 and ihr_disabled = true
+    1 STI              // store `bounce`
+    s1 s2 XCHG         // swap `init.data` with `init.code`, placing code on s1
+    STREF              // store `init.code`
+    STREF              // store `init.data`
+    // Inline StateInit:
+    b{00010000000000} STSLICECONST
+    // 0 + 00 + 10 + 0 + 00000000
+    // 1) 0 - bounced = false
+    // 2) 00 - src = addr_none
+    // 3) 10 - tag of addr_std (part of dest)
+    // 4) 0 - Maybe Anycast = false
+    // 5) 00000000 - workchain_id (part of dest)
+    //
+    256 STU     // store destAddr(hash part)
+    SWAP        // Builder on top, `value` below
+    STGRAMS     // store `value`
+    105 PUSHINT // 1 + 4 + 4 + 64 + 32
+    STZEROES    // store currency_collection, ihr_fee, fwd_fee, created_lt and created_at
+
+    // Group 4: Continue building a message (CommonMsgInfoRelaxed into MessageRelaxed)
+    // Remaining bits of MessageRelaxed:
+    b{1000110} STSLICECONST
+    // 10 + 0 + 0 + 1 + 1 + 0
+    // 10 - Maybe (Either StateInit ^StateInit) = true false
+    // 0 - split_depth:(Maybe (## 5)) = false
+    // 0 = special:(Maybe TickTock) = false
+    // 1 = code:(Maybe ^Cell) = true
+    // 1 = data:(Maybe ^Cell) = true
+    // 0 = library:(Maybe ^Cell) = false
+    //
+    STDICT // store `body` as ref with an extra Maybe bit, since `body` might be null
+    ENDC   // finalize the message
+    // → Stack state
+    // s0: Cell
+    // s1: params.`mode`
+
+    // Group 5: Sending the message, with `mode` on top
+    SWAP
+    SENDRAWMSG
+""";
+
+builder $Builder$_fun_storeRef(cell $cell, builder $self) impure asm """
+    STREF
+""";
+
+slice $Slice$_fun_asString(slice $self) impure asm "NOP";
+
+(slice, slice) $Slice$_fun_loadAddress(slice $self) impure asm( -> 1 0) """
+    LDMSGADDR
+""";
+
+;; tact_NFTCollection.storage.fc
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_constructor_code_data(cell $code, cell $data) inline {
+    return ($code, $data);
+}
+
+;;
+;; Type: MessageParameters
+;; TLB: _ mode:int257 body:Maybe ^cell value:int257 to:address bounce:bool = MessageParameters
+;;
+
+((int, cell, int, slice, int)) $MessageParameters$_constructor_bounce_to_value_body_mode(int $bounce, slice $to, int $value, cell $body, int $mode) inline {
+    return ($mode, $body, $value, $to, $bounce);
+}
+
+;;
+;; Type: DeployParameters
+;; TLB: _ mode:int257 body:Maybe ^cell value:int257 bounce:bool init:StateInit{code:^cell,data:^cell} = DeployParameters
+;;
+
+((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_value_body_init_mode(int $value, cell $body, (cell, cell) $init, int $mode) inline {
+    return ($mode, $body, $value, true, $init);
+}
+
+;;
+;; Type: DictItem
+;; TLB: _ amount:coins initNFTBody:^cell = DictItem
+;;
+
+(slice, ((int, cell))) $DictItem$_load(slice sc_0) inline {
+    var v'amount = sc_0~load_varuint16();
+    var v'initNFTBody = sc_0~load_ref();
+    return (sc_0, (v'amount, v'initNFTBody));
+}
+
+((int, cell)) $DictItem$_load_not_mut(slice sc_0) inline {
+    var r = sc_0~$DictItem$_load();
+    sc_0.end_parse();
+    return r;
+}
+
+;;
+;; Type: CollectionData
+;; TLB: _ nextItemIndex:uint64 collectionContent:^cell owner:address = CollectionData
+;;
+
+(int, cell, slice) $CollectionData$_to_external(((int, cell, slice)) v) inline {
+    var (v'nextItemIndex, v'collectionContent, v'owner) = v; 
+    return (v'nextItemIndex, v'collectionContent, v'owner);
+}
+
+((int, cell, slice)) $CollectionData$_constructor_nextItemIndex_collectionContent_owner(int $nextItemIndex, cell $collectionContent, slice $owner) inline {
+    return ($nextItemIndex, $collectionContent, $owner);
+}
+
+;;
+;; Type: RoyaltyParams
+;; TLB: _ nominator:uint16 dominator:uint16 owner:address = RoyaltyParams
+;;
+
+builder $RoyaltyParams$_store(builder build_0, (int, int, slice) v) inline {
+    var (v'nominator, v'dominator, v'owner) = v;
+    build_0 = build_0.store_uint(v'nominator, 16);
+    build_0 = build_0.store_uint(v'dominator, 16);
+    build_0 = build_0.store_slice(v'owner);
+    return build_0;
+}
+
+(slice, ((int, int, slice))) $RoyaltyParams$_load(slice sc_0) inline {
+    var v'nominator = sc_0~load_uint(16);
+    var v'dominator = sc_0~load_uint(16);
+    var v'owner = sc_0~load_msg_addr();
+    return (sc_0, (v'nominator, v'dominator, v'owner));
+}
+
+(int, int, slice) $RoyaltyParams$_to_external(((int, int, slice)) v) inline {
+    var (v'nominator, v'dominator, v'owner) = v; 
+    return (v'nominator, v'dominator, v'owner);
+}
+
+((int, int, slice)) $RoyaltyParams$_constructor_nominator_dominator_owner(int $nominator, int $dominator, slice $owner) inline {
+    return ($nominator, $dominator, $owner);
+}
+
+;;
+;; Type: ReportRoyaltyParams
+;; Header: 0xa8cb00ad
+;; TLB: report_royalty_params#a8cb00ad queryId:uint64 params:RoyaltyParams{nominator:uint16,dominator:uint16,owner:address} = ReportRoyaltyParams
+;;
+
+builder $ReportRoyaltyParams$_store(builder build_0, (int, (int, int, slice)) v) inline {
+    var (v'queryId, (v'params'nominator, v'params'dominator, v'params'owner)) = v;
+    build_0 = store_uint(build_0, 2831876269, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    build_0 = $RoyaltyParams$_store(build_0, (v'params'nominator, v'params'dominator, v'params'owner));
+    return build_0;
+}
+
+cell $ReportRoyaltyParams$_store_cell((int, (int, int, slice)) v, builder b) inline {
+    return $ReportRoyaltyParams$_store(b, v).end_cell();
+}
+
+((int, (int, int, slice))) $ReportRoyaltyParams$_constructor_queryId_params(int $queryId, (int, int, slice) $params) inline {
+    return ($queryId, $params);
+}
+
+;;
+;; Type: NFTCollection
+;; TLB: _ owner:address admin:address nextItemIndex:uint64 content:^cell defaultContent:^cell royaltyParams:RoyaltyParams{nominator:uint16,dominator:uint16,owner:address} commonCode:^cell commonData:^builder = NFTCollection
+;;
+
+builder $NFTCollection$_store(builder build_0, (slice, slice, int, cell, cell, (int, int, slice), cell, builder) v) inline {
+    var (v'owner, v'admin, v'nextItemIndex, v'content, v'defaultContent, (v'royaltyParams'nominator, v'royaltyParams'dominator, v'royaltyParams'owner), v'commonCode, v'commonData) = v;
+    build_0 = build_0.store_slice(v'owner);
+    build_0 = build_0.store_slice(v'admin);
+    build_0 = build_0.store_uint(v'nextItemIndex, 64);
+    build_0 = build_0.store_ref(v'content);
+    var build_1 = begin_cell();
+    build_1 = build_1.store_ref(v'defaultContent);
+    build_1 = $RoyaltyParams$_store(build_1, (v'royaltyParams'nominator, v'royaltyParams'dominator, v'royaltyParams'owner));
+    build_1 = build_1.store_ref(v'commonCode);
+    build_1 = build_1.store_builder_ref(v'commonData);
+    build_0 = store_builder_ref(build_0, build_1);
+    return build_0;
+}
+
+(slice, ((slice, slice, int, cell, cell, (int, int, slice), cell, builder))) $NFTCollection$_load(slice sc_0) inline {
+    var v'owner = sc_0~load_msg_addr();
+    var v'admin = sc_0~load_msg_addr();
+    var v'nextItemIndex = sc_0~load_uint(64);
+    var v'content = sc_0~load_ref();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'defaultContent = sc_1~load_ref();
+    var v'royaltyParams = sc_1~$RoyaltyParams$_load();
+    var v'commonCode = sc_1~load_ref();
+    var v'commonData = begin_cell().store_slice(sc_1~load_ref().begin_parse());
+    return (sc_0, (v'owner, v'admin, v'nextItemIndex, v'content, v'defaultContent, v'royaltyParams, v'commonCode, v'commonData));
+}
+
+(slice, ((slice, slice, int, cell, cell))) $NFTCollection$init$_load(slice sc_0) inline {
+    var v'owner = sc_0~load_msg_addr();
+    var v'admin = sc_0~load_msg_addr();
+    var v'nextItemIndex = sc_0~load_uint(64);
+    var v'collectionContent = sc_0~load_ref();
+    var v'defaultContent = sc_0~load_ref();
+    return (sc_0, (v'owner, v'admin, v'nextItemIndex, v'collectionContent, v'defaultContent));
+}
+
+(slice, slice, int, cell, cell, (int, int, slice), cell, builder) $NFTCollection$_contract_load() impure inline {
+    slice $sc = get_data().begin_parse();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$NFTCollection$_load();
+    }
+    else {
+        (slice $owner, slice $admin, int $nextItemIndex, cell $collectionContent, cell $defaultContent) = $sc~$NFTCollection$init$_load();
+        $sc.end_parse();
+        return $NFTCollection$_contract_init($owner, $admin, $nextItemIndex, $collectionContent, $defaultContent);
+    }
+}
+
+() $NFTCollection$_contract_store((slice, slice, int, cell, cell, (int, int, slice), cell, builder) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_int(true, 1);
+    b = $NFTCollection$_store(b, v);
+    set_data(b.end_cell());
+}
+
+;;
+;; Type: NFTItem
+;; TLB: _ owner:address content:Maybe ^cell editor:address collectionAddress:address itemIndex:uint64 = NFTItem
+;;
+
+builder $NFTItem$init$_store(builder build_0, (slice, cell, slice, slice, int) v) inline {
+    var (v'owner, v'content, v'editor, v'collectionAddress, v'itemIndex) = v;
+    build_0 = __tact_store_address_opt(build_0, v'owner);
+    build_0 = build_0.store_maybe_ref(v'content);
+    build_0 = build_0.store_slice(v'editor);
+    build_0 = build_0.store_slice(v'collectionAddress);
+    build_0 = build_0.store_uint(v'itemIndex, 64);
+    return build_0;
+}
+
+cell $NFTItem$_child_get_code() impure asm """
+    B{b5ee9c7201020b010002b400022cff008e88f4a413f4bcf2c80bed53208e8130e1ed43d901020143a663f3fb513435cb00645b64fe900078807d013e903e9034cfd5501b0576cf1b15600304f601d072d721d200d200fa4021103450666f04f86102f862ed44d0d72c01916d93fa4001e201f404fa40fa40d33f55406c1506925f06e07025d74920c21f963125d70b1f01de2182102fcb26a2bae3022182101a0b9d51bae3022182105fcc3d14bae30234c00003c12113b0925f05e0840f036e13f2f4f84221c705040506070018246eb3917f9170e254712527009e10245f04028020d721d33f30016eb3f289f8427082108b771735c816cbff5004cf164440804070c815cb1f13cb3f01cf17c9102443005034c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00006a5b32038020d721d33f31d4308200f0f6f84225c705f2f4441302c855405054206e9430cf84809201cee212f400ce12cecb3fc9ed5403fe5b048020d721d33ffa40d72c01916d93fa4001e201f40431fa00276eb3f289f84226c705f2e19120d749c200f2e2c423fa4430f2d08af8416f24fa40fa0071d721fa00fa00306c6170f83af8276f10820afaf080a123c200945331a0a1de246eb3209202a19132e220c2fff2e19223c20093396c21e30d93303430e30d403408090a0052f2e19502fa40d45902d101503304c855405054206e9430cf84809201cee212f400ce12cecb3fc9ed54008e821005138d91c80b206ef2d0801bcf165003cf16712651481046103c50c270c815cb1f13cb3f01cf17c9102443005034c8cf8580ca00cf8440ce01fa02806acf40f400c901fb00008e20206ef2d080fa4430f2d08a206ef2d0808210d53276dbc810241037127170c815cb1f13cb3f01cf17c9102443005034c8cf8580ca00cf8440ce01fa02806acf40f400c901fb000036c855405054206e9430cf84809201cee212f400ce12cecb3fc9ed54} B>boc PUSHREF
+""";
+
+cell $NFTItem$_code_child() inline {
+    return $NFTItem$_child_get_code();
+}
+
+(cell, cell) $NFTItem$_init_child(slice $owner, cell $content, slice $editor, slice $collectionAddress, int $itemIndex) inline_ref {
+    ;; Build init code cell
+
+    ;; Contract Code: NFTItem
+    cell init_code = $NFTItem$_child_get_code();
+
+
+    builder b = begin_cell();
+    b = $NFTItem$init$_store(b, ($owner, $content, $editor, $collectionAddress, $itemIndex));
+    return (init_code, b.end_cell());
+}
+
+;;
+;; Contract NFTCollection functions
+;;
+
+(slice, slice, int, cell, cell, (int, int, slice), cell, builder) $NFTCollection$_contract_init(slice $owner, slice $admin, int $nextItemIndex, cell $collectionContent, cell $defaultContent) impure inline {
+    var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = (null(), null(), null(), null(), null(), null(), null(), null());
+    $self'owner = $owner;
+    $self'admin = $admin;
+    $self'nextItemIndex = $nextItemIndex;
+    $self'content = $collectionContent;
+    $self'defaultContent = $defaultContent;
+    ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner) = $RoyaltyParams$_constructor_nominator_dominator_owner(0, 100, $owner);
+    $self'commonCode = $NFTItem$_code_child();
+    $self'commonData = $Builder$_fun_storeAddress($Builder$_fun_storeAddress(store_uint($global_beginCell(), 0, 3), $self'owner), $global_myAddress());
+    return ($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData);
+}
+
+() $global_deployNFTItem(cell $commonCode, int $itemIndex, int $amount, cell $initNFTBody, builder $commonData) impure inline {
+    cell $data = $Builder$_fun_endCell(store_uint($commonData, $itemIndex, 64));
+    $global_deploy($DeployParameters$_constructor_value_body_init_mode($amount, $initNFTBody, $StateInit$_constructor_code_data($commonCode, $data), 1));
+}
+
+(int, slice, int) $global_dictGetMin(cell $dict, int $keySize) impure asm( -> 1 0 2) """
+    DICTUMIN NULLSWAPIFNOT2
+""";
+
+(int, slice, int) $global_dictGetNext(int $pivot, cell $dict, int $keySize) impure asm( -> 1 0 2) """
+    DICTUGETNEXT NULLSWAPIFNOT2
+""";
+
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), (int, cell, slice)) $NFTCollection$_fun_get_collection_data((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
+    tuple $sb = __tact_string_builder_start_string();
+    $sb~__tact_string_builder_append($Slice$_fun_asString($Cell$_fun_asSlice($self'content)));
+    var $fresh$ret_7113 = $CollectionData$_constructor_nextItemIndex_collectionContent_owner($self'nextItemIndex, __tact_string_builder_end($sb), $self'owner);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_7113);
+}
+
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), slice) $NFTCollection$_fun_get_nft_address_by_index((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index) impure inline_ref {
+    var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
+    var ($stateInit'code, $stateInit'data) = $NFTItem$_init_child(null(), null(), $self'owner, $global_myAddress(), $index);
+    var $fresh$ret_7114 = $global_contractAddress(($stateInit'code, $stateInit'data));
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_7114);
+}
+
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), (int, int, slice)) $NFTCollection$_fun_royalty_params((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
+    var $fresh$ret_7115 = ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_7115);
+}
+
+((slice, slice, int, cell, cell, (int, int, slice), cell, builder), cell) $NFTCollection$_fun_get_nft_content((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index, cell $individualNFTContent) impure inline_ref {
+    var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
+    tuple $sb = __tact_string_builder_start_string();
+    $sb~__tact_string_builder_append($Slice$_fun_asString($Cell$_fun_asSlice($individualNFTContent)));
+    var $fresh$ret_7116 = __tact_string_builder_end($sb);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_7116);
+}
+
+;;
+;; Get methods of a Contract NFTCollection
+;;
+
+_ %get_collection_data() method_id(102491) {
+    var self = $NFTCollection$_contract_load();
+    var res = self~$NFTCollection$_fun_get_collection_data();
+    return $CollectionData$_to_external(res);
+}
+
+_ %get_nft_address_by_index(int $index) method_id(92067) {
+    int $index = $index;
+    var self = $NFTCollection$_contract_load();
+    var res = self~$NFTCollection$_fun_get_nft_address_by_index($index);
+    return res;
+}
+
+_ %royalty_params() method_id(85719) {
+    var self = $NFTCollection$_contract_load();
+    var res = self~$NFTCollection$_fun_royalty_params();
+    return $RoyaltyParams$_to_external(res);
+}
+
+_ %get_nft_content(int $index, cell $individualNFTContent) method_id(68445) {
+    int $index = $index;
+    cell $individualNFTContent = $individualNFTContent;
+    var self = $NFTCollection$_contract_load();
+    var res = self~$NFTCollection$_fun_get_nft_content($index, $individualNFTContent);
+    return res;
+}
+
+;;
+;; Routing of a Contract NFTCollection
+;;
+
+;; message opcode reader utility: only binary receivers
+;; Returns 32 bit message opcode, otherwise throws the "Invalid incoming message" exit code
+(slice, int) ~load_opcode_internal(slice s) asm( -> 1 0) "32 LDUQ 130 THROWIFNOT";
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    cs~skip_bits(2);
+    var msg_bounceable = cs~load_int(1);
+    var msg_bounced = cs~load_int(1);
+    slice msg_sender_addr = cs~load_msg_addr();
+    __tact_context = (msg_bounceable, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var ($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData) = $NFTCollection$_contract_load();
+    
+    ;; Handle bounced messages
+    if (msg_bounced) { return (); }
+    int op = 0;
+    int in_msg_length = slice_bits(in_msg);
+    if (in_msg_length >= 32) {
+        op = in_msg~load_uint(32);
+    }
+    ;; Receive DeployNFT message
+    if (op == 1) {
+        var $msg'queryId = in_msg~load_uint(64);
+        var $msg'itemIndex = in_msg~load_uint(64);
+        var $msg'amount = in_msg~load_varuint16();
+        var $msg'initNFTBody = in_msg~load_ref();
+        throw_unless(401, ( (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ));
+        slice $data = $Cell$_fun_beginParse($msg'initNFTBody);
+        $global_deployNFTItem($self'commonCode, $self'nextItemIndex, $msg'amount, $Builder$_fun_endCell($Builder$_fun_storeRef($self'defaultContent, $Builder$_fun_storeAddress($global_beginCell(), $data~$Slice$_fun_loadAddress()))), $self'commonData);
+        $self'nextItemIndex = $self'nextItemIndex + 1;
+        $NFTCollection$_contract_store(($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData));
+        return ();
+    }
+    
+    ;; Receive GetRoyaltyParams message
+    if (op == 0x693d3950) {
+        var $msg'queryId = in_msg~load_uint(64);
+        $global_message($MessageParameters$_constructor_bounce_to_value_body_mode(false, __tact_context_get_sender(), 0, $ReportRoyaltyParams$_store_cell($ReportRoyaltyParams$_constructor_queryId_params($msg'queryId, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner)), begin_cell()), 64));
+        $NFTCollection$_contract_store(($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData));
+        return ();
+    }
+    
+    ;; Receive BatchDeploy message
+    if (op == 2) {
+        var $msg'queryId = in_msg~load_uint(64);
+        var $msg'deployList = in_msg~load_ref();
+        throw_unless(401, ( (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ));
+        var ($currNFTItem'itemIndex, $currNFTItem'item, $currNFTItem'flag) = $global_dictGetMin($msg'deployList, 64);
+        int $counter = 0;
+        while (($currNFTItem'flag)) {
+            $counter = $counter + 1;
+            throw_if(399, ($counter >= 250));
+            throw_unless((403 + $counter), (__tact_not_null($currNFTItem'itemIndex) <= $self'nextItemIndex));
+            var ($dictItem'amount, $dictItem'initNFTBody) = $DictItem$_load_not_mut(__tact_not_null($currNFTItem'item));
+            $global_deployNFTItem($self'commonCode, __tact_not_null($currNFTItem'itemIndex), $dictItem'amount, $dictItem'initNFTBody, $self'commonData);
+            if ((__tact_not_null($currNFTItem'itemIndex) == $self'nextItemIndex)) {
+                $self'nextItemIndex = $self'nextItemIndex + 1;
+            }
+            ($currNFTItem'itemIndex, $currNFTItem'item, $currNFTItem'flag) = $global_dictGetNext(__tact_not_null($currNFTItem'itemIndex), $msg'deployList, 64);
+        }
+        $NFTCollection$_contract_store(($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData));
+        return ();
+    }
+    
+    ;; Receive ChangeOwner message
+    if (op == 3) {
+        var $msg'queryId = in_msg~load_uint(64);
+        var $msg'newOwner = in_msg~load_msg_addr();
+        throw_unless(401, ( (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ));
+        $self'admin = $msg'newOwner;
+        $NFTCollection$_contract_store(($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData));
+        return ();
+    }
+    
+    ;; Receive empty message
+    if ((op == 0) & (in_msg_length <= 32)) {
+        $NFTCollection$_contract_store(($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData));
+        return ();
+    }
+    ;; Throw if not handled
+    throw(130);
+}
+
+
+() __tact_selector_hack_asm() impure asm """
+@atend @ 1 {
+        execute current@ context@ current!
+        {
+            // The core idea of this function is to save gas by avoiding unnecessary dict jump, when recv_internal/recv_external is called
+            // We want to extract recv_internal/recv_external from the dict and select needed function
+            // not by jumping to the needed function by it's index, but by using usual IF statements.
+
+            }END> b> // Close previous builder, now we have a cell of previous code on top of the stack
+
+            <{ // Start of the new code builder
+                SETCP0
+                // Swap the new code builder with the previous code, now we have previous code on top of the stack
+                swap
+                // Transform cell to slice and load first ref from the previous code, now we have the dict on top of the stack
+                <s ref@
+
+                // Extract the recv_internal from the dict
+                dup 0 swap @procdictkeylen idict@ { "internal shortcut error" abort } ifnot
+                swap
+
+                // Delete the recv_internal from the dict
+                0 swap @procdictkeylen idict- drop
+                // Delete the recv_external from the dict (it's okay if it's not there)
+                -1 swap @procdictkeylen idict- drop
+                // Delete the __tact_selector_hack from the dict
+                65535 swap @procdictkeylen idict- drop
+
+                // Bring the code builder from the bottom of the stack
+                // because if recv_external extraction is optional, and the number of elements on the stack is not fixed
+                depth 1- roll
+                // Swap with the dict from which we extracted recv_internal and (maybe) recv_external
+                swap
+
+                // Check if the dict is empty
+                dup null?
+                // Store a copy of this flag in the bottom of the stack
+                dup depth 1- -roll
+                {
+                    // If the dict is empty, just drop it (it will be null if it's empty)
+                    drop
+                }
+                {
+                    // If the dict is not empty, prepare continuation to be stored in c3
+                    <{
+                        // Save this dict as first ref in this continuation, it will be pushed in runtime by DICTPUSHCONST
+                        swap @procdictkeylen DICTPUSHCONST
+                        // Jump to the needed function by it's index
+                        DICTIGETJMPZ
+                        // If such key is not found, throw 11 along with the key as an argument
+                        11 THROWARG
+                    }> PUSHCONT
+                    // Store the continuation in c3
+                    c3 POP
+                } cond
+
+                // Function id is on top of the (runtime) stack
+                DUP IFNOTJMP:<{
+                    // place recv_internal here
+                    DROP swap @addop
+                }>
+
+                // Bring back the flag, indicating if the dict is empty or not from the bottom of the stack
+                depth 1- roll
+                {
+                    // If the dict is empty, throw 11
+                    11 THROWARG
+                }
+                {
+                    // If the dict is not empty, jump to continuation from c3
+                    c3 PUSH JMPX
+                } cond
+            }> b>
+        } : }END>c
+        current@ context! current!
+    } does @atend !
+""";
+
+() __tact_selector_hack() method_id(65535) {
+    return __tact_selector_hack_asm();
+}
