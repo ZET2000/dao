@@ -1,20 +1,20 @@
 import { Blockchain, SandboxContract } from '@ton/sandbox';
 import { toNano } from '@ton/core';
-import { BlankContract } from '../dist/tact_BlankContract';
+import { MasterDAO } from '../dist/tact_MasterDAO';
 import '@ton/test-utils';
 
-describe('BlankContract', () => {
+describe('MasterDAO', () => {
 let blockchain: Blockchain;
-let blankContract: SandboxContract<BlankContract>;
+let masterContract: SandboxContract<MasterDAO>;
 
 beforeEach(async () => {
     blockchain = await Blockchain.create();
 
-    blankContract = blockchain.openContract(await BlankContract.fromInit());
+    masterContract = blockchain.openContract(await MasterDAO.fromInit());
 
     const deployer = await blockchain.treasury('deployer');
 
-    const deployResult = await blankContract.send(
+    const deployResult = await masterContract.send(
         deployer.getSender(),
         {
             value: toNano('0.05'),
@@ -27,7 +27,7 @@ beforeEach(async () => {
 
     expect(deployResult.transactions).toHaveTransaction({
         from: deployer.address,
-        to: blankContract.address,
+        to: masterContract.address,
         deploy: true,
         success: true,
     });
