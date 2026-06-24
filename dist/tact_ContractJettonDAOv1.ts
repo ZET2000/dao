@@ -3843,6 +3843,7 @@ export type OptionInfoRoot = {
     address: Address;
     title: string;
     description: string;
+    amount: bigint;
 }
 
 export function storeOptionInfoRoot(src: OptionInfoRoot) {
@@ -3851,6 +3852,7 @@ export function storeOptionInfoRoot(src: OptionInfoRoot) {
         b_0.storeAddress(src.address);
         b_0.storeStringRefTail(src.title);
         b_0.storeStringRefTail(src.description);
+        b_0.storeUint(src.amount, 64);
     };
 }
 
@@ -3859,21 +3861,24 @@ export function loadOptionInfoRoot(slice: Slice) {
     const _address = sc_0.loadAddress();
     const _title = sc_0.loadStringRefTail();
     const _description = sc_0.loadStringRefTail();
-    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description };
+    const _amount = sc_0.loadUintBig(64);
+    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description, amount: _amount };
 }
 
 export function loadTupleOptionInfoRoot(source: TupleReader) {
     const _address = source.readAddress();
     const _title = source.readString();
     const _description = source.readString();
-    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description };
+    const _amount = source.readBigNumber();
+    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description, amount: _amount };
 }
 
 export function loadGetterTupleOptionInfoRoot(source: TupleReader) {
     const _address = source.readAddress();
     const _title = source.readString();
     const _description = source.readString();
-    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description };
+    const _amount = source.readBigNumber();
+    return { $$type: 'OptionInfoRoot' as const, address: _address, title: _title, description: _description, amount: _amount };
 }
 
 export function storeTupleOptionInfoRoot(source: OptionInfoRoot) {
@@ -3881,6 +3886,7 @@ export function storeTupleOptionInfoRoot(source: OptionInfoRoot) {
     builder.writeAddress(source.address);
     builder.writeString(source.title);
     builder.writeString(source.description);
+    builder.writeNumber(source.amount);
     return builder.build();
 }
 
@@ -4111,6 +4117,69 @@ export function dictValueParserTakeDAOVoteStruct(): DictionaryValue<TakeDAOVoteS
     }
 }
 
+export type WinnerInfo = {
+    $$type: 'WinnerInfo';
+    address: Address | null;
+    amount: bigint;
+    total: bigint;
+    finished: boolean;
+}
+
+export function storeWinnerInfo(src: WinnerInfo) {
+    return (builder: Builder) => {
+        const b_0 = builder;
+        b_0.storeAddress(src.address);
+        b_0.storeUint(src.amount, 64);
+        b_0.storeUint(src.total, 64);
+        b_0.storeBit(src.finished);
+    };
+}
+
+export function loadWinnerInfo(slice: Slice) {
+    const sc_0 = slice;
+    const _address = sc_0.loadMaybeAddress();
+    const _amount = sc_0.loadUintBig(64);
+    const _total = sc_0.loadUintBig(64);
+    const _finished = sc_0.loadBit();
+    return { $$type: 'WinnerInfo' as const, address: _address, amount: _amount, total: _total, finished: _finished };
+}
+
+export function loadTupleWinnerInfo(source: TupleReader) {
+    const _address = source.readAddressOpt();
+    const _amount = source.readBigNumber();
+    const _total = source.readBigNumber();
+    const _finished = source.readBoolean();
+    return { $$type: 'WinnerInfo' as const, address: _address, amount: _amount, total: _total, finished: _finished };
+}
+
+export function loadGetterTupleWinnerInfo(source: TupleReader) {
+    const _address = source.readAddressOpt();
+    const _amount = source.readBigNumber();
+    const _total = source.readBigNumber();
+    const _finished = source.readBoolean();
+    return { $$type: 'WinnerInfo' as const, address: _address, amount: _amount, total: _total, finished: _finished };
+}
+
+export function storeTupleWinnerInfo(source: WinnerInfo) {
+    const builder = new TupleBuilder();
+    builder.writeAddress(source.address);
+    builder.writeNumber(source.amount);
+    builder.writeNumber(source.total);
+    builder.writeBoolean(source.finished);
+    return builder.build();
+}
+
+export function dictValueParserWinnerInfo(): DictionaryValue<WinnerInfo> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeWinnerInfo(src)).endCell());
+        },
+        parse: (src) => {
+            return loadWinnerInfo(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type SliceBitsAndRefs = {
     $$type: 'SliceBitsAndRefs';
     bits: bigint;
@@ -4172,6 +4241,7 @@ export type ContractDAOv1$Data = {
     metadata: Cell;
     settings: VoteSettings;
     options: Dictionary<Address, OptionInfoRoot>;
+    winner: WinnerInfo;
 }
 
 export function storeContractDAOv1$Data(src: ContractDAOv1$Data) {
@@ -4186,6 +4256,7 @@ export function storeContractDAOv1$Data(src: ContractDAOv1$Data) {
         b_1.storeRef(src.metadata);
         b_1.store(storeVoteSettings(src.settings));
         b_1.storeDict(src.options, Dictionary.Keys.Address(), dictValueParserOptionInfoRoot());
+        b_1.store(storeWinnerInfo(src.winner));
         b_0.storeRef(b_1.endCell());
     };
 }
@@ -4201,7 +4272,8 @@ export function loadContractDAOv1$Data(slice: Slice) {
     const _metadata = sc_1.loadRef();
     const _settings = loadVoteSettings(sc_1);
     const _options = Dictionary.load(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), sc_1);
-    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadWinnerInfo(sc_1);
+    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function loadTupleContractDAOv1$Data(source: TupleReader) {
@@ -4213,7 +4285,8 @@ export function loadTupleContractDAOv1$Data(source: TupleReader) {
     const _metadata = source.readCell();
     const _settings = loadTupleVoteSettings(source);
     const _options = Dictionary.loadDirect(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), source.readCellOpt());
-    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadTupleWinnerInfo(source);
+    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function loadGetterTupleContractDAOv1$Data(source: TupleReader) {
@@ -4225,7 +4298,8 @@ export function loadGetterTupleContractDAOv1$Data(source: TupleReader) {
     const _metadata = source.readCell();
     const _settings = loadGetterTupleVoteSettings(source);
     const _options = Dictionary.loadDirect(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), source.readCellOpt());
-    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadGetterTupleWinnerInfo(source);
+    return { $$type: 'ContractDAOv1$Data' as const, owner: _owner, admin: _admin, wallet: _wallet, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function storeTupleContractDAOv1$Data(source: ContractDAOv1$Data) {
@@ -4238,6 +4312,7 @@ export function storeTupleContractDAOv1$Data(source: ContractDAOv1$Data) {
     builder.writeCell(source.metadata);
     builder.writeTuple(storeTupleVoteSettings(source.settings));
     builder.writeCell(source.options.size > 0 ? beginCell().storeDictDirect(source.options, Dictionary.Keys.Address(), dictValueParserOptionInfoRoot()).endCell() : null);
+    builder.writeTuple(storeTupleWinnerInfo(source.winner));
     return builder.build();
 }
 
@@ -4261,6 +4336,7 @@ export type ContractDAOv2$Data = {
     metadata: Cell;
     settings: VoteSettings;
     options: Dictionary<Address, OptionInfoRoot>;
+    winner: WinnerInfo;
 }
 
 export function storeContractDAOv2$Data(src: ContractDAOv2$Data) {
@@ -4274,6 +4350,7 @@ export function storeContractDAOv2$Data(src: ContractDAOv2$Data) {
         const b_1 = new Builder();
         b_1.store(storeVoteSettings(src.settings));
         b_1.storeDict(src.options, Dictionary.Keys.Address(), dictValueParserOptionInfoRoot());
+        b_1.store(storeWinnerInfo(src.winner));
         b_0.storeRef(b_1.endCell());
     };
 }
@@ -4288,7 +4365,8 @@ export function loadContractDAOv2$Data(slice: Slice) {
     const sc_1 = sc_0.loadRef().beginParse();
     const _settings = loadVoteSettings(sc_1);
     const _options = Dictionary.load(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), sc_1);
-    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadWinnerInfo(sc_1);
+    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function loadTupleContractDAOv2$Data(source: TupleReader) {
@@ -4299,7 +4377,8 @@ export function loadTupleContractDAOv2$Data(source: TupleReader) {
     const _metadata = source.readCell();
     const _settings = loadTupleVoteSettings(source);
     const _options = Dictionary.loadDirect(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), source.readCellOpt());
-    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadTupleWinnerInfo(source);
+    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function loadGetterTupleContractDAOv2$Data(source: TupleReader) {
@@ -4310,7 +4389,8 @@ export function loadGetterTupleContractDAOv2$Data(source: TupleReader) {
     const _metadata = source.readCell();
     const _settings = loadGetterTupleVoteSettings(source);
     const _options = Dictionary.loadDirect(Dictionary.Keys.Address(), dictValueParserOptionInfoRoot(), source.readCellOpt());
-    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options };
+    const _winner = loadGetterTupleWinnerInfo(source);
+    return { $$type: 'ContractDAOv2$Data' as const, owner: _owner, admin: _admin, master: _master, status: _status, metadata: _metadata, settings: _settings, options: _options, winner: _winner };
 }
 
 export function storeTupleContractDAOv2$Data(source: ContractDAOv2$Data) {
@@ -4322,6 +4402,7 @@ export function storeTupleContractDAOv2$Data(source: ContractDAOv2$Data) {
     builder.writeCell(source.metadata);
     builder.writeTuple(storeTupleVoteSettings(source.settings));
     builder.writeCell(source.options.size > 0 ? beginCell().storeDictDirect(source.options, Dictionary.Keys.Address(), dictValueParserOptionInfoRoot()).endCell() : null);
+    builder.writeTuple(storeTupleWinnerInfo(source.winner));
     return builder.build();
 }
 
@@ -6133,14 +6214,15 @@ const ContractJettonDAOv1_types: ABIType[] = [
     {"name":"TokenInfo","header":null,"fields":[{"name":"jetton_master","type":{"kind":"simple","type":"address","optional":false}},{"name":"jetton_fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"DaoToken","header":null,"fields":[{"name":"jetton_wallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"dao_fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"OptionInfo","header":null,"fields":[{"name":"title","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}}]},
-    {"name":"OptionInfoRoot","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"title","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}}]},
+    {"name":"OptionInfoRoot","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"title","type":{"kind":"simple","type":"string","optional":false}},{"name":"description","type":{"kind":"simple","type":"string","optional":false}},{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
     {"name":"VoteSettings","header":null,"fields":[{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"min_amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"quorum","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
     {"name":"StartNewVotingStruct","header":null,"fields":[{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}}]},
     {"name":"StartNewVotingTestStruct","header":null,"fields":[{"name":"endTime","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"min_amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"fee","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
     {"name":"TakeDAOVoteStruct","header":null,"fields":[{"name":"adminAddress","type":{"kind":"simple","type":"address","optional":false}},{"name":"optionAddress","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"WinnerInfo","header":null,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":true}},{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"total","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"finished","type":{"kind":"simple","type":"bool","optional":false}}]},
     {"name":"SliceBitsAndRefs","header":null,"fields":[{"name":"bits","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"refs","type":{"kind":"simple","type":"int","optional":false,"format":257}}]},
-    {"name":"ContractDAOv1$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"wallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"master","type":{"kind":"simple","type":"address","optional":false}},{"name":"status","type":{"kind":"simple","type":"uint","optional":false,"format":4}},{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}},{"name":"options","type":{"kind":"dict","key":"address","value":"OptionInfoRoot","valueFormat":"ref"}}]},
-    {"name":"ContractDAOv2$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"master","type":{"kind":"simple","type":"address","optional":false}},{"name":"status","type":{"kind":"simple","type":"uint","optional":false,"format":4}},{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}},{"name":"options","type":{"kind":"dict","key":"address","value":"OptionInfoRoot","valueFormat":"ref"}}]},
+    {"name":"ContractDAOv1$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"wallet","type":{"kind":"simple","type":"address","optional":false}},{"name":"master","type":{"kind":"simple","type":"address","optional":false}},{"name":"status","type":{"kind":"simple","type":"uint","optional":false,"format":4}},{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}},{"name":"options","type":{"kind":"dict","key":"address","value":"OptionInfoRoot","valueFormat":"ref"}},{"name":"winner","type":{"kind":"simple","type":"WinnerInfo","optional":false}}]},
+    {"name":"ContractDAOv2$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"master","type":{"kind":"simple","type":"address","optional":false}},{"name":"status","type":{"kind":"simple","type":"uint","optional":false,"format":4}},{"name":"metadata","type":{"kind":"simple","type":"cell","optional":false}},{"name":"settings","type":{"kind":"simple","type":"VoteSettings","optional":false}},{"name":"options","type":{"kind":"dict","key":"address","value":"OptionInfoRoot","valueFormat":"ref"}},{"name":"winner","type":{"kind":"simple","type":"WinnerInfo","optional":false}}]},
     {"name":"NFTCollection$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"admin","type":{"kind":"simple","type":"address","optional":false}},{"name":"nextItemIndex","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"content","type":{"kind":"simple","type":"cell","optional":false}},{"name":"defaultContent","type":{"kind":"simple","type":"cell","optional":false}},{"name":"royaltyParams","type":{"kind":"simple","type":"RoyaltyParams","optional":false}},{"name":"commonCode","type":{"kind":"simple","type":"cell","optional":false}},{"name":"commonData","type":{"kind":"simple","type":"builder","optional":false}}]},
     {"name":"DictGet","header":null,"fields":[{"name":"itemIndex","type":{"kind":"simple","type":"uint","optional":true,"format":64}},{"name":"item","type":{"kind":"simple","type":"slice","optional":true}},{"name":"flag","type":{"kind":"simple","type":"int","optional":false,"format":257}}]},
     {"name":"DictItem","header":null,"fields":[{"name":"amount","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}},{"name":"initNFTBody","type":{"kind":"simple","type":"cell","optional":false}}]},

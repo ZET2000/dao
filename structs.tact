@@ -19,6 +19,7 @@ struct OptionInfoRoot {
     address: Address;
     title: String;
     description: String;
+    amount: Int as uint64;
 }
 
 struct VoteSettings {
@@ -41,4 +42,11 @@ struct StartNewVotingTestStruct {
 struct TakeDAOVoteStruct {
     adminAddress: Address;
     optionAddress: Address;
+}
+
+struct WinnerInfo {
+    address: Address?;
+    amount: Int as uint64;
+    total: Int as uint64;
+    finished: Bool;
 }

@@ -29,3 +29,16 @@ struct SliceBitsAndRefs {
 asm fun calculateSliceBitsAndRefs(slice: Slice): SliceBitsAndRefs {
     SBITREFS
 }
+
+inline fun checkWinner(data: map<Address, OptionInfoRoot>, total: Int): WinnerInfo {
+    let winnerAddress: Address? = null;
+    let winnerVotes: Int = -1;
+
+    foreach (key, value in data) {
+        let more: Bool = value.amount > winnerVotes;
+        winnerVotes = more ? value.amount : winnerVotes;
+        winnerAddress = more ? key : winnerAddress;
+    }
+
+    return WinnerInfo{address: winnerAddress, amount: winnerVotes, total: total, finished: true};
+}

@@ -10,7 +10,7 @@ import "./nft/nft-minter.tact";
 import "./nft/messages.tact";
 import "./DAOCitizen.tact";
 
-contract MasterDAO with Deployable {
+contract MasterDAO {
     owner: Address;
     treasury: Address;
     fees: Int as coins;
@@ -18,9 +18,9 @@ contract MasterDAO with Deployable {
     collection: Address;
     token: DaoToken?;
 
-    init(owner: Address) {
+    init(owner: Address, treasury: Address) {
         self.owner = owner;
-        self.treasury = owner;
+        self.treasury = treasury;
         self.fees = 0;
         self.admins = emptyMap();
         self.collection = owner;
@@ -32,24 +32,6 @@ contract MasterDAO with Deployable {
     receive(msg: DropCollection) {
         require(sender() == self.owner, "access denied");
         self.collection = msg.address;
-    }
-
-    receive(msg: GetFunds) {
-        require(sender() == self.owner, "access denied");
-        
-        send(SendParameters{
-            to: msg.jettonWallet,
-            value: ton("0.05"),
-            body: JettonTransfer{
-                queryId: 42,
-                amount: msg.jettonAmount,
-                destination: self.treasury,
-                responseDestination: self.treasury,
-                customPayload: null,
-                forwardTonAmount: 1,
-                forwardPayload: rawSlice("F")
-            }.toCell()
-        });
     }
 
     receive(msg: PassPassport) {
@@ -114,6 +96,7 @@ contract MasterDAO with Deployable {
             msg.metadata,
             msg.settings,
             emptyMap(),
+            WinnerInfo{address: null, amount: 0, total: 0, finished: false}
         );
 
         deploy(DeployParameters{
@@ -147,6 +130,7 @@ contract MasterDAO with Deployable {
                 metadata,
                 settings,
                 emptyMap(),
+                WinnerInfo{address: null, amount: 0, total: 0, finished: false}
             );
 
             deploy(DeployParameters{
@@ -189,6 +173,20 @@ contract MasterDAO with Deployable {
                 init: init,
                 value: ctx.value,
                 body: "init".asComment()
+            });
+        
+            send(SendParameters{
+                to: sender(),
+                value: ton("0.05"),
+                body: JettonTransfer{
+                    queryId: 42,
+                    amount: msg.amount,
+                    destination: self.treasury,
+                    responseDestination: self.treasury,
+                    customPayload: null,
+                    forwardTonAmount: 1,
+                    forwardPayload: rawSlice("F")
+                }.toCell()
             });
         }
     }

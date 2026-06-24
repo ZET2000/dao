@@ -280,8 +280,8 @@ builder $ContractJettonDAOv1$_store(builder build_0, (slice, slice, slice, slice
 
 ((slice, slice, slice, slice, int), slice) $ContractJettonDAOv1$_fun_get_option((slice, slice, slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'option, $self'wallet, $self'amount)) = $self;
-    var $fresh$ret_7226 = $self'option;
-    return (($self'owner, $self'admin, $self'option, $self'wallet, $self'amount), $fresh$ret_7226);
+    var $fresh$ret_7818 = $self'option;
+    return (($self'owner, $self'admin, $self'option, $self'wallet, $self'amount), $fresh$ret_7818);
 }
 
 ;;

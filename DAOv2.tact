@@ -16,6 +16,7 @@ contract ContractDAOv2(
     metadata: Cell,
     settings: VoteSettings,
     options: map<Address, OptionInfoRoot>,
+    winner: WinnerInfo,
 ) {
     receive("init") {
         require(sender() == self.owner, "access denied");
@@ -77,6 +78,16 @@ contract ContractDAOv2(
         let expectedAddress: Address = contractAddress(initOf ContractVirtualDAOv2(myAddress(), msg.adminAddress, null, 0));
         require(sender() == expectedAddress, "unknown wallet");
 
+        self.winner.total += 1;
+        let option: OptionInfoRoot = self.options.get(msg.optionAddress)!!;
+
+        self.options.set(msg.optionAddress, OptionInfoRoot{
+            address: msg.optionAddress,
+            title: option.title,
+            description: option.description,
+            amount: option.amount + 1
+        });
+
         send(SendParameters{
             to: self.master,
             value: ton("0.05"),
@@ -99,6 +110,16 @@ contract ContractDAOv2(
 
         let expectedAddress: Address = contractAddress(initOf ContractVirtualDAOv2(myAddress(), msg.adminAddress, null, 0));
         require(sender() == expectedAddress, "unknown wallet");
+        
+        self.winner.total -= 1;
+        let option: OptionInfoRoot = self.options.get(msg.optionAddress)!!;
+
+        self.options.set(msg.optionAddress, OptionInfoRoot{
+            address: msg.optionAddress,
+            title: option.title,
+            description: option.description,
+            amount: option.amount - 1
+        });
 
         send(SendParameters{
             to: self.master,
@@ -128,7 +149,8 @@ contract ContractDAOv2(
         self.options.set(contractAddress(init), OptionInfoRoot{
             address: contractAddress(init),
             title: msg.title,
-            description: msg.description
+            description: msg.description,
+            amount: 0
         });
 
         deploy(DeployParameters{
@@ -148,17 +170,29 @@ contract ContractDAOv2(
         self.status = 1;
     }
 
-    receive("wd") {
-        require(sender() == self.admin || sender() == self.owner, "access denied");
+    receive("finalize") {
         require(self.status == 1, "wrong operation");
         require(self.settings.endTime < now(), "vote time is not over");
 
-        send(SendParameters{
-            to: self.admin,
-            value: 0,
-            mode: SendRemainingBalance,
-            body: "cashout".asComment()
-        });
+        if (self.settings.quorum > self.winner.total) {
+            self.winner = WinnerInfo{address: null, amount: self.winner.amount, total: self.winner.total, finished: true};
+
+            send(SendParameters{
+                to: self.admin,
+                value: 0,
+                mode: SendRemainingBalance,
+                body: "finished".asComment()
+            });
+        } else {
+            self.winner = checkWinner(self.options, self.winner.total);
+
+            send(SendParameters{
+                to: self.admin,
+                value: 0,
+                mode: SendRemainingBalance,
+                body: "finished".asComment()
+            });
+        }
     }
 
     receive() { return }
@@ -173,5 +207,9 @@ contract ContractDAOv2(
 
     get fun get_status(): Int {
         return self.status;
+    }
+
+    get fun get_results(): WinnerInfo {
+        return self.winner;
     }
 }

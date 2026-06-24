@@ -3,7 +3,7 @@ Contract: ContractVaultDAOv1
 BoC Size: 189 bytes
 
 ## Structures (Structs and Messages)
-Total structures: 101
+Total structures: 102
 
 ### DataSize
 TL-B: `_ cells:int257 bits:int257 refs:int257 = DataSize`
@@ -274,8 +274,8 @@ TL-B: `_ title:^string description:^string = OptionInfo`
 Signature: `OptionInfo{title:^string,description:^string}`
 
 ### OptionInfoRoot
-TL-B: `_ address:address title:^string description:^string = OptionInfoRoot`
-Signature: `OptionInfoRoot{address:address,title:^string,description:^string}`
+TL-B: `_ address:address title:^string description:^string amount:uint64 = OptionInfoRoot`
+Signature: `OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}`
 
 ### VoteSettings
 TL-B: `_ endTime:uint64 min_amount:coins quorum:uint32 = VoteSettings`
@@ -293,17 +293,21 @@ Signature: `StartNewVotingTestStruct{endTime:uint64,min_amount:coins,fee:coins}`
 TL-B: `_ adminAddress:address optionAddress:address = TakeDAOVoteStruct`
 Signature: `TakeDAOVoteStruct{adminAddress:address,optionAddress:address}`
 
+### WinnerInfo
+TL-B: `_ address:address amount:uint64 total:uint64 finished:bool = WinnerInfo`
+Signature: `WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool}`
+
 ### SliceBitsAndRefs
 TL-B: `_ bits:int257 refs:int257 = SliceBitsAndRefs`
 Signature: `SliceBitsAndRefs{bits:int257,refs:int257}`
 
 ### ContractDAOv1$Data
-TL-B: `_ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv1`
-Signature: `ContractDAOv1{owner:address,admin:address,wallet:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
+TL-B: `_ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}> winner:WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool} = ContractDAOv1`
+Signature: `ContractDAOv1{owner:address,admin:address,wallet:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}>,winner:WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool}}`
 
 ### ContractDAOv2$Data
-TL-B: `_ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv2`
-Signature: `ContractDAOv2{owner:address,admin:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}>}`
+TL-B: `_ owner:address admin:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}> winner:WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool} = ContractDAOv2`
+Signature: `ContractDAOv2{owner:address,admin:address,master:address,status:uint4,metadata:^cell,settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32},options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}>,winner:WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool}}`
 
 ### NFTCollection$Data
 TL-B: `_ owner:address admin:address nextItemIndex:uint64 content:^cell defaultContent:^cell royaltyParams:RoyaltyParams{nominator:uint16,dominator:uint16,owner:address} commonCode:^cell commonData:^builder = NFTCollection`

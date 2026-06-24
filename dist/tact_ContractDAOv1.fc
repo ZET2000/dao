@@ -20,6 +20,12 @@ slice __tact_context_get_sender() inline;
 ;; __tact_dict_get_slice_cell
 cell __tact_dict_get_slice_cell(cell d, int kl, slice k) inline;
 
+;; __tact_dict_min_slice_cell
+(slice, cell, int) __tact_dict_min_slice_cell(cell d, int kl) inline;
+
+;; __tact_dict_next_slice_cell
+(slice, cell, int) __tact_dict_next_slice_cell(cell d, int kl, slice pivot) inline;
+
 ;; __tact_dict_set_slice_cell
 (cell, ()) __tact_dict_set_slice_cell(cell d, int kl, slice k, cell v) inline;
 
@@ -66,31 +72,40 @@ cell $CallTo$_store_cell((int, slice, int, cell) v, builder b) inline;
 builder $OptionInfo$_store(builder build_0, (slice, slice) v) inline;
 
 ;; $OptionInfoRoot$_store
-builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice) v) inline;
+builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice, int) v) inline;
 
 ;; $OptionInfoRoot$_store_cell
-cell $OptionInfoRoot$_store_cell((slice, slice, slice) v, builder b) inline;
+cell $OptionInfoRoot$_store_cell((slice, slice, slice, int) v, builder b) inline;
 
 ;; $OptionInfoRoot$_load
-(slice, ((slice, slice, slice))) $OptionInfoRoot$_load(slice sc_0) inline;
+(slice, ((slice, slice, slice, int))) $OptionInfoRoot$_load(slice sc_0) inline;
 
 ;; $OptionInfoRoot$_as_optional
-tuple $OptionInfoRoot$_as_optional((slice, slice, slice) v) inline;
+tuple $OptionInfoRoot$_as_optional((slice, slice, slice, int) v) inline;
 
 ;; $OptionInfoRoot$_load_opt
 tuple $OptionInfoRoot$_load_opt(cell cl) inline;
 
+;; $WinnerInfo$_store
+builder $WinnerInfo$_store(builder build_0, (slice, int, int, int) v) inline;
+
+;; $WinnerInfo$_load
+(slice, ((slice, int, int, int))) $WinnerInfo$_load(slice sc_0) inline;
+
 ;; $ContractDAOv1$_store
-builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int, cell, (int, int, int), cell) v) inline;
+builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) v) inline;
 
 ;; $ContractDAOv1$_load
-(slice, ((slice, slice, slice, slice, int, cell, (int, int, int), cell))) $ContractDAOv1$_load(slice sc_0) inline;
+(slice, ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)))) $ContractDAOv1$_load(slice sc_0) inline;
 
 ;; $OptionInfoRoot$_not_null
-((slice, slice, slice)) $OptionInfoRoot$_not_null(tuple v) inline;
+((slice, slice, slice, int)) $OptionInfoRoot$_not_null(tuple v) inline;
 
 ;; $VoteSettings$_to_external
 (int, int, int) $VoteSettings$_to_external(((int, int, int)) v) inline;
+
+;; $WinnerInfo$_to_external
+(slice, int, int, int) $WinnerInfo$_to_external(((slice, int, int, int)) v) inline;
 
 ;; $GovernanceJettonMinter$init$_store
 builder $GovernanceJettonMinter$init$_store(builder build_0, (int, slice, slice, cell) v) inline;
@@ -102,10 +117,10 @@ builder $ContractVaultDAOv1$init$_store(builder build_0, (slice, int, (slice, sl
 builder $ContractJettonDAOv1$init$_store(builder build_0, (slice, slice, slice, slice, int) v) inline;
 
 ;; $ContractDAOv1$_contract_load
-(slice, slice, slice, slice, int, cell, (int, int, int), cell) $ContractDAOv1$_contract_load() impure inline;
+(slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $ContractDAOv1$_contract_load() impure inline;
 
 ;; $ContractDAOv1$_contract_store
-() $ContractDAOv1$_contract_store((slice, slice, slice, slice, int, cell, (int, int, int), cell) v) impure inline;
+() $ContractDAOv1$_contract_store((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) v) impure inline;
 
 ;; $Cell$_fun_asSlice
 slice $Cell$_fun_asSlice(cell $self) impure inline;
@@ -119,17 +134,26 @@ slice $global_contractAddressExt(int $chain, cell $code, cell $data) impure inli
 ;; $global_contractAddress
 slice $global_contractAddress((cell, cell) $s) impure inline;
 
+;; $WinnerInfo$_constructor_address_amount_total_finished
+((slice, int, int, int)) $WinnerInfo$_constructor_address_amount_total_finished(slice $address, int $amount, int $total, int $finished) inline;
+
+;; $global_checkWinner
+(slice, int, int, int) $global_checkWinner(cell $data, int $total) impure inline;
+
 ;; $Builder$_fun_asSlice
 slice $Builder$_fun_asSlice(builder $self) impure inline;
 
 ;; $ContractDAOv1$_fun_get_options
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), cell) $ContractDAOv1$_fun_get_options((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), cell) $ContractDAOv1$_fun_get_options((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref;
 
 ;; $ContractDAOv1$_fun_get_settings
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), (int, int, int)) $ContractDAOv1$_fun_get_settings((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (int, int, int)) $ContractDAOv1$_fun_get_settings((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref;
 
 ;; $ContractDAOv1$_fun_get_status
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), int) $ContractDAOv1$_fun_get_status((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref;
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), int) $ContractDAOv1$_fun_get_status((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref;
+
+;; $ContractDAOv1$_fun_get_results
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (slice, int, int, int)) $ContractDAOv1$_fun_get_results((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref;
 
 ;; $GovernanceJettonMinter$_init_child
 (cell, cell) $GovernanceJettonMinter$_init_child(int $totalSupply, slice $adminAddress, slice $nextAdminAddress, cell $jettonContent) inline_ref;
@@ -139,6 +163,9 @@ slice $Builder$_fun_asSlice(builder $self) impure inline;
 
 ;; $ContractJettonDAOv1$_init_child
 (cell, cell) $ContractJettonDAOv1$_init_child(slice $owner, slice $admin, slice $option, slice $wallet, int $amount) inline_ref;
+
+;; $OptionInfoRoot$_constructor_address_title_description_amount
+((slice, slice, slice, int)) $OptionInfoRoot$_constructor_address_title_description_amount(slice $address, slice $title, slice $description, int $amount) inline;
 
 ;; $DeployParameters$_constructor_init_value_body
 ((int, cell, int, int, (cell, cell))) $DeployParameters$_constructor_init_value_body((cell, cell) $init, int $value, cell $body) inline;
@@ -164,9 +191,6 @@ slice $Builder$_fun_asSlice(builder $self) impure inline;
 ;; $OptionInfo$_constructor_title_description
 ((slice, slice)) $OptionInfo$_constructor_title_description(slice $title, slice $description) inline;
 
-;; $OptionInfoRoot$_constructor_address_title_description
-((slice, slice, slice)) $OptionInfoRoot$_constructor_address_title_description(slice $address, slice $title, slice $description) inline;
-
 ;; $SendParameters$_constructor_to_value_code_data_body
 ((int, cell, cell, cell, int, slice, int)) $SendParameters$_constructor_to_value_code_data_body(slice $to, int $value, cell $code, cell $data, cell $body) inline;
 
@@ -185,6 +209,18 @@ global (int, slice, int, slice) __tact_context;
 global slice __tact_context_sender;
 global cell __tact_child_contract_codes;
 global int __tact_randomized;
+
+(slice, slice) __tact_load_address_opt(slice cs) asm """
+
+            b{00} SDBEGINSQ
+            IF:<{
+              PUSHNULL
+            }>ELSE<{
+              LDMSGADDR
+              SWAP
+            }>
+
+""";
 
 builder __tact_store_addr_none(builder b) asm "b{00} STSLICECONST";
 
@@ -208,6 +244,14 @@ builder __tact_store_address_opt(builder b, slice address) inline {
     DICTGETREF NULLSWAPIFNOT
 """;
 
+(slice, cell, int) __tact_dict_min_ref(cell dict, int key_len) asm(dict key_len -> 1 0 2) """
+    DICTMINREF NULLSWAPIFNOT2
+""";
+
+(slice, slice, int) __tact_dict_next(cell dict, int key_len, slice pivot) asm(pivot dict key_len -> 1 0 2) """
+    DICTGETNEXT NULLSWAPIFNOT2
+""";
+
 (int, slice, int, slice) __tact_context_get() inline {
     return __tact_context;
 }
@@ -216,12 +260,12 @@ slice __tact_context_get_sender() inline {
     return __tact_context_sender;
 }
 
-forall X0, X1, X2 -> tuple __tact_tuple_create_3((X0, X1, X2) v) asm """
-    3 TUPLE
+forall X0, X1, X2, X3 -> tuple __tact_tuple_create_4((X0, X1, X2, X3) v) asm """
+    4 TUPLE
 """;
 
-forall X0, X1, X2 -> (X0, X1, X2) __tact_tuple_destroy_3(tuple v) asm """
-    3 UNTUPLE
+forall X0, X1, X2, X3 -> (X0, X1, X2, X3) __tact_tuple_destroy_4(tuple v) asm """
+    4 UNTUPLE
 """;
 
 cell __tact_dict_get_slice_cell(cell d, int kl, slice k) inline {
@@ -230,6 +274,24 @@ cell __tact_dict_get_slice_cell(cell d, int kl, slice k) inline {
         return r;
     } else {
         return null();
+    }
+}
+
+(slice, cell, int) __tact_dict_min_slice_cell(cell d, int kl) inline {
+    var (key, value, flag) = __tact_dict_min_ref(d, kl);
+    if (flag) {
+        return (key, value, flag);
+    } else {
+        return (null(), null(), flag);
+    }
+}
+
+(slice, cell, int) __tact_dict_next_slice_cell(cell d, int kl, slice pivot) inline {
+    var (key, value, flag) = __tact_dict_next(d, kl, pivot);
+    if (flag) {
+        return (key, value~load_ref(), flag);
+    } else {
+        return (null(), null(), flag);
     }
 }
 
@@ -475,9 +537,9 @@ slice __gen_slice_slice_5dcf118847f69faec2c995cb99acf92d70cfe3223342f66c96b50435
     B{b5ee9c72410101010003000001f8f0f88c0c} B>boc <s PUSHSLICE
 """;
 
-;; Cell 6gGlk9Cm6jWdiiwvOLPhTwkOl+wueAh52ffe0rXFodM=
-cell __gen_cell_cell_ea01a593d0a6ea359d8a2c2f38b3e14f090e97ec2e780879d9f7ded2b5c5a1d3() asm """
-    B{b5ee9c7241010101000d00001600000000636173686f7574c596ac28} B>boc PUSHREF
+;; Cell 6S3RPJfJ8w29CjYa/mpqQzy1Z0DXarBCM+X5Tf17+OY=
+cell __gen_cell_cell_e92dd13c97c9f30dbd0a361afe6a6a433cb56740d76ab04233e5f94dfd7bf8e6() asm """
+    B{b5ee9c7241010101000e0000180000000066696e6973686564196bc7e8} B>boc PUSHREF
 """;
 
 ;; tact_ContractDAOv1.storage.fc
@@ -698,31 +760,33 @@ builder $OptionInfo$_store(builder build_0, (slice, slice) v) inline {
 
 ;;
 ;; Type: OptionInfoRoot
-;; TLB: _ address:address title:^string description:^string = OptionInfoRoot
+;; TLB: _ address:address title:^string description:^string amount:uint64 = OptionInfoRoot
 ;;
 
-builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice) v) inline {
-    var (v'address, v'title, v'description) = v;
+builder $OptionInfoRoot$_store(builder build_0, (slice, slice, slice, int) v) inline {
+    var (v'address, v'title, v'description, v'amount) = v;
     build_0 = build_0.store_slice(v'address);
     build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'title));
     build_0 = build_0.store_builder_ref(begin_cell().store_slice(v'description));
+    build_0 = build_0.store_uint(v'amount, 64);
     return build_0;
 }
 
-cell $OptionInfoRoot$_store_cell((slice, slice, slice) v, builder b) inline {
+cell $OptionInfoRoot$_store_cell((slice, slice, slice, int) v, builder b) inline {
     return $OptionInfoRoot$_store(b, v).end_cell();
 }
 
-(slice, ((slice, slice, slice))) $OptionInfoRoot$_load(slice sc_0) inline {
+(slice, ((slice, slice, slice, int))) $OptionInfoRoot$_load(slice sc_0) inline {
     var v'address = sc_0~load_msg_addr();
     var v'title = sc_0~load_ref().begin_parse();
     var v'description = sc_0~load_ref().begin_parse();
-    return (sc_0, (v'address, v'title, v'description));
+    var v'amount = sc_0~load_uint(64);
+    return (sc_0, (v'address, v'title, v'description, v'amount));
 }
 
-tuple $OptionInfoRoot$_as_optional((slice, slice, slice) v) inline {
-    var (v'address, v'title, v'description) = v;
-    return __tact_tuple_create_3(v'address, v'title, v'description);
+tuple $OptionInfoRoot$_as_optional((slice, slice, slice, int) v) inline {
+    var (v'address, v'title, v'description, v'amount) = v;
+    return __tact_tuple_create_4(v'address, v'title, v'description, v'amount);
 }
 
 tuple $OptionInfoRoot$_load_opt(cell cl) inline {
@@ -733,23 +797,54 @@ tuple $OptionInfoRoot$_load_opt(cell cl) inline {
     return $OptionInfoRoot$_as_optional(sc~$OptionInfoRoot$_load());
 }
 
-((slice, slice, slice)) $OptionInfoRoot$_not_null(tuple v) inline {
+((slice, slice, slice, int)) $OptionInfoRoot$_not_null(tuple v) inline {
     throw_if(128, null?(v));
-    var (slice vvv'address, slice vvv'title, slice vvv'description) = __tact_tuple_destroy_3(v);
-    return (vvv'address, vvv'title, vvv'description);
+    var (slice vvv'address, slice vvv'title, slice vvv'description, int vvv'amount) = __tact_tuple_destroy_4(v);
+    return (vvv'address, vvv'title, vvv'description, vvv'amount);
 }
 
-((slice, slice, slice)) $OptionInfoRoot$_constructor_address_title_description(slice $address, slice $title, slice $description) inline {
-    return ($address, $title, $description);
+((slice, slice, slice, int)) $OptionInfoRoot$_constructor_address_title_description_amount(slice $address, slice $title, slice $description, int $amount) inline {
+    return ($address, $title, $description, $amount);
+}
+
+;;
+;; Type: WinnerInfo
+;; TLB: _ address:address amount:uint64 total:uint64 finished:bool = WinnerInfo
+;;
+
+builder $WinnerInfo$_store(builder build_0, (slice, int, int, int) v) inline {
+    var (v'address, v'amount, v'total, v'finished) = v;
+    build_0 = __tact_store_address_opt(build_0, v'address);
+    build_0 = build_0.store_uint(v'amount, 64);
+    build_0 = build_0.store_uint(v'total, 64);
+    build_0 = build_0.store_int(v'finished, 1);
+    return build_0;
+}
+
+(slice, ((slice, int, int, int))) $WinnerInfo$_load(slice sc_0) inline {
+    var v'address = sc_0~__tact_load_address_opt();
+    var v'amount = sc_0~load_uint(64);
+    var v'total = sc_0~load_uint(64);
+    var v'finished = sc_0~load_int(1);
+    return (sc_0, (v'address, v'amount, v'total, v'finished));
+}
+
+(slice, int, int, int) $WinnerInfo$_to_external(((slice, int, int, int)) v) inline {
+    var (v'address, v'amount, v'total, v'finished) = v; 
+    return (v'address, v'amount, v'total, v'finished);
+}
+
+((slice, int, int, int)) $WinnerInfo$_constructor_address_amount_total_finished(slice $address, int $amount, int $total, int $finished) inline {
+    return ($address, $amount, $total, $finished);
 }
 
 ;;
 ;; Type: ContractDAOv1
-;; TLB: _ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string}> = ContractDAOv1
+;; TLB: _ owner:address admin:address wallet:address master:address status:uint4 metadata:^cell settings:VoteSettings{endTime:uint64,min_amount:coins,quorum:uint32} options:dict<address, ^OptionInfoRoot{address:address,title:^string,description:^string,amount:uint64}> winner:WinnerInfo{address:address,amount:uint64,total:uint64,finished:bool} = ContractDAOv1
 ;;
 
-builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int, cell, (int, int, int), cell) v) inline {
-    var (v'owner, v'admin, v'wallet, v'master, v'status, v'metadata, (v'settings'endTime, v'settings'min_amount, v'settings'quorum), v'options) = v;
+builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) v) inline {
+    var (v'owner, v'admin, v'wallet, v'master, v'status, v'metadata, (v'settings'endTime, v'settings'min_amount, v'settings'quorum), v'options, (v'winner'address, v'winner'amount, v'winner'total, v'winner'finished)) = v;
     build_0 = build_0.store_slice(v'owner);
     build_0 = build_0.store_slice(v'admin);
     build_0 = build_0.store_slice(v'wallet);
@@ -759,11 +854,12 @@ builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int,
     build_1 = build_1.store_ref(v'metadata);
     build_1 = $VoteSettings$_store(build_1, (v'settings'endTime, v'settings'min_amount, v'settings'quorum));
     build_1 = build_1.store_dict(v'options);
+    build_1 = $WinnerInfo$_store(build_1, (v'winner'address, v'winner'amount, v'winner'total, v'winner'finished));
     build_0 = store_builder_ref(build_0, build_1);
     return build_0;
 }
 
-(slice, ((slice, slice, slice, slice, int, cell, (int, int, int), cell))) $ContractDAOv1$_load(slice sc_0) inline {
+(slice, ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)))) $ContractDAOv1$_load(slice sc_0) inline {
     var v'owner = sc_0~load_msg_addr();
     var v'admin = sc_0~load_msg_addr();
     var v'wallet = sc_0~load_msg_addr();
@@ -773,15 +869,16 @@ builder $ContractDAOv1$_store(builder build_0, (slice, slice, slice, slice, int,
     var v'metadata = sc_1~load_ref();
     var v'settings = sc_1~$VoteSettings$_load();
     var v'options = sc_1~load_dict();
-    return (sc_0, (v'owner, v'admin, v'wallet, v'master, v'status, v'metadata, v'settings, v'options));
+    var v'winner = sc_1~$WinnerInfo$_load();
+    return (sc_0, (v'owner, v'admin, v'wallet, v'master, v'status, v'metadata, v'settings, v'options, v'winner));
 }
 
-(slice, slice, slice, slice, int, cell, (int, int, int), cell) $ContractDAOv1$_contract_load() impure inline {
+(slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $ContractDAOv1$_contract_load() impure inline {
     slice $sc = get_data().begin_parse();
     return $sc~$ContractDAOv1$_load();
 }
 
-() $ContractDAOv1$_contract_store((slice, slice, slice, slice, int, cell, (int, int, int), cell) v) impure inline {
+() $ContractDAOv1$_contract_store((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) v) impure inline {
     builder b = begin_cell();
     b = $ContractDAOv1$_store(b, v);
     set_data(b.end_cell());
@@ -883,22 +980,42 @@ cell $ContractJettonDAOv1$_child_get_code() impure asm """
 ;; Contract ContractDAOv1 functions
 ;;
 
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), cell) $ContractDAOv1$_fun_get_options((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
-    var $fresh$ret_7257 = $self'options;
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7257);
+(slice, int, int, int) $global_checkWinner(cell $data, int $total) impure inline {
+    slice $winnerAddress = null();
+    int $winnerVotes = -1;
+    var ($key, $value, $fresh$flag_7852) = __tact_dict_min_slice_cell($data, 267);
+    while ($fresh$flag_7852) {
+        var ($value'address, $value'title, $value'description, $value'amount) = $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt($value));
+        int $more = ($value'amount > $winnerVotes);
+        $winnerVotes = ($more ? $value'amount : $winnerVotes);
+        $winnerAddress = ($more ? $key : $winnerAddress);
+        ($key, $value, $fresh$flag_7852) = __tact_dict_next_slice_cell($data, 267, $key);
+    }
+    return $WinnerInfo$_constructor_address_amount_total_finished($winnerAddress, $winnerVotes, $total, true);
 }
 
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), (int, int, int)) $ContractDAOv1$_fun_get_settings((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
-    var $fresh$ret_7258 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum);
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7258);
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), cell) $ContractDAOv1$_fun_get_options((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
+    var $fresh$ret_7853 = $self'options;
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7853);
 }
 
-((slice, slice, slice, slice, int, cell, (int, int, int), cell), int) $ContractDAOv1$_fun_get_status((slice, slice, slice, slice, int, cell, (int, int, int), cell) $self) impure inline_ref {
-    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options)) = $self;
-    var $fresh$ret_7259 = $self'status;
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options), $fresh$ret_7259);
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (int, int, int)) $ContractDAOv1$_fun_get_settings((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
+    var $fresh$ret_7854 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum);
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7854);
+}
+
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), int) $ContractDAOv1$_fun_get_status((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
+    var $fresh$ret_7855 = $self'status;
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7855);
+}
+
+((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (slice, int, int, int)) $ContractDAOv1$_fun_get_results((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
+    var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
+    var $fresh$ret_7856 = ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished);
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7856);
 }
 
 ;;
@@ -923,6 +1040,12 @@ _ %get_status() method_id(100881) {
     return res;
 }
 
+_ %get_results() method_id(129659) {
+    var self = $ContractDAOv1$_contract_load();
+    var res = self~$ContractDAOv1$_fun_get_results();
+    return $WinnerInfo$_to_external(res);
+}
+
 ;;
 ;; Routing of a Contract ContractDAOv1
 ;;
@@ -943,7 +1066,7 @@ _ %get_status() method_id(100881) {
     __tact_context_sender = msg_sender_addr;
     
     ;; Load contract data
-    var ($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options) = $ContractDAOv1$_contract_load();
+    var ($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)) = $ContractDAOv1$_contract_load();
     
     ;; Handle bounced messages
     if (msg_bounced) { return (); }
@@ -971,7 +1094,9 @@ _ %get_status() method_id(100881) {
                 throw_unless(12119, ($msg'amount >= $self'settings'min_amount));
                 throw_unless(32290, ($self'settings'endTime > $global_now()));
                 slice $optionAddress = $data~$Slice$_fun_loadAddress();
-                $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt(__tact_dict_get_slice_cell($self'options, 267, $optionAddress)));
+                var ($option'address, $option'title, $option'description, $option'amount) = $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt(__tact_dict_get_slice_cell($self'options, 267, $optionAddress)));
+                $self'winner'total = $self'winner'total + 1;
+                $self'options~__tact_dict_set_slice_cell(267, $optionAddress, $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description_amount($optionAddress, $option'title, $option'description, ($option'amount + 1)), begin_cell()));
                 var ($init'code, $init'data) = $ContractJettonDAOv1$_init_child($global_myAddress(), $msg'sender, $optionAddress, $self'wallet, 0);
                 $global_deploy($DeployParameters$_constructor_init_value_body(($init'code, $init'data), 50000000, __gen_cell_cell_61d4984869602654e350e1909ea32d1e3fb2c63bd60a938509729f1acd1cd643()));
                 $global_send($SendParameters$_constructor_to_value_body(__tact_context_get_sender(), 50000000, $JettonTransfer$_store_cell($JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload(42, $msg'amount, $global_contractAddress(($init'code, $init'data)), $global_contractAddress(($init'code, $init'data)), null(), 10000000, __gen_slice_slice_5dcf118847f69faec2c995cb99acf92d70cfe3223342f66c96b504350c5d5b19()), begin_cell())));
@@ -982,11 +1107,14 @@ _ %get_status() method_id(100881) {
                 slice $optionAddress = $data~$Slice$_fun_loadAddress();
                 slice $expectedAddress = $global_contractAddress($ContractJettonDAOv1$_init_child($global_myAddress(), $adminAddress, $optionAddress, $self'wallet, 0));
                 throw_unless(63977, ( equal_slices_bits($msg'sender, $expectedAddress) ));
+                var ($option'address, $option'title, $option'description, $option'amount) = $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt(__tact_dict_get_slice_cell($self'options, 267, $optionAddress)));
+                $self'winner'total = $self'winner'total + 1;
+                $self'options~__tact_dict_set_slice_cell(267, $optionAddress, $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description_amount($optionAddress, $option'title, $option'description, ($option'amount - 1)), begin_cell()));
                 $global_send($SendParameters$_constructor_to_value_body($self'wallet, 50000000, $JettonTransfer$_store_cell($JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload(42, $msg'amount, $adminAddress, $adminAddress, null(), 1, $Builder$_fun_asSlice(store_uint($global_beginCell(), 0, 1))), begin_cell())));
                 throw_unless(32290, ($self'settings'endTime > $global_now()));
                 $global_send($SendParameters$_constructor_to_value_body($self'master, 25000000, $CallTo$_store_cell($CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg(0, $optionAddress, 20000000, $JettonBurn$_store_cell($JettonBurn$_constructor_queryId_amount(0, $msg'amount), begin_cell())), begin_cell())));
             }
-            $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
+            $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
             return ();
         }
         
@@ -1001,9 +1129,9 @@ _ %get_status() method_id(100881) {
             throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
             var ($data'title, $data'description) = $OptionInfo$_constructor_title_description($msg'title, $msg'description);
             var ($init'code, $init'data) = $ContractVaultDAOv1$_init_child($global_myAddress(), 0, ($data'title, $data'description));
-            $self'options~__tact_dict_set_slice_cell(267, $global_contractAddress(($init'code, $init'data)), $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description($global_contractAddress(($init'code, $init'data)), $msg'title, $msg'description), begin_cell()));
+            $self'options~__tact_dict_set_slice_cell(267, $global_contractAddress(($init'code, $init'data)), $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description_amount($global_contractAddress(($init'code, $init'data)), $msg'title, $msg'description, 0), begin_cell()));
             $global_send($SendParameters$_constructor_to_value_code_data_body($global_contractAddress(($init'code, $init'data)), ($ctx'value - 10000000), $init'code, $init'data, $VaultInitialization$_store_cell($VaultInitialization$_constructor_queryId_admin(0, __tact_context_get_sender()), begin_cell())));
-            $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
+            $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
             return ();
         }
         
@@ -1023,7 +1151,7 @@ _ %get_status() method_id(100881) {
         var ($init'code, $init'data) = $GovernanceJettonMinter$_init_child(0, $global_myAddress(), $self'owner, $self'metadata);
         $self'master = $global_contractAddress(($init'code, $init'data));
         $global_deploy($DeployParameters$_constructor_init_value(($init'code, $init'data), 100000000));
-        $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
+        $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
         return ();
     }
     ;; Receive "start" message
@@ -1031,16 +1159,21 @@ _ %get_status() method_id(100881) {
         throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
         throw_unless(45676, ($self'status == 0));
         $self'status = 1;
-        $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options));
+        $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
         return ();
     }
-    ;; Receive "wd" message
-    if (text_op == 0x03b5f46289242db6c23e9c4a1e6262bb261e5019870c97c602dfaf96c60739bf) {
-        throw_unless(61686, ( (( equal_slices_bits(__tact_context_get_sender(), $self'admin) )) ? (true) : (( equal_slices_bits(__tact_context_get_sender(), $self'owner) )) ));
+    ;; Receive "finalize" message
+    if (text_op == 0x3f8bd49d13c13b558445a8696a0abe19ea23d46ac172f15f136e7e2aff3c2086) {
         throw_unless(45676, ($self'status == 1));
         throw_unless(16693, ($self'settings'endTime < $global_now()));
-        $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, 128, __gen_cell_cell_ea01a593d0a6ea359d8a2c2f38b3e14f090e97ec2e780879d9f7ded2b5c5a1d3()));
-        
+        if (($self'settings'quorum > $self'winner'total)) {
+            ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished) = $WinnerInfo$_constructor_address_amount_total_finished(null(), $self'winner'amount, $self'winner'total, true);
+            $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, 128, __gen_cell_cell_e92dd13c97c9f30dbd0a361afe6a6a433cb56740d76ab04233e5f94dfd7bf8e6()));
+        } else {
+            ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished) = $global_checkWinner($self'options, $self'winner'total);
+            $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, 128, __gen_cell_cell_e92dd13c97c9f30dbd0a361afe6a6a433cb56740d76ab04233e5f94dfd7bf8e6()));
+        }
+        $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
         return ();
     }
     ;; Throw if not handled
