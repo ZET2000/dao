@@ -267,8 +267,8 @@ builder $ContractVirtualDAOv2$_store(builder build_0, (slice, slice, slice, int)
 
 ((slice, slice, slice, int), slice) $ContractVirtualDAOv2$_fun_get_option((slice, slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'option, $self'status)) = $self;
-    var $fresh$ret_8855 = $self'option;
-    return (($self'owner, $self'admin, $self'option, $self'status), $fresh$ret_8855);
+    var $fresh$ret_9163 = $self'option;
+    return (($self'owner, $self'admin, $self'option, $self'status), $fresh$ret_9163);
 }
 
 ;;

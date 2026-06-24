@@ -122,7 +122,9 @@ contract ContractDAOv1(
                 }.toCell()
             });
 
-            require(self.settings.endTime > now(), "vote time is over");
+            if (self.settings.endTime < now()) {
+                return;
+            }
 
             self.winner.total -= 1;
             self.options.set(optionAddress, OptionInfoRoot{

@@ -737,20 +737,20 @@ slice $global_getJettonWalletByOwner(slice $jettonWalletOwner) impure inline {
 
 ((int, slice, slice, cell), (int, int, slice, cell, cell)) $GovernanceJettonMinter$_fun_get_jetton_data((int, slice, slice, cell) $self) impure inline_ref {
     var (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent)) = $self;
-    var $fresh$ret_8708 = $JettonMinterState$_constructor_totalSupply_mintable_adminAddress_jettonContent_jettonWalletCode($self'totalSupply, true, $self'adminAddress, $self'jettonContent, $JettonWalletGovernance$_code_child());
-    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_8708);
+    var $fresh$ret_9016 = $JettonMinterState$_constructor_totalSupply_mintable_adminAddress_jettonContent_jettonWalletCode($self'totalSupply, true, $self'adminAddress, $self'jettonContent, $JettonWalletGovernance$_code_child());
+    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_9016);
 }
 
 ((int, slice, slice, cell), slice) $GovernanceJettonMinter$_fun_get_wallet_address((int, slice, slice, cell) $self, slice $ownerAddress) impure inline_ref {
     var (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent)) = $self;
-    var $fresh$ret_8709 = $global_getJettonWalletByOwner($ownerAddress);
-    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_8709);
+    var $fresh$ret_9017 = $global_getJettonWalletByOwner($ownerAddress);
+    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_9017);
 }
 
 ((int, slice, slice, cell), slice) $GovernanceJettonMinter$_fun_get_next_admin_address((int, slice, slice, cell) $self) impure inline_ref {
     var (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent)) = $self;
-    var $fresh$ret_8710 = $self'nextAdminAddress;
-    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_8710);
+    var $fresh$ret_9018 = $self'nextAdminAddress;
+    return (($self'totalSupply, $self'adminAddress, $self'nextAdminAddress, $self'jettonContent), $fresh$ret_9018);
 }
 
 ;;

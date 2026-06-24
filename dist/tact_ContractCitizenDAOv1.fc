@@ -271,20 +271,20 @@ builder $ContractCitizenDAOv1$_store(builder build_0, (slice, slice, int) v) inl
 
 ((slice, slice, int), slice) $ContractCitizenDAOv1$_fun_get_owner((slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'status)) = $self;
-    var $fresh$ret_8817 = $self'owner;
-    return (($self'owner, $self'admin, $self'status), $fresh$ret_8817);
+    var $fresh$ret_9125 = $self'owner;
+    return (($self'owner, $self'admin, $self'status), $fresh$ret_9125);
 }
 
 ((slice, slice, int), slice) $ContractCitizenDAOv1$_fun_get_admin((slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'status)) = $self;
-    var $fresh$ret_8818 = $self'admin;
-    return (($self'owner, $self'admin, $self'status), $fresh$ret_8818);
+    var $fresh$ret_9126 = $self'admin;
+    return (($self'owner, $self'admin, $self'status), $fresh$ret_9126);
 }
 
 ((slice, slice, int), int) $ContractCitizenDAOv1$_fun_get_status((slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'status)) = $self;
-    var $fresh$ret_8819 = $self'status;
-    return (($self'owner, $self'admin, $self'status), $fresh$ret_8819);
+    var $fresh$ret_9127 = $self'status;
+    return (($self'owner, $self'admin, $self'status), $fresh$ret_9127);
 }
 
 ;;

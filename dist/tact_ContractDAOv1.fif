@@ -1110,11 +1110,16 @@ PROGRAM{
                   // Group 5: Sending the message, with `mode` on top
                   SWAP
                   SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
-              32290 PUSHINT
                   NOW
-              s12 s(-1) PUXC
-              GREATER
-              THROWANYIFNOT
+              s11 s(-1) PUXC
+              LESS
+              IFJMP:<{
+                5 BLKDROP
+                s11 s13 XCHG
+                2 11 BLKSWAP
+                $ContractDAOv1$_contract_store INLINECALLDICT
+                RETALT
+              }>
               s0 17 s() XCHG
               DEC
               267 PUSHINT
