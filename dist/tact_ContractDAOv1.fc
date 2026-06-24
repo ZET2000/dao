@@ -983,39 +983,39 @@ cell $ContractJettonDAOv1$_child_get_code() impure asm """
 (slice, int, int, int) $global_checkWinner(cell $data, int $total) impure inline {
     slice $winnerAddress = null();
     int $winnerVotes = -1;
-    var ($key, $value, $fresh$flag_7852) = __tact_dict_min_slice_cell($data, 267);
-    while ($fresh$flag_7852) {
+    var ($key, $value, $fresh$flag_8776) = __tact_dict_min_slice_cell($data, 267);
+    while ($fresh$flag_8776) {
         var ($value'address, $value'title, $value'description, $value'amount) = $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt($value));
         int $more = ($value'amount > $winnerVotes);
         $winnerVotes = ($more ? $value'amount : $winnerVotes);
         $winnerAddress = ($more ? $key : $winnerAddress);
-        ($key, $value, $fresh$flag_7852) = __tact_dict_next_slice_cell($data, 267, $key);
+        ($key, $value, $fresh$flag_8776) = __tact_dict_next_slice_cell($data, 267, $key);
     }
     return $WinnerInfo$_constructor_address_amount_total_finished($winnerAddress, $winnerVotes, $total, true);
 }
 
 ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), cell) $ContractDAOv1$_fun_get_options((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
-    var $fresh$ret_7853 = $self'options;
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7853);
+    var $fresh$ret_8777 = $self'options;
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_8777);
 }
 
 ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (int, int, int)) $ContractDAOv1$_fun_get_settings((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
-    var $fresh$ret_7854 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum);
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7854);
+    var $fresh$ret_8778 = ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum);
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_8778);
 }
 
 ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), int) $ContractDAOv1$_fun_get_status((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
-    var $fresh$ret_7855 = $self'status;
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7855);
+    var $fresh$ret_8779 = $self'status;
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_8779);
 }
 
 ((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)), (slice, int, int, int)) $ContractDAOv1$_fun_get_results((slice, slice, slice, slice, int, cell, (int, int, int), cell, (slice, int, int, int)) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished))) = $self;
-    var $fresh$ret_7856 = ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished);
-    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_7856);
+    var $fresh$ret_8780 = ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished);
+    return (($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)), $fresh$ret_8780);
 }
 
 ;;
@@ -1108,10 +1108,10 @@ _ %get_results() method_id(129659) {
                 slice $expectedAddress = $global_contractAddress($ContractJettonDAOv1$_init_child($global_myAddress(), $adminAddress, $optionAddress, $self'wallet, 0));
                 throw_unless(63977, ( equal_slices_bits($msg'sender, $expectedAddress) ));
                 var ($option'address, $option'title, $option'description, $option'amount) = $OptionInfoRoot$_not_null($OptionInfoRoot$_load_opt(__tact_dict_get_slice_cell($self'options, 267, $optionAddress)));
-                $self'winner'total = $self'winner'total + 1;
-                $self'options~__tact_dict_set_slice_cell(267, $optionAddress, $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description_amount($optionAddress, $option'title, $option'description, ($option'amount - 1)), begin_cell()));
                 $global_send($SendParameters$_constructor_to_value_body($self'wallet, 50000000, $JettonTransfer$_store_cell($JettonTransfer$_constructor_queryId_amount_destination_responseDestination_customPayload_forwardTonAmount_forwardPayload(42, $msg'amount, $adminAddress, $adminAddress, null(), 1, $Builder$_fun_asSlice(store_uint($global_beginCell(), 0, 1))), begin_cell())));
                 throw_unless(32290, ($self'settings'endTime > $global_now()));
+                $self'winner'total = $self'winner'total - 1;
+                $self'options~__tact_dict_set_slice_cell(267, $optionAddress, $OptionInfoRoot$_store_cell($OptionInfoRoot$_constructor_address_title_description_amount($optionAddress, $option'title, $option'description, ($option'amount - 1)), begin_cell()));
                 $global_send($SendParameters$_constructor_to_value_body($self'master, 25000000, $CallTo$_store_cell($CallTo$_constructor_queryId_toAddress_tonAmount_masterMsg(0, $optionAddress, 20000000, $JettonBurn$_store_cell($JettonBurn$_constructor_queryId_amount(0, $msg'amount), begin_cell())), begin_cell())));
             }
             $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
@@ -1173,6 +1173,7 @@ _ %get_results() method_id(129659) {
             ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished) = $global_checkWinner($self'options, $self'winner'total);
             $global_send($SendParameters$_constructor_to_value_mode_body($self'admin, 0, 128, __gen_cell_cell_e92dd13c97c9f30dbd0a361afe6a6a433cb56740d76ab04233e5f94dfd7bf8e6()));
         }
+        $self'status = 2;
         $ContractDAOv1$_contract_store(($self'owner, $self'admin, $self'wallet, $self'master, $self'status, $self'metadata, ($self'settings'endTime, $self'settings'min_amount, $self'settings'quorum), $self'options, ($self'winner'address, $self'winner'amount, $self'winner'total, $self'winner'finished)));
         return ();
     }

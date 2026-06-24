@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: ContractDAOv2
-BoC Size: 7367 bytes
+BoC Size: 7368 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 102

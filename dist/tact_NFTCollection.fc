@@ -612,29 +612,29 @@ cell $NFTItem$_code_child() inline {
     var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
     tuple $sb = __tact_string_builder_start_string();
     $sb~__tact_string_builder_append($Slice$_fun_asString($Cell$_fun_asSlice($self'content)));
-    var $fresh$ret_8001 = $CollectionData$_constructor_nextItemIndex_collectionContent_owner($self'nextItemIndex, __tact_string_builder_end($sb), $self'owner);
-    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8001);
+    var $fresh$ret_8925 = $CollectionData$_constructor_nextItemIndex_collectionContent_owner($self'nextItemIndex, __tact_string_builder_end($sb), $self'owner);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8925);
 }
 
 ((slice, slice, int, cell, cell, (int, int, slice), cell, builder), slice) $NFTCollection$_fun_get_nft_address_by_index((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index) impure inline_ref {
     var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
     var ($stateInit'code, $stateInit'data) = $NFTItem$_init_child(null(), null(), $self'owner, $global_myAddress(), $index);
-    var $fresh$ret_8002 = $global_contractAddress(($stateInit'code, $stateInit'data));
-    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8002);
+    var $fresh$ret_8926 = $global_contractAddress(($stateInit'code, $stateInit'data));
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8926);
 }
 
 ((slice, slice, int, cell, cell, (int, int, slice), cell, builder), (int, int, slice)) $NFTCollection$_fun_royalty_params((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self) impure inline_ref {
     var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
-    var $fresh$ret_8003 = ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner);
-    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8003);
+    var $fresh$ret_8927 = ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8927);
 }
 
 ((slice, slice, int, cell, cell, (int, int, slice), cell, builder), cell) $NFTCollection$_fun_get_nft_content((slice, slice, int, cell, cell, (int, int, slice), cell, builder) $self, int $index, cell $individualNFTContent) impure inline_ref {
     var (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData)) = $self;
     tuple $sb = __tact_string_builder_start_string();
     $sb~__tact_string_builder_append($Slice$_fun_asString($Cell$_fun_asSlice($individualNFTContent)));
-    var $fresh$ret_8004 = __tact_string_builder_end($sb);
-    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8004);
+    var $fresh$ret_8928 = __tact_string_builder_end($sb);
+    return (($self'owner, $self'admin, $self'nextItemIndex, $self'content, $self'defaultContent, ($self'royaltyParams'nominator, $self'royaltyParams'dominator, $self'royaltyParams'owner), $self'commonCode, $self'commonData), $fresh$ret_8928);
 }
 
 ;;

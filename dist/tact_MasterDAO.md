@@ -1,6 +1,6 @@
 # Tact compilation report
 Contract: MasterDAO
-BoC Size: 13485 bytes
+BoC Size: 13477 bytes
 
 ## Structures (Structs and Messages)
 Total structures: 102

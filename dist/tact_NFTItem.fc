@@ -253,8 +253,8 @@ builder $NFTItem$_store(builder build_0, (slice, cell, slice, slice, int) v) inl
 
 ((slice, cell, slice, slice, int), (int, int, slice, slice, cell)) $NFTItem$_fun_get_nft_data((slice, cell, slice, slice, int) $self) impure inline_ref {
     var (($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex)) = $self;
-    var $fresh$ret_7988 = $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content(((~ null?($self'owner)) ? -1 : 0), $self'itemIndex, $self'collectionAddress, $self'owner, $self'content);
-    return (($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex), $fresh$ret_7988);
+    var $fresh$ret_8912 = $NFTData$_constructor_init_itemIndex_collectionAddress_owner_content(((~ null?($self'owner)) ? -1 : 0), $self'itemIndex, $self'collectionAddress, $self'owner, $self'content);
+    return (($self'owner, $self'content, $self'editor, $self'collectionAddress, $self'itemIndex), $fresh$ret_8912);
 }
 
 ;;

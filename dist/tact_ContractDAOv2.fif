@@ -1460,25 +1460,26 @@ PROGRAM{
     EQUAL
     IFJMP:<{
       45676 PUSHINT
-      s6 PUSH
+      s0 s6 XCHG
       1 EQINT
+      s1 s6 XCHG
       THROWANYIFNOT
       16693 PUSHINT
           NOW
-      s5 s(-1) PUXC
+      s4 s(-1) PUXC
       LESS
       THROWANYIFNOT
-      s1 s9 PUSH2
+      s0 s8 PUSH2
       GREATER
       IF:<{
         PUSHNULL
-        s0 s11 s10 XCHG3
+        s0 s10 s9 XCHG3
         TRUE
         $WinnerInfo$_constructor_address_amount_total_finished INLINECALLDICT
         0 PUSHINT
         7 PUSHPOW2
             B{b5ee9c7241010101000e0000180000000066696e6973686564196bc7e8} B>boc PUSHREF
-        s12 PUSH
+        s11 PUSH
         3 -ROLL
         $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
             NEWC
@@ -1548,13 +1549,13 @@ PROGRAM{
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
       }>ELSE<{
-        s10 POP
-        s9 s8 PUXC
+        s9 POP
+        s3 s7 PUXC
         $global_checkWinner INLINECALLDICT
         0 PUSHINT
         7 PUSHPOW2
             B{b5ee9c7241010101000e0000180000000066696e6973686564196bc7e8} B>boc PUSHREF
-        s12 PUSH
+        s11 PUSH
         3 -ROLL
         $SendParameters$_constructor_to_value_mode_body INLINECALLDICT
             NEWC
@@ -1624,13 +1625,14 @@ PROGRAM{
             SWAP
             SENDRAWMSG // https://github.com/tact-lang/tact/issues/1558
       }>
-      s10 s12 XCHG
       s9 s11 XCHG
       s8 s10 XCHG
       s7 s9 XCHG
+      2 PUSHINT
+      s0 s9 XCHG
       s6 s8 XCHG
       s5 s7 XCHG
-      s4 s6 XCHG
+      6 -ROLL
       $ContractDAOv2$_contract_store INLINECALLDICT
     }>
     11 BLKDROP
