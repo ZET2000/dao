@@ -108,7 +108,7 @@ contract ContractDAOv1(
 
             let option: OptionInfoRoot = self.options.get(optionAddress)!!;
 
-            self.winner.total += 1;
+            self.winner.total -= 1;
             self.options.set(optionAddress, OptionInfoRoot{
                 address: optionAddress,
                 title: option.title,
@@ -207,6 +207,8 @@ contract ContractDAOv1(
                 body: "finished".asComment()
             });
         }
+
+        self.status = 2;
     }
 
     receive() { return }

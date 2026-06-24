@@ -193,6 +193,8 @@ contract ContractDAOv2(
                 body: "finished".asComment()
             });
         }
+
+        self.status = 2;
     }
 
     receive() { return }

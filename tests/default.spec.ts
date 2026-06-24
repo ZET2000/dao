@@ -4,37 +4,39 @@ import { MasterDAO } from '../dist/tact_MasterDAO';
 import '@ton/test-utils';
 
 describe('MasterDAO', () => {
-let blockchain: Blockchain;
-let masterContract: SandboxContract<MasterDAO>;
+    let blockchain: Blockchain;
+    let masterContract: SandboxContract<MasterDAO>;
 
-beforeEach(async () => {
-    blockchain = await Blockchain.create();
+    beforeEach(async () => {
+        blockchain = await Blockchain.create();
 
-    masterContract = blockchain.openContract(await MasterDAO.fromInit());
+        const deployer = await blockchain.treasury('deployer');
+        const treasury = await blockchain.treasury('treasury');
 
-    const deployer = await blockchain.treasury('deployer');
+        masterContract = blockchain.openContract(
+            await MasterDAO.fromInit(
+                deployer.address,
+                treasury.address
+            )
+        );
 
-    const deployResult = await masterContract.send(
-        deployer.getSender(),
-        {
-            value: toNano('0.05'),
-        },
-        {
-            $$type: 'Deploy',
-            queryId: 0n,
-        }
-    );
+        const deployResult = await masterContract.send(
+            deployer.getSender(),
+            {
+                value: toNano('0.05'),
+            },
+            "TopUp"
+        );
 
-    expect(deployResult.transactions).toHaveTransaction({
-        from: deployer.address,
-        to: masterContract.address,
-        deploy: true,
-        success: true,
+        expect(deployResult.transactions).toHaveTransaction({
+            from: deployer.address,
+            to: masterContract.address,
+            deploy: true,
+            success: true,
+        });
     });
-});
 
-it('should deploy', async () => {
-    // the check is done inside beforeEach
-    // blockchain and blankContract are ready to use
-});
+    it('should deploy', async () => {
+        expect(masterContract.address).toBeDefined();
+    });
 });
