@@ -108,14 +108,6 @@ contract ContractDAOv1(
 
             let option: OptionInfoRoot = self.options.get(optionAddress)!!;
 
-            self.winner.total -= 1;
-            self.options.set(optionAddress, OptionInfoRoot{
-                address: optionAddress,
-                title: option.title,
-                description: option.description,
-                amount: option.amount - 1
-            });
-
             send(SendParameters{
                 to: self.wallet,
                 value: ton("0.05"),
@@ -131,6 +123,14 @@ contract ContractDAOv1(
             });
 
             require(self.settings.endTime > now(), "vote time is over");
+
+            self.winner.total -= 1;
+            self.options.set(optionAddress, OptionInfoRoot{
+                address: optionAddress,
+                title: option.title,
+                description: option.description,
+                amount: option.amount - 1
+            });
 
             send(SendParameters{
                 to: self.master,
